@@ -27,7 +27,7 @@ export function SiteFooter() {
                   alt="Ficro Logo"
                   width={40}
                   height={40}
-                  className="h-20 w-20 object-contain"
+                  className="h-10 w-20 object-contain"
                 />
               </div>
             </div>
@@ -159,7 +159,7 @@ export function SiteFooter() {
         {/* Bottom Section */}
         <div className="border-t border-slate-700/50">
           <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-6 text-xs text-slate-400">
-            <p>© {new Date().getFullYear()} YouSport. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Ficro. All rights reserved.</p>
             <div className="flex gap-6 mt-2 sm:mt-0">
               <Link
                 href="/privacy"

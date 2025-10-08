@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden rounded-t-3xl bg-gradient-to-b from-background via-muted/10 to-primary/20 text-white border-t border-border">
+    <footer className="relative overflow-hidden rounded-t-3xl bg-gradient-to-b from-background via-muted/10 to-primary/20 text-foreground border-t border-border">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] bg-repeat"></div>
@@ -31,7 +31,7 @@ export function SiteFooter() {
                 />
               </div>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-sm text-foreground/70 leading-relaxed">
               A unified platform for tournaments, facilities, academies, and the
               YouSport channel. Connecting athletes, fans, and sports
               communities worldwide.
@@ -40,8 +40,8 @@ export function SiteFooter() {
 
           {/* Explore Section */}
           <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Explore</h3>
-            <ul className="space-y-3 text-sm text-slate-300">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Explore</h3>
+            <ul className="space-y-3 text-sm text-foreground/70">
               <li>
                 <Link
                   href="/tournaments"
@@ -79,8 +79,8 @@ export function SiteFooter() {
 
           {/* Company Section */}
           <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
-            <ul className="space-y-3 text-sm text-slate-300">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Company</h3>
+            <ul className="space-y-3 text-sm text-foreground/70">
               <li>
                 <Link
                   href="/about"
@@ -118,8 +118,8 @@ export function SiteFooter() {
 
           {/* Contact Section */}
           <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Connect</h3>
-            <ul className="space-y-3 text-sm text-slate-300">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Connect</h3>
+            <ul className="space-y-3 text-sm text-foreground/70">
               <li>
                 <Link
                   href="/news"
@@ -157,8 +157,8 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-slate-700/50">
-          <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-6 text-xs text-slate-400">
+        <div className="border-t border-foreground/70">
+          <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-6 text-xs text-foreground/70">
             <p>© {new Date().getFullYear()} Ficro. All rights reserved.</p>
             <div className="flex gap-6 mt-2 sm:mt-0">
               <Link

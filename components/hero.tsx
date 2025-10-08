@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 
 export function Hero() {
   return (
-    <section className="relative" aria-label="Hero">
+    <section className="relative dark" aria-label="Hero">
       {/* Full-bleed background */}
       <div
         className="absolute inset-0 -z-10 bg-cover bg-center"

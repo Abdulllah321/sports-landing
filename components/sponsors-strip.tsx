@@ -13,18 +13,18 @@ const logos = [
 
 export function SponsorsStrip() {
   return (
-    <section aria-label="Sponsors" className="relative border-y bg-background/60">
-      <div className="container mx-auto px-4 py-6">
+    <section aria-label="Sponsors" className="relative bg-muted border-y border-border">
+      <div className="container mx-auto px-4 py-8">
         <div className="relative overflow-hidden">
-          <div className="marquee flex items-center gap-12 opacity-80 hover:opacity-100">
+          <div className="marquee flex items-center gap-16">
             {[...logos, ...logos].map((logo, idx) => (
-              <div key={idx} className="shrink-0">
+              <div key={idx} className="shrink-0 flex items-center justify-center">
                 <Image
                   src={logo.src}
                   alt={logo.alt}
-                  width={140}
-                  height={40}
-                  className="h-8 w-auto object-contain dark:invert"
+                  width={120}
+                  height={32}
+                  className="h-8 w-auto object-contain filter  opacity-70 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
             ))}
@@ -33,8 +33,14 @@ export function SponsorsStrip() {
       </div>
 
       <style jsx>{`
-        .marquee { width: max-content; will-change: transform; animation: scroll 28s linear infinite; }
-        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .marquee {
+          width: max-content;
+          animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
       `}</style>
     </section>
   )

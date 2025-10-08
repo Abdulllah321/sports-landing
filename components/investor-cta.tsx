@@ -1,10 +1,10 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
 import {
   Dialog,
   DialogContent,
@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Download, Calendar, Users, TrendingUp, ArrowRight, CheckCircle } from "lucide-react"
 
 export function InvestorCta() {
   const [email, setEmail] = useState("")
@@ -26,44 +27,96 @@ export function InvestorCta() {
   }
 
   return (
-    <div className="flex flex-col items-start justify-between gap-6 rounded-xl border bg-card p-6 md:flex-row">
-      <div>
-        <h3 className="text-lg font-semibold">Request Investment</h3>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Get the investor pack and schedule time with our team. We’ll follow up within 2 business days.
-        </p>
-      </div>
+    <>
+    
+          {/* CTA Section */}
+          <div className="bg-gradient-to-r from-background/80 to-background/60 backdrop-blur-md rounded-2xl border border-border/50 p-8">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  Ready to Invest?
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  Get the complete investor pack with financial projections, market analysis, 
+                  and exclusive access to our founding team. We'll follow up within 24 hours.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span>Detailed Financial Projections</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span>Market Analysis Report</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                    <span>Direct Team Access</span>
+                  </div>
+                </div>
+              </div>
 
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button className="bg-primary text-foreground hover:opacity-90">Open Form</Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Request Investment</DialogTitle>
-            <DialogDescription>Share your email and any brief note.</DialogDescription>
-          </DialogHeader>
-          {sent ? (
-            <div className="text-sm text-primary">Thanks! Your request has been received.</div>
-          ) : (
-            <form onSubmit={handleSubmit} className="grid gap-3">
-              <Input
-                type="email"
-                required
-                placeholder="you@company.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                aria-label="Investor email"
-              />
-              <DialogFooter>
-                <Button type="submit" className="bg-primary text-foreground hover:opacity-90">
-                  Send Request
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl">
+                      Request Investment Pack
+                      <ArrowRight className="h-5 w-5 ml-2" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold">Request Investment Pack</DialogTitle>
+                      <DialogDescription>
+                        Get exclusive access to our investor materials and schedule a call with our team.
+                      </DialogDescription>
+                    </DialogHeader>
+                    {sent ? (
+                      <div className="text-center py-8">
+                        <CheckCircle className="h-16 w-16 text-primary mx-auto mb-4" />
+                        <div className="text-lg font-semibold text-foreground mb-2">Request Received!</div>
+                        <div className="text-muted-foreground">
+                          We'll send you the investor pack and follow up within 24 hours.
+                        </div>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                          <Input
+                            type="email"
+                            required
+                            placeholder="your@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="h-12 text-lg"
+                            aria-label="Investor email"
+                          />
+                        </div>
+                        <DialogFooter>
+                          <Button 
+                            type="submit" 
+                            className="w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-8 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
+                          >
+                            Send Request
+                          </Button>
+                        </DialogFooter>
+                      </form>
+                    )}
+                  </DialogContent>
+                </Dialog>
+
+                <Button 
+                  variant="secondary" 
+                  className="rounded-xl "
+                >
+                  <Download className="h-5 w-5 mr-2" />
+                  Download Brochure
                 </Button>
-              </DialogFooter>
-            </form>
-          )}
-        </DialogContent>
-      </Dialog>
-    </div>
+              </div>
+            </div>
+          </div>
+        </>
+
+
   )
 }

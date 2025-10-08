@@ -4,8 +4,27 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
 
+const baseButtonStyle = `
+  relative isolate inline-flex items-center justify-center
+  gap-2 whitespace-nowrap overflow-hidden rounded-md px-3 py-2 h-9
+  text-left text-sm font-medium group shadow ring-1 ring-primary
+  bg-primary text-primary-foreground transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)]
+  focus:outline-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
+  disabled:pointer-events-none disabled:opacity-50
+  [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0
+
+  /* gradient overlays (now visible by default) */
+  before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-md
+  before:bg-gradient-to-b before:from-primary-foreground/15 before:to-black/10 before:opacity-100
+  before:transition-opacity before:duration-300 before:ease-[cubic-bezier(0.4,0.36,0,1)]
+
+  after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-md
+  after:bg-gradient-to-b after:from-white/5 after:to-transparent after:mix-blend-overlay
+`;
+
+
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  baseButtonStyle,
   {
     variants: {
       variant: {

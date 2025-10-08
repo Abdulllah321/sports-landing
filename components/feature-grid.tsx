@@ -54,28 +54,31 @@ const features = [
 
 export function FeatureGrid() {
   return (
-    <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {features.map((f, i) => (
         <motion.div
           key={f.title}
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.4, delay: i * 0.05 }}
+          transition={{ duration: 0.5, delay: i * 0.1 }}
         >
-          <Card className="group h-full border-border/50 bg-card/80 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-md">
-            <CardHeader className="items-center text-center">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-secondary">
-                <f.icon className="h-5 w-5 text-primary" aria-hidden />
-              </span>
-              <div className="mt-2 flex w-full items-center justify-center">
-                <Badge variant="secondary" className="mr-2">Demo</Badge>
+          <Card className="group relative h-full bg-card border-border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 py-2">
+            <CardHeader className="items-center text-center pb-2 pt-4">
+              <div className="relative mb-4">
+                <f.icon className="h-16 w-16 text-primary mx-auto stroke-1" aria-hidden />
+                <Badge className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs">
+                  Demo
+                </Badge>
               </div>
-              <CardTitle className="mt-1 text-lg font-mono tracking-wide">{f.title}</CardTitle>
+              <CardTitle className="text-base font-semibold text-foreground">
+                {f.title}
+              </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4 text-center">
-              <p className="text-sm text-muted-foreground">{f.desc}</p>
-              <Button asChild variant="secondary" className="rounded-full px-6">
+            
+            <CardContent className="space-y-3 text-center pb-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              <Button asChild className="w-full">
                 <Link href={f.href}>Dashboard</Link>
               </Button>
             </CardContent>

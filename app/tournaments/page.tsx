@@ -49,7 +49,7 @@ const enhancedTournaments = [
     maxTeams: 16,
     description:
       "Premier 7v7 tournament featuring top teams from across the region.",
-    image: "https://picsum.photos/400/250?random=10",
+    image: "/capital-cup-tournament.jpg",
     featured: true,
   },
   {
@@ -59,7 +59,7 @@ const enhancedTournaments = [
     teams: 12,
     maxTeams: 20,
     description: "Community-focused 5v5 league with multiple divisions.",
-    image: "https://picsum.photos/400/250?random=11",
+    image: "/public-yousport-highlight-frame.jpg",
     featured: false,
   },
   {
@@ -69,7 +69,7 @@ const enhancedTournaments = [
     teams: 16,
     maxTeams: 16,
     description: "Elite knockout tournament with international participation.",
-    image: "https://picsum.photos/400/250?random=12",
+    image: "/coastal-classic-tournament.jpg",
     featured: true,
   },
   {
@@ -79,7 +79,7 @@ const enhancedTournaments = [
     teams: 0,
     maxTeams: 12,
     description: "Beachside 7v7 tournament with scenic coastal views.",
-    image: "https://picsum.photos/400/250?random=13",
+    image: "/metro-open-tournament.jpg",
     featured: false,
   },
   {
@@ -89,7 +89,7 @@ const enhancedTournaments = [
     teams: 6,
     maxTeams: 16,
     description: "Fast-paced 5v5 tournament in Qatar's capital.",
-    image: "https://picsum.photos/400/250?random=14",
+    image: "/news-regional-cup-format.jpg",
     featured: false,
   },
 ];
@@ -201,7 +201,16 @@ export default function TournamentsIndex() {
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+        {/* Background Image */}
+        <Image
+          src="/images/hero-illustration.jpg"
+          alt="Hero illustration"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/10 w-full h-full" />
+        <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -211,10 +220,10 @@ export default function TournamentsIndex() {
             <Badge variant="secondary" className="mb-4">
               Tournaments
             </Badge>
-            <h1 className="text-pretty font-serif tracking-tight text-4xl md:text-6xl">
+            <h1 className="text-pretty font-serif tracking-tight text-4xl md:text-6xl text-white">
               Compete & Win
             </h1>
-            <p className="mt-6 max-w-2xl mx-auto text-lg text-muted-foreground">
+            <p className="mt-6 max-w-2xl mx-auto text-lg text-white">
               Join tournaments, create competitions, and showcase your skills in
               the ultimate sports platform.
             </p>
@@ -226,7 +235,7 @@ export default function TournamentsIndex() {
                 <UserPlus className="mr-2 h-4 w-4" />
                 Register Team
               </Button>
-              <Button onClick={() => setCreateOpen(true)} variant="outline">
+              <Button onClick={() => setCreateOpen(true)} variant="secondary">
                 <Plus className="mr-2 h-4 w-4" />
                 Create Tournament
               </Button>
@@ -262,7 +271,7 @@ export default function TournamentsIndex() {
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card className="group overflow-hidden transition-all hover:shadow-lg">
+                <Card className="group overflow-hidden transition-all hover:shadow-lg pt-0">
                   <div className="relative aspect-video overflow-hidden">
                     <Image
                       src={tournament.image}
@@ -281,10 +290,10 @@ export default function TournamentsIndex() {
                         variant="secondary"
                         className={
                           tournament.status === "Open"
-                            ? "bg-green-500/20 text-green-700"
+                            ? "bg-green-700/50 text-foreground/80"
                             : tournament.status === "Registration Closed"
-                            ? "bg-red-500/20 text-red-700"
-                            : "bg-yellow-500/20 text-yellow-700"
+                            ? "bg-red-500/60 text-foreground/80"
+                            : "bg-yellow-500/50 text-foreground/80"
                         }
                       >
                         {tournament.status}
@@ -319,8 +328,8 @@ export default function TournamentsIndex() {
                           Prize Pool
                         </div>
                       </div>
-                      <div className="text-center p-3 bg-accent/5 rounded-lg">
-                        <div className="text-2xl font-bold text-accent">
+                      <div className="text-center p-3 bg-secondary/5 rounded-lg">
+                        <div className="text-2xl font-bold text-secondary">
                           {tournament.teams}/{tournament.maxTeams}
                         </div>
                         <div className="text-sm text-muted-foreground">
@@ -343,7 +352,7 @@ export default function TournamentsIndex() {
       )}
 
       {/* Filters and Search */}
-      <section className="bg-secondary">
+      <section className="bg-foreground/2">
         <div className="container mx-auto px-4 py-16 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -360,8 +369,8 @@ export default function TournamentsIndex() {
             </div>
           </motion.div>
 
-          <div className="grid gap-4 md:grid-cols-5 mb-8">
-            <div className="relative">
+          <div className="flex flex-wrap gap-4 mb-8">
+            <div className="relative w-full sm:w-80">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search tournaments..."
@@ -372,7 +381,7 @@ export default function TournamentsIndex() {
             </div>
 
             <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full sm:w-48">
                 <MapPin className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Country" />
               </SelectTrigger>
@@ -386,7 +395,7 @@ export default function TournamentsIndex() {
             </Select>
 
             <Select value={selectedType} onValueChange={setSelectedType}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full sm:w-48">
                 <Trophy className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
@@ -400,7 +409,7 @@ export default function TournamentsIndex() {
             </Select>
 
             <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full sm:w-48">
                 <Clock className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
@@ -414,7 +423,7 @@ export default function TournamentsIndex() {
             </Select>
 
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full sm:w-48">
                 <Filter className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
@@ -438,23 +447,23 @@ export default function TournamentsIndex() {
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card className="group h-full overflow-hidden transition-all hover:shadow-lg">
+                <Card className="group h-full overflow-hidden transition-all hover:shadow-lg pt-0">
                   <div className="relative aspect-video overflow-hidden">
                     <Image
                       src={tournament.image}
                       alt={tournament.name}
                       fill
-                      className="object-cover transition-transform group-hover:scale-105"
+                      className="object-cover object-top transition-transform group-hover:scale-105"
                     />
                     <div className="absolute top-4 right-4">
                       <Badge
                         variant="secondary"
                         className={
                           tournament.status === "Open"
-                            ? "bg-green-500/20 text-green-700"
+                            ? "bg-green-500/50 text-foreground/80"
                             : tournament.status === "Registration Closed"
-                            ? "bg-red-500/20 text-red-700"
-                            : "bg-yellow-500/20 text-yellow-700"
+                            ? "bg-red-500/60 text-foreground/80"
+                            : "bg-yellow-500/50 text-foreground/80"
                         }
                       >
                         {tournament.status}
@@ -493,15 +502,14 @@ export default function TournamentsIndex() {
                         <span className="text-sm text-muted-foreground">
                           Teams
                         </span>
-                        <span className="font-semibold">
+                        <span className="font-semibold text-secondary">
                           {tournament.teams}/{tournament.maxTeams}
                         </span>
                       </div>
                       <Button
                         asChild
-                        variant="outline"
                         size="sm"
-                        className="w-full"
+                        className="w-full bg-primary"
                       >
                         <Link href={`/tournaments/${tournament.id}`}>
                           <Trophy className="mr-2 h-4 w-4" />

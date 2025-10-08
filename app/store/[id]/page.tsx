@@ -1,11 +1,11 @@
-import { PRODUCTS } from "@/data/products"
-import { notFound } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { SectionHeader } from "@/components/section-header"
+import { PRODUCTS } from "@/data/products";
+import { notFound } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { SectionHeader } from "@/components/section-header";
 
 export default function ProductDetail({ params }: { params: { id: string } }) {
-  const p = PRODUCTS.find((x) => x.id === params.id)
-  if (!p) return notFound()
+  const p = PRODUCTS.find((x) => x.id === params.id);
+  if (!p) return notFound();
   return (
     <main className="mx-auto max-w-3xl space-y-6 px-6 py-10">
       <SectionHeader title={p.name} subtitle={`$${p.price}`} align="left" />
@@ -16,5 +16,5 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         <Button variant="outline">Buy Now (Stub)</Button>
       </div>
     </main>
-  )
+  );
 }

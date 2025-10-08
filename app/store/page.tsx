@@ -1,19 +1,29 @@
-"use client"
-import useSWR from "swr"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { SectionHeader } from "@/components/section-header"
+"use client";
+import useSWR from "swr";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { SectionHeader } from "@/components/section-header";
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export default function StorePage() {
-  const { data } = useSWR("/api/products", fetcher)
-  const items = data?.items ?? []
+  const { data } = useSWR("/api/products", fetcher);
+  const items = data?.items ?? [];
 
   return (
     <main className="mx-auto max-w-6xl space-y-6 px-6 py-10">
-      <SectionHeader title="Sports Store" subtitle="Curated gear for players and coaches." align="left" />
+      <SectionHeader
+        title="Sports Store"
+        subtitle="Curated gear for players and coaches."
+        align="left"
+      />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {items.map((p: any) => (
           <Card key={p.id}>
@@ -42,5 +52,5 @@ export default function StorePage() {
         ))}
       </div>
     </main>
-  )
+  );
 }

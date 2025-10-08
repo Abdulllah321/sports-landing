@@ -1,30 +1,34 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function EventsPage() {
-  const [voted, setVoted] = useState(false)
-  const [needLogin, setNeedLogin] = useState(false)
-  const [demoUser, setDemoUser] = useState<string | null>(null)
+  const [voted, setVoted] = useState(false);
+  const [needLogin, setNeedLogin] = useState(false);
+  const [demoUser, setDemoUser] = useState<string | null>(null);
 
   useEffect(() => {
-    setDemoUser(localStorage.getItem("ys_demo_user"))
-  }, [])
+    setDemoUser(localStorage.getItem("ys_demo_user"));
+  }, []);
 
   function handleVote() {
     if (!demoUser) {
-      setNeedLogin(true)
-      return
+      setNeedLogin(true);
+      return;
     }
-    setVoted(true)
+    setVoted(true);
   }
 
   return (
     <section className="container mx-auto px-4 py-12 md:py-16">
-      <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Events & Contests</h1>
-      <p className="mt-2 text-muted-foreground">One public contest is interactive; others are UI stubs.</p>
+      <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
+        Events & Contests
+      </h1>
+      <p className="mt-2 text-muted-foreground">
+        One public contest is interactive; others are UI stubs.
+      </p>
 
       <div className="mt-8 rounded-xl border bg-card p-6">
         <h2 className="text-lg font-semibold">Fan Vote: Goal of the Week</h2>
@@ -41,21 +45,25 @@ export default function EventsPage() {
             </Button>
           </div>
         ) : (
-          <div className="mt-4 text-sm text-accent">Thanks for voting! (Demo)</div>
+          <div className="mt-4 text-sm text-accent">
+            Thanks for voting! (Demo)
+          </div>
         )}
       </div>
 
       {needLogin && (
         <div className="mt-6 max-w-md rounded-lg border bg-card p-4">
           <h3 className="text-sm font-medium">Sign-in required (stub)</h3>
-          <p className="mt-1 text-xs text-muted-foreground">Use demo sign-in to continue.</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Use demo sign-in to continue.
+          </p>
           <form
             className="mt-3 flex items-center gap-2"
             onSubmit={(e) => {
-              e.preventDefault()
-              localStorage.setItem("ys_demo_user", "demo@user")
-              setDemoUser("demo@user")
-              setNeedLogin(false)
+              e.preventDefault();
+              localStorage.setItem("ys_demo_user", "demo@user");
+              setDemoUser("demo@user");
+              setNeedLogin(false);
             }}
           >
             <Input placeholder="Email (not validated)" />
@@ -66,5 +74,5 @@ export default function EventsPage() {
         </div>
       )}
     </section>
-  )
+  );
 }

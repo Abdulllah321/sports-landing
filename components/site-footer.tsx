@@ -1,62 +1,182 @@
-import Link from "next/link"
+import Link from "next/link";
+import Image from "next/image";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t">
-      <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-10 md:grid-cols-3">
-        <div>
-          <div className="flex items-center gap-2 font-semibold">
-            <div className="h-7 w-7 rounded-md bg-primary" aria-hidden />
-            <span>YouSport</span>
-          </div>
-          <p className="mt-3 text-sm text-muted-foreground">
-            A unified platform for tournaments, facilities, academies, and the YouSport channel. Investor demo UI.
-          </p>
-        </div>
-        <div>
-          <h3 className="text-sm font-medium">Explore</h3>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>
-              <Link href="/tournaments">Tournaments</Link>
-            </li>
-            <li>
-              <Link href="/facilities">Facilities</Link>
-            </li>
-            <li>
-              <Link href="/yousport">YouSport</Link>
-            </li>
-            <li>
-              <Link href="/academies">Academies</Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-sm font-medium">Company</h3>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>
-              <Link href="/about">About Us</Link>
-            </li>
-            <li>
-              <Link href="/opportunities">Opportunities</Link>
-            </li>
-            <li>
-              <Link href="/advertise">Advertise</Link>
-            </li>
-            <li>
-              <Link href="/admin">Admin</Link>
-            </li>
-          </ul>
-        </div>
+    <footer className="relative overflow-hidden rounded-t-3xl bg-gradient-to-b from-background via-muted/10 to-primary/20 text-white border-t border-border">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] bg-repeat"></div>
       </div>
-      <div className="border-t">
-        <div className="container mx-auto flex items-center justify-between px-4 py-6 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} YouSport. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
+
+      {/* Blurry Background Elements */}
+      <div className="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-primary/20 blur-3xl"></div>
+      <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-secondary/20 blur-2xl"></div>
+      <div className="absolute top-1/2 left-1/4 h-24 w-24 rounded-full bg-accent/15 blur-xl"></div>
+      <div className="absolute bottom-0 right-1/4 h-36 w-36 rounded-full bg-primary/10 blur-2xl"></div>
+
+      {/* Main Content */}
+      <div className="relative z-10">
+        <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-12 md:grid-cols-4">
+          {/* Logo and Brand Section */}
+          <div className="md:col-span-1">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative">
+                <Image
+                  src="/images/logo-ficro.png"
+                  alt="Ficro Logo"
+                  width={40}
+                  height={40}
+                  className="h-20 w-20 object-contain"
+                />
+              </div>
+            </div>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              A unified platform for tournaments, facilities, academies, and the
+              YouSport channel. Connecting athletes, fans, and sports
+              communities worldwide.
+            </p>
+          </div>
+
+          {/* Explore Section */}
+          <div>
+            <h3 className="text-sm font-semibold text-white mb-4">Explore</h3>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li>
+                <Link
+                  href="/tournaments"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Tournaments
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/facilities"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Facilities
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/yousport"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  YouSport
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/academies"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Academies
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Company Section */}
+          <div>
+            <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li>
+                <Link
+                  href="/about"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/opportunities"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Opportunities
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/advertise"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Advertise
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Admin
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Section */}
+          <div>
+            <h3 className="text-sm font-semibold text-white mb-4">Connect</h3>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li>
+                <Link
+                  href="/news"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  News & Updates
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/events"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/store"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  Store
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/account"
+                  className="hover:text-primary transition-colors duration-200"
+                >
+                  My Account
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="border-t border-slate-700/50">
+          <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-6 text-xs text-slate-400">
+            <p>© {new Date().getFullYear()} YouSport. All rights reserved.</p>
+            <div className="flex gap-6 mt-2 sm:mt-0">
+              <Link
+                href="/privacy"
+                className="hover:text-primary transition-colors duration-200"
+              >
+                Privacy
+              </Link>
+              <Link
+                href="/terms"
+                className="hover:text-primary transition-colors duration-200"
+              >
+                Terms
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

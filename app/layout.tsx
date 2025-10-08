@@ -5,17 +5,27 @@ import "./globals.css"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { Suspense } from "react"
-import { Poppins, Inter } from "next/font/google"
+import { Anton, Poppins, Lato } from "next/font/google"
 
-const heading = Poppins({
+// Load Google fonts and expose CSS variables
+const heading = Anton({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
   variable: "--font-heading",
   display: "swap",
 })
-const body = Inter({
+
+const subheading = Poppins({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-subheading",
+  display: "swap",
+})
+
+const body = Lato({
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+  variable: "--font-body",
   display: "swap",
 })
 
@@ -47,7 +57,7 @@ function ThemeNoFlashScript() {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${body.variable} ${heading.variable} antialiased`}>
+    <html lang="en" className={`${heading.variable} ${subheading.variable} ${body.variable} antialiased`}>
       <head>
         <ThemeNoFlashScript />
       </head>

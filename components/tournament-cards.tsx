@@ -41,19 +41,19 @@ export function TournamentCards({ limit }: { limit?: number }) {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         {items.map((t) => (
-          <Card key={t.id} className="h-full">
-            <CardHeader>
-              <CardTitle className="text-base">{t.name}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                {t.city}, {t.country} — {t.date}
-              </p>
-              <Link className="text-sm text-accent underline underline-offset-4" href={`/tournaments/${t.id}`}>
-                View details
-              </Link>
-            </CardContent>
-          </Card>
+          <Link key={t.id} href={`/tournaments/${t.id}`} className="group block">
+            <Card className="h-full transition hover:shadow-lg group-hover:border-primary/40">
+              <CardHeader>
+                <CardTitle className="text-base group-hover:text-foreground/90">{t.name}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  {t.city}, {t.country} — {t.date}
+                </p>
+                <span className="text-sm text-primary underline-offset-4 group-hover:underline">View details</span>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

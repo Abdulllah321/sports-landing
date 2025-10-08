@@ -40,19 +40,19 @@ export function StadiumCards({ limit }: { limit?: number }) {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         {items.map((f) => (
-          <Card key={f.id} className="h-full">
-            <CardHeader>
-              <CardTitle className="text-base">{f.name}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                {f.city} — {f.type}
-              </p>
-              <Link className="text-sm text-accent underline underline-offset-4" href={`/facilities/${f.id}`}>
-                View stadium
-              </Link>
-            </CardContent>
-          </Card>
+          <Link key={f.id} href={`/facilities/${f.id}`} className="group block">
+            <Card className="h-full transition hover:shadow-lg group-hover:border-primary/40">
+              <CardHeader>
+                <CardTitle className="text-base group-hover:text-foreground/90">{f.name}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  {f.city} — {f.type}
+                </p>
+                <span className="text-sm text-primary underline-offset-4 group-hover:underline">View stadium</span>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

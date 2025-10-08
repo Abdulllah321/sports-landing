@@ -11,8 +11,8 @@ export function SectionHeader({ title, subtitle }: { title: string; subtitle?: s
       transition={{ duration: 0.4 }}
       className="max-w-2xl"
     >
-      <h2 className="text-balance font-serif uppercase tracking-wide text-2xl md:text-3xl">{title}</h2>
-      <div className="mt-2 h-1 w-16 rounded bg-primary" aria-hidden />
+      <h2 className="text-balance font-serif tracking-tight text-2xl md:text-3xl">{title}</h2>
+      <div className="mt-3 h-px w-16 bg-border" aria-hidden />
       {subtitle ? <p className="mt-3 text-muted-foreground">{subtitle}</p> : null}
     </motion.div>
   )

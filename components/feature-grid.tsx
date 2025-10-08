@@ -54,7 +54,7 @@ const features = [
 
 export function FeatureGrid() {
   return (
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
       {features.map((f, i) => (
         <motion.div
           key={f.title}
@@ -63,20 +63,20 @@ export function FeatureGrid() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.4, delay: i * 0.05 }}
         >
-          <Card className="group h-full border-border/70 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md hover:ring-2 hover:ring-primary/40">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-accent/10 ring-1 ring-accent">
-                  <f.icon className="h-4 w-4 text-accent" aria-hidden />
-                </span>
-                <CardTitle className="text-base">{f.title}</CardTitle>
+          <Card className="group h-full border-border/50 bg-card/80 backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-md">
+            <CardHeader className="items-center text-center">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-secondary">
+                <f.icon className="h-5 w-5 text-primary" aria-hidden />
+              </span>
+              <div className="mt-2 flex w-full items-center justify-center">
+                <Badge variant="secondary" className="mr-2">Demo</Badge>
               </div>
-              <Badge className="bg-primary text-primary-foreground">Demo</Badge>
+              <CardTitle className="mt-1 text-lg font-mono tracking-wide">{f.title}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 text-center">
               <p className="text-sm text-muted-foreground">{f.desc}</p>
-              <Button asChild className="bg-accent text-accent-foreground hover:opacity-90">
-                <Link href={f.href}>{f.cta}</Link>
+              <Button asChild variant="secondary" className="rounded-full px-6">
+                <Link href={f.href}>Dashboard</Link>
               </Button>
             </CardContent>
           </Card>

@@ -1,5 +1,4 @@
 import { Hero } from "@/components/hero"
-import { KpiStrip } from "@/components/kpi-strip"
 import { FeatureGrid } from "@/components/feature-grid"
 import { SectionHeader } from "@/components/section-header"
 import { NewsCards } from "@/components/news-cards"
@@ -7,12 +6,14 @@ import { TournamentCards } from "@/components/tournament-cards"
 import { StadiumCards } from "@/components/stadium-cards"
 import { YouSportEmbed } from "@/components/yousport-embed"
 import { InvestorCta } from "@/components/investor-cta"
+import { SponsorsStrip } from "@/components/sponsors-strip"
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <KpiStrip />
+
+      <SponsorsStrip />
 
       <section className="container mx-auto px-4 py-12 md:py-16">
         <h2 className="text-balance text-2xl md:text-3xl font-semibold tracking-tight">Personal Overview Panel</h2>

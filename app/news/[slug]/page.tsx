@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation"
 import { news } from "@/data/news"
 
-export default function NewsDetail({ params }: { params: { slug: string } }) {
-  const item = news.find((n) => n.slug === params.slug)
+export default async function NewsDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const item = news.find((n) => n.slug === slug)
   if (!item) return notFound()
   return (
     <article className="container mx-auto px-4 py-12 md:py-16 prose dark:prose-invert">

@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/section-header";
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-  const p = PRODUCTS.find((x) => x.id === params.id);
+export default async function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const p = PRODUCTS.find((x) => x.id === id);
   if (!p) return notFound();
   return (
     <main className="mx-auto max-w-3xl space-y-6 px-6 py-10">

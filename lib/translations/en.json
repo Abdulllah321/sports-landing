@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "tournaments": "Tournaments",
+    "facilities": "Facilities",
+    "yousport": "YouSport",
+    "news": "News",
+    "store": "Store",
+    "bookFields": "Book Fields"
+  },
+  "hero": {
+    "tagline": "Play harder with Ficro",
+    "title": "Train. Book. Compete.",
+    "description": "Reserve fields, explore tournaments, and watch curated highlights on YouSport — all in one platform.",
+    "tournaments": {
+      "title": "Explore Tournaments",
+      "description": "Find upcoming events and register in seconds."
+    },
+    "facilities": {
+      "title": "Book Facility",
+      "description": "Reserve courts and fields at verified venues."
+    },
+    "yousport": {
+      "title": "Watch YouSport",
+      "description": "Catch highlights and athlete spotlights."
+    },
+    "stats": {
+      "players": "Players Registered",
+      "tournaments": "Tournaments Run",
+      "stadiums": "Stadiums Listed"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Personal Overview Panel",
+      "description": "Browse tournaments and events, discover academies, book facilities, and explore our YouSport channel. Built for the investor demo — fully responsive UI with clear stubs where deeper integrations are required."
+    },
+    "news": {
+      "title": "Latest News",
+      "description": "Updates on programs, results, and features."
+    },
+    "tournaments": {
+      "title": "Upcoming Tournaments",
+      "description": "Find competitions across regions."
+    },
+    "stadiums": {
+      "title": "Featured Stadiums",
+      "description": "Explore high-quality facilities with amenities.",
+      "viewAll": "View All Stadiums"
+    }
+  },
+  "features": {
+    "demo": "Demo",
+    "tournaments": {
+      "title": "Tournaments & Events",
+      "description": "Browse and register for competitions and events.",
+      "cta": "Browse"
+    },
+    "academies": {
+      "title": "Sports Academies",
+      "description": "Discover training programs and coaching opportunities.",
+      "cta": "Explore"
+    },
+    "facilities": {
+      "title": "Facility Booking",
+      "description": "Find and reserve fields and training venues.",
+      "cta": "Search"
+    },
+    "store": {
+      "title": "Sports Store",
+      "description": "Shop equipment and merch (demo cart).",
+      "cta": "Shop"
+    },
+    "dashboard": {
+      "title": "Player Dashboard",
+      "description": "Manage bookings, registrations, and inbox (demo).",
+      "cta": "Open"
+    },
+    "support": {
+      "title": "Support Center",
+      "description": "Submit tickets and get help (lead capture).",
+      "cta": "Submit"
+    }
+  },
+  "news": {
+    "readArticle": "Read article"
+  },
+  "tournaments": {
+    "searchPlaceholder": "Search tournaments",
+    "countryPlaceholder": "Country",
+    "allCountries": "All countries",
+    "viewDetails": "View details"
+  },
+  "stadiums": {
+    "searchPlaceholder": "Search stadiums",
+    "cityPlaceholder": "City",
+    "allCities": "All cities",
+    "rating": "Rating",
+    "capacity": "Capacity",
+    "amenities": "Amenities",
+    "startingFrom": "Starting from",
+    "viewStadium": "View Stadium"
+  },
+  "yousport": {
+    "title": "Latest YouSport Clip",
+    "description": "Watch public highlights from the community.",
+    "live": "LIVE",
+    "views": "2.3K views",
+    "watchMore": "Watch More Clips",
+    "uploadClip": "Upload Your Clip"
+  },
+  "common": {
+    "loading": "Loading...",
+    "language": "Language"
+  }
+}

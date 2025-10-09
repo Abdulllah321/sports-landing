@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import Image from "next/image"
-import { facilities } from "@/data/facilities"
+import { getFacilitiesByLocale } from "@/lib/client-dynamic-translations"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
@@ -14,6 +14,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import { Locale } from "@/lib/i18n"
 
 // Custom Swiper styles
 const swiperStyles = `
@@ -35,18 +36,35 @@ const swiperStyles = `
   }
 `
 
-export function StadiumCards({ limit }: { limit?: number }) {
+interface StadiumCardsClientProps {
+  limit?: number
+  locale: Locale
+  translations: {
+    searchPlaceholder: string
+    cityPlaceholder: string
+    allCities: string
+    rating: string
+    capacity: string
+    amenities: string
+    startingFrom: string
+    viewStadium: string
+  }
+}
+
+export function StadiumCardsClient({ limit, locale, translations }: StadiumCardsClientProps) {
   const [city, setCity] = useState("all")
   const [query, setQuery] = useState("")
   
+  const facilityData = getFacilitiesByLocale(locale)
+  
   const items = useMemo(() => {
-    let list = facilities
+    let list = facilityData
     if (city !== "all") list = list.filter((f) => f.city === city)
     if (query) list = list.filter((f) => f.name.toLowerCase().includes(query.toLowerCase()))
     return typeof limit === "number" ? list.slice(0, limit) : list
-  }, [city, query, limit])
+  }, [city, query, limit, facilityData])
 
-  const cities = Array.from(new Set(facilities.map((f) => f.city)))
+  const cities = Array.from(new Set(facilityData.map((f) => f.city)))
 
   return (
     <>
@@ -54,17 +72,17 @@ export function StadiumCards({ limit }: { limit?: number }) {
       <div className="space-y-6 container mx-auto ">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-w-2xl mx-auto">
         <Input 
-          placeholder="Search stadiums" 
+          placeholder={translations.searchPlaceholder} 
           value={query} 
           onChange={(e) => setQuery(e.target.value)}
-          className="bg-background/80 backdrop-blur border-border/60"
+          className={`bg-background/80 backdrop-blur border-border/60 ${locale === 'ar' ? 'font-arabic-body' : ''}`}
         />
         <Select value={city} onValueChange={setCity}>
-          <SelectTrigger className="bg-background/80 backdrop-blur border-border/60">
-            <SelectValue placeholder="City" />
+          <SelectTrigger className={`bg-background/80 backdrop-blur border-border/60 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+            <SelectValue placeholder={translations.cityPlaceholder} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All cities</SelectItem>
+            <SelectItem value="all">{translations.allCities}</SelectItem>
             {cities.map((c) => (
               <SelectItem key={c} value={c}>
                 {c}
@@ -134,12 +152,12 @@ export function StadiumCards({ limit }: { limit?: number }) {
                   <div className="space-y-4">
                     {/* Header */}
                     <div className="space-y-2">
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
+                      <h3 className={`text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                         {f.name}
                       </h3>
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <MapPin className="h-4 w-4 text-primary" />
-                        <span className="font-medium">{f.city}</span>
+                        <span className={`font-medium ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{f.city}</span>
                       </div>
                     </div>
                     
@@ -151,7 +169,7 @@ export function StadiumCards({ limit }: { limit?: number }) {
                         </div>
                         <div>
                           <div className="text-lg font-bold text-foreground">{f.rating}</div>
-                          <div className="text-xs text-muted-foreground">Rating</div>
+                          <div className={`text-xs text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{translations.rating}</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -160,17 +178,17 @@ export function StadiumCards({ limit }: { limit?: number }) {
                         </div>
                         <div>
                           <div className="text-lg font-bold text-foreground">{f.capacity}</div>
-                          <div className="text-xs text-muted-foreground">Capacity</div>
+                          <div className={`text-xs text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{translations.capacity}</div>
                         </div>
                       </div>
                     </div>
                     
                     {/* Amenities */}
                     <div className="space-y-2">
-                      <h4 className="text-sm font-bold text-foreground">Amenities</h4>
+                      <h4 className={`text-sm font-bold text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{translations.amenities}</h4>
                       <div className="flex flex-wrap gap-2">
                         {f.amenities.map((amenity, index) => (
-                          <Badge key={index} variant="secondary" className="bg-primary/10 text-primary border-primary/20 px-2 py-1 text-xs font-medium">
+                          <Badge key={index} variant="secondary" className={`bg-primary/10 text-primary border-primary/20 px-2 py-1 text-xs font-medium ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                             {amenity}
                           </Badge>
                         ))}
@@ -179,7 +197,7 @@ export function StadiumCards({ limit }: { limit?: number }) {
                     
                     {/* Price */}
                     <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-4 rounded-lg border border-primary/20">
-                      <div className="text-xs text-muted-foreground mb-1">Starting from</div>
+                      <div className={`text-xs text-muted-foreground mb-1 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{translations.startingFrom}</div>
                       <div className="text-xl font-bold text-primary">{f.price}</div>
                     </div>
                   </div>
@@ -187,7 +205,7 @@ export function StadiumCards({ limit }: { limit?: number }) {
                   {/* CTA */}
                   <div className="flex items-center justify-between pt-4 border-t border-border/50">
                     <div className="flex items-center text-sm font-semibold text-primary group-hover:text-primary/80 transition-colors">
-                      <span>View Stadium</span>
+                      <span className={locale === 'ar' ? 'font-arabic-body' : ''}>{translations.viewStadium}</span>
                       <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
                     </div>
                   </div>

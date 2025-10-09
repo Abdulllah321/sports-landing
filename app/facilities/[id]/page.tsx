@@ -6,8 +6,9 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export default function FacilityDetail({ params }: { params: { id: string } }) {
-  const f = facilities.find((x) => x.id === params.id)
+export default async function FacilityDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const f = facilities.find((x) => x.id === id)
   const [booking, setBooking] = useState<{ name: string; email: string; when: string } | null>(null)
   const [submitted, setSubmitted] = useState(false)
   if (!f) return notFound()

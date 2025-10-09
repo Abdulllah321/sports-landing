@@ -6,8 +6,9 @@ import { tournaments } from "@/data/tournaments"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export default function TournamentDetail({ params }: { params: { id: string } }) {
-  const t = tournaments.find((x) => x.id === params.id)
+export default async function TournamentDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const t = tournaments.find((x) => x.id === id)
   const [open, setOpen] = useState(false)
   const [team, setTeam] = useState("")
   const [email, setEmail] = useState("")

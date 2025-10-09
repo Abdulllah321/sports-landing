@@ -2,8 +2,21 @@
 
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { Locale } from "@/lib/i18n"
 
-export function YouSportVideo() {
+interface YouSportVideoProps {
+  locale: Locale
+  translations: {
+    title: string
+    description: string
+    live: string
+    views: string
+    watchMore: string
+    uploadClip: string
+  }
+}
+
+export function YouSportVideo({ locale, translations }: YouSportVideoProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-foreground/10 to-background">
       {/* Background Pattern */}
@@ -21,11 +34,11 @@ export function YouSportVideo() {
       
       <div className="container relative mx-auto px-4 py-16 md:py-20">
         <div className="mx-auto max-w-4xl text-center mb-12">
-          <h2 className="text-balance text-3xl md:text-4xl font-extralight tracking-tight font-mono text-foreground">
-            Latest YouSport Clip
+          <h2 className={`text-balance text-3xl md:text-4xl font-extralight tracking-tight font-mono text-foreground ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+            {translations.title}
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Watch public highlights from the community.
+          <p className={`mt-4 text-lg text-muted-foreground max-w-2xl mx-auto ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+            {translations.description}
           </p>
         </div>
         
@@ -43,19 +56,23 @@ export function YouSportVideo() {
           </div>
           
           {/* Video Overlay Info */}
-          <div className="absolute top-6 left-6 z-10">
+          <div className={`absolute top-6 z-10 ${locale === 'ar' ? 'right-6' : 'left-6'}`}>
             <div className="bg-background/95 backdrop-blur-md rounded-full px-4 py-2 shadow-xl">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-sm font-semibold text-foreground">LIVE</span>
+                <span className={`text-sm font-semibold text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                  {translations.live}
+                </span>
               </div>
             </div>
           </div>
           
-          <div className="absolute top-6 right-6 z-10">
+          <div className={`absolute top-6 z-10 ${locale === 'ar' ? 'left-6' : 'right-6'}`}>
             <div className="bg-background/95 backdrop-blur-md rounded-full px-4 py-2 shadow-xl">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-foreground">2.3K views</span>
+                <span className={`text-sm font-semibold text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                  {translations.views}
+                </span>
               </div>
             </div>
           </div>
@@ -63,14 +80,14 @@ export function YouSportVideo() {
         
         {/* CTA Section */}
         <div className="text-center mt-8">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/yousport" className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl">
-              Watch More Clips
-              <ArrowRight className="h-4 w-4" />
+          <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${locale === 'ar' ? 'sm:flex-row-reverse' : ''}`}>
+            <Link href="/yousport" className={`inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:from-primary/90 hover:to-primary/70 transition-all duration-300 shadow-lg hover:shadow-xl ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+              {translations.watchMore}
+              <ArrowRight className={`h-4 w-4 ${locale === 'ar' ? 'rotate-180' : ''}`} />
             </Link>
-            <Link href="/yousport/upload" className="inline-flex items-center gap-2 bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground px-8 py-4 rounded-xl font-semibold hover:from-secondary/90 hover:to-secondary/70 transition-all duration-300 shadow-lg hover:shadow-xl">
-              Upload Your Clip
-              <ArrowRight className="h-4 w-4" />
+            <Link href="/yousport/upload" className={`inline-flex items-center gap-2 bg-gradient-to-r from-secondary to-secondary/80 text-secondary-foreground px-8 py-4 rounded-xl font-semibold hover:from-secondary/90 hover:to-secondary/70 transition-all duration-300 shadow-lg hover:shadow-xl ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+              {translations.uploadClip}
+              <ArrowRight className={`h-4 w-4 ${locale === 'ar' ? 'rotate-180' : ''}`} />
             </Link>
           </div>
         </div>

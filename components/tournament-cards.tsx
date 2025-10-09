@@ -2,42 +2,56 @@
 
 import { useMemo, useState } from "react"
 import Image from "next/image"
-import { tournaments } from "@/data/tournaments"
+import { getTournamentsByLocale } from "@/lib/client-dynamic-translations"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select"
 import Link from "next/link"
 import { Calendar, MapPin, Trophy, ArrowRight } from "lucide-react"
+import { Locale } from "@/lib/i18n"
 
-export function TournamentCards({ limit }: { limit?: number }) {
+interface TournamentCardsClientProps {
+  limit?: number
+  locale: Locale
+  translations: {
+    searchPlaceholder: string
+    countryPlaceholder: string
+    allCountries: string
+    viewDetails: string
+  }
+}
+
+export function TournamentCardsClient({ limit, locale, translations }: TournamentCardsClientProps) {
   const [query, setQuery] = useState("")
   const [country, setCountry] = useState("all")
 
+  const tournamentData = getTournamentsByLocale(locale)
+
   const items = useMemo(() => {
-    let list = tournaments
+    let list = tournamentData
     if (country !== "all") list = list.filter((t) => t.country === country)
     if (query) list = list.filter((t) => t.name.toLowerCase().includes(query.toLowerCase()))
     return typeof limit === "number" ? list.slice(0, limit) : list
-  }, [query, country, limit])
+  }, [query, country, limit, tournamentData])
 
-  const countries = Array.from(new Set(tournaments.map((t) => t.country)))
+  const countries = Array.from(new Set(tournamentData.map((t) => t.country)))
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-w-2xl mx-auto">
         <Input 
-          placeholder="Search tournaments" 
+          placeholder={translations.searchPlaceholder} 
           value={query} 
           onChange={(e) => setQuery(e.target.value)}
-          className="bg-background/80 backdrop-blur border-border/60"
+          className={`bg-background/80 backdrop-blur border-border/60 ${locale === 'ar' ? 'font-arabic-body' : ''}`}
         />
         <Select value={country} onValueChange={setCountry}>
-          <SelectTrigger className="bg-background/80 backdrop-blur border-border/60">
-            <SelectValue placeholder="Country" />
+          <SelectTrigger className={`bg-background/80 backdrop-blur border-border/60 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+            <SelectValue placeholder={translations.countryPlaceholder} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All countries</SelectItem>
+            <SelectItem value="all">{translations.allCountries}</SelectItem>
             {countries.map((c) => (
               <SelectItem key={c} value={c}>
                 {c}
@@ -81,7 +95,7 @@ export function TournamentCards({ limit }: { limit?: number }) {
                   {/* Title with sliding effect */}
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="relative overflow-hidden">
-                      <h3 className="text-2xl font-bold text-white mb-3 transition-transform duration-500 group-hover:-translate-y-8">
+                      <h3 className={`text-2xl font-bold text-white mb-3 transition-transform duration-500 group-hover:-translate-y-8 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                         {t.name}
                       </h3>
                       
@@ -90,11 +104,13 @@ export function TournamentCards({ limit }: { limit?: number }) {
                         <div className="flex items-center gap-4 text-sm text-white/90 mb-2">
                           <div className="flex items-center gap-2">
                             <MapPin className="h-4 w-4 text-primary" />
-                            <span className="font-medium">{t.city}, {t.country}</span>
+                            <span className={`font-medium ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{t.city}, {t.country}</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4 text-primary" />
-                            <span className="font-medium">{new Date(t.date).toLocaleDateString()}</span>
+                            <span className={`font-medium ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                              {new Date(t.date).toLocaleDateString(locale === 'ar' ? 'ar-SA' : 'en-US')}
+                            </span>
                           </div>
                         </div>
                       </div>

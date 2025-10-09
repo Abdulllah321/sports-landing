@@ -5,8 +5,9 @@ const projects = [
   { slug: "academy-scholarships", title: "Academy Scholarships", amount: "$180k", use: "Coaching & scholarships" },
 ]
 
-export default function ProjectDetail({ params }: { params: { slug: string } }) {
-  const p = projects.find((x) => x.slug === params.slug)
+export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const p = projects.find((x) => x.slug === slug)
   if (!p) return notFound()
   return (
     <section className="container mx-auto px-4 py-12 md:py-16 prose dark:prose-invert">

@@ -2,10 +2,13 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
+import { SiteHeaderServer } from "@/components/site-header-server";
 import { SiteFooter } from "@/components/site-footer";
+import { LanguageProvider } from "@/lib/translation-context";
+import { HtmlAttributes } from "@/components/html-attributes";
 import { Suspense } from "react";
-import { Anton, Poppins, Lato } from "next/font/google";
+import { Anton, Poppins, Lato, Noto_Sans_Arabic, Noto_Naskh_Arabic } from "next/font/google";
+import localFont from "next/font/local";
 
 // Load Google fonts and expose CSS variables
 const heading = Anton({
@@ -26,6 +29,41 @@ const body = Lato({
   subsets: ["latin"],
   weight: ["300", "400", "700", "900"],
   variable: "--font-body",
+  display: "swap",
+});
+
+// Arabic fonts
+const arabicHeading = localFont({
+  src: [
+    {
+      path: "../public/fonts/reem-kufi-regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/reem-kufi-medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/reem-kufi-semibold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/reem-kufi-bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-arabic-heading",
+  display: "swap",
+});
+
+const arabicBody = Noto_Naskh_Arabic({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-arabic-body",
   display: "swap",
 });
 
@@ -58,21 +96,27 @@ function ThemeNoFlashScript() {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{ 
+  children: React.ReactNode
+}>) {
   return (
     <html
       lang="en"
-      className={`${heading.variable} ${subheading.variable} ${body.variable} antialiased`}
+      dir="ltr"
+      className={`${heading.variable} ${subheading.variable} ${body.variable} ${arabicHeading.variable} ${arabicBody.variable} antialiased`}
     >
       <head>
         <ThemeNoFlashScript />
       </head>
       <body className="font-sans bg-background text-foreground">
-        <Suspense fallback={<div>Loading...</div>}>
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
-        </Suspense>
+        <LanguageProvider initialLocale="en">
+          <HtmlAttributes />
+          <Suspense fallback={<div>Loading...</div>}>
+            <SiteHeaderServer />
+            <main>{children}</main>
+            <SiteFooter />
+          </Suspense>
+        </LanguageProvider>
         <Analytics />
       </body>
     </html>

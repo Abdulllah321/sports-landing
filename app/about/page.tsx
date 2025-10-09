@@ -38,21 +38,34 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+      <section className="relative overflow-hidden min-h-[60vh] flex items-center">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/facility-city-arena.jpg"
+            alt="City Arena Facility"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-4xl mx-auto text-center"
           >
-            <Badge variant="secondary" className="mb-4">
+            <Badge className="mb-4 bg-secondary text-white border-white/30 font-serif">
               About Ficro Sports
             </Badge>
-            <h1 className="text-pretty font-serif tracking-tight text-4xl md:text-6xl">
+            <h1 className="text-pretty font-mono tracking-wide text-4xl md:text-6xl text-white">
               Building the Future of Sports
             </h1>
-            <p className="mt-6 max-w-2xl mx-auto text-lg text-muted-foreground">
+            <p className="mt-6 max-w-2xl mx-auto text-lg text-white/90 font-serif">
               We're revolutionizing how athletes train, compete, and connect
               through innovative technology and community-driven platforms.
             </p>
@@ -71,9 +84,9 @@ export default function AboutPage() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-1 w-12 rounded bg-primary" />
-              <h2 className="text-2xl font-semibold">Our Vision</h2>
+              <h2 className="text-2xl font-semibold font-serif">Our Vision</h2>
             </div>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed font-serif">
               To make sports accessible to everyone by creating a unified
               platform that connects athletes, facilities, and communities. We
               envision a world where every athlete has equal opportunity to
@@ -88,10 +101,10 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="h-1 w-12 rounded bg-accent" />
-              <h2 className="text-2xl font-semibold">Our Mission</h2>
+              <div className="h-1 w-12 rounded bg-primary" />
+              <h2 className="text-2xl font-semibold font-serif">Our Mission</h2>
             </div>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed font-serif">
               To unify tournaments, facilities, academies, and media under one
               comprehensive ecosystem that empowers athletes to reach their full
               potential while building sustainable revenue streams for sports
@@ -102,7 +115,7 @@ export default function AboutPage() {
       </section>
 
       {/* Goals Section */}
-      <section className="bg-secondary">
+      <section className="bg-foreground/2">
         <div className="container mx-auto px-4 py-16 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -111,10 +124,10 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-serif tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-mono tracking-wide mb-4">
               Our Strategic Goals
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-serif">
               Driving growth and innovation across the sports ecosystem
             </p>
           </motion.div>
@@ -132,11 +145,11 @@ export default function AboutPage() {
                     <div className="p-2 rounded-lg bg-primary/10">
                       <Users className="h-6 w-6 text-primary" />
                     </div>
-                    <CardTitle>Player Growth</CardTitle>
+                    <CardTitle className="font-serif">Player Growth</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">
+                  <CardDescription className="text-base font-serif">
                     Expand player participation and academy enrollments through
                     accessible training programs and competitive opportunities
                     that engage athletes at every skill level.
@@ -154,14 +167,14 @@ export default function AboutPage() {
               <Card className="h-full">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 rounded-lg bg-accent/10">
-                      <Building2 className="h-6 w-6 text-accent" />
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <Building2 className="h-6 w-6 text-primary" />
                     </div>
-                    <CardTitle>Venue Optimization</CardTitle>
+                    <CardTitle className="font-serif">Venue Optimization</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">
+                  <CardDescription className="text-base font-serif">
                     Increase venue utilization with transparent booking systems
                     and data-driven insights that help facilities maximize their
                     potential and serve more athletes.
@@ -182,11 +195,11 @@ export default function AboutPage() {
                     <div className="p-2 rounded-lg bg-primary/10">
                       <PlayCircle className="h-6 w-6 text-primary" />
                     </div>
-                    <CardTitle>Media Innovation</CardTitle>
+                    <CardTitle className="font-serif">Media Innovation</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">
+                  <CardDescription className="text-base font-serif">
                     Enable revenue-sharing media through YouSport platform,
                     creating new opportunities for content creators and athletes
                     to monetize their sports content.
@@ -207,10 +220,10 @@ export default function AboutPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-serif tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl font-mono tracking-wide mb-4">
             Our Team
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-serif">
             Passionate professionals dedicated to transforming the sports
             industry through technology and innovation.
           </p>
@@ -234,11 +247,11 @@ export default function AboutPage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <CardTitle>John Doe</CardTitle>
-                <CardDescription>CEO & Founder</CardDescription>
+                <CardTitle className="font-serif">John Doe</CardTitle>
+                <CardDescription className="font-serif">CEO & Founder</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground text-center">
+                <p className="text-sm text-muted-foreground text-center font-serif">
                   Former professional athlete with 15+ years in sports
                   technology and business development.
                 </p>
@@ -263,11 +276,11 @@ export default function AboutPage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <CardTitle>Sarah Miller</CardTitle>
-                <CardDescription>CTO</CardDescription>
+                <CardTitle className="font-serif">Sarah Miller</CardTitle>
+                <CardDescription className="font-serif">CTO</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground text-center">
+                <p className="text-sm text-muted-foreground text-center font-serif">
                   Technology leader with expertise in scalable platforms and
                   sports analytics systems.
                 </p>
@@ -292,11 +305,11 @@ export default function AboutPage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <CardTitle>Mike Johnson</CardTitle>
-                <CardDescription>Head of Operations</CardDescription>
+                <CardTitle className="font-serif">Mike Johnson</CardTitle>
+                <CardDescription className="font-serif">Head of Operations</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground text-center">
+                <p className="text-sm text-muted-foreground text-center font-serif">
                   Operations expert with deep experience in sports facility
                   management and tournament organization.
                 </p>
@@ -307,7 +320,7 @@ export default function AboutPage() {
       </section>
 
       {/* Investor Section */}
-      <section className="bg-secondary">
+      <section className="bg-foreground/2">
         <div className="container mx-auto px-4 py-16 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -317,10 +330,10 @@ export default function AboutPage() {
             className="max-w-4xl mx-auto"
           >
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight mb-4">
+              <h2 className="text-3xl md:text-4xl font-mono tracking-wide mb-4">
                 Investor Information
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-muted-foreground font-serif">
                 Join us in revolutionizing the sports industry. Download our
                 investor pack and connect with our team.
               </p>
@@ -340,9 +353,9 @@ export default function AboutPage() {
                       <div className="p-2 rounded-lg bg-primary/10">
                         <Download className="h-6 w-6 text-primary" />
                       </div>
-                      <CardTitle>Investor Pack</CardTitle>
+                      <CardTitle className="font-serif">Investor Pack</CardTitle>
                     </div>
-                    <CardDescription>
+                    <CardDescription className="font-serif">
                       Comprehensive overview of our business model, financial
                       projections, and growth strategy.
                     </CardDescription>
@@ -371,12 +384,12 @@ export default function AboutPage() {
                 <Card>
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 rounded-lg bg-accent/10">
-                        <Mail className="h-6 w-6 text-accent" />
+                      <div className="p-2 rounded-lg bg-primary/10">
+                        <Mail className="h-6 w-6 text-primary" />
                       </div>
-                      <CardTitle>Request Information</CardTitle>
+                      <CardTitle className="font-serif">Request Information</CardTitle>
                     </div>
-                    <CardDescription>
+                    <CardDescription className="font-serif">
                       Get in touch with our team for detailed discussions about
                       investment opportunities.
                     </CardDescription>
@@ -390,7 +403,7 @@ export default function AboutPage() {
                         <h3 className="text-lg font-semibold mb-2">
                           Thank You!
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground font-serif">
                           Your request has been received. We'll follow up within
                           2 business days.
                         </p>
@@ -447,15 +460,15 @@ export default function AboutPage() {
               <div className="grid gap-6 md:grid-cols-3">
                 <div className="flex items-center justify-center gap-3">
                   <Mail className="h-5 w-5 text-primary" />
-                  <span className="text-sm">investors@ficro.com</span>
+                  <span className="text-sm font-serif">investors@ficro.com</span>
                 </div>
                 <div className="flex items-center justify-center gap-3">
                   <Phone className="h-5 w-5 text-primary" />
-                  <span className="text-sm">+1 (555) 123-4567</span>
+                  <span className="text-sm font-serif">+1 (555) 123-4567</span>
                 </div>
                 <div className="flex items-center justify-center gap-3">
                   <MapPin className="h-5 w-5 text-primary" />
-                  <span className="text-sm">San Francisco, CA</span>
+                  <span className="text-sm font-serif">San Francisco, CA</span>
                 </div>
               </div>
             </motion.div>

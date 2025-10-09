@@ -217,13 +217,13 @@ export default function TournamentsIndex() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-4xl mx-auto text-center"
           >
-            <Badge variant="secondary" className="mb-4">
+            <Badge variant="secondary" className="mb-4 font-serif">
               Tournaments
             </Badge>
-            <h1 className="text-pretty font-serif tracking-tight text-4xl md:text-6xl text-white">
+            <h1 className="text-pretty font-mono tracking-wide text-4xl md:text-6xl text-white">
               Compete & Win
             </h1>
-            <p className="mt-6 max-w-2xl mx-auto text-lg text-white">
+            <p className="mt-6 max-w-2xl mx-auto text-lg text-white font-serif">
               Join tournaments, create competitions, and showcase your skills in
               the ultimate sports platform.
             </p>
@@ -256,7 +256,7 @@ export default function TournamentsIndex() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-1 w-12 rounded bg-primary" />
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-mono tracking-wide">
                 Featured Tournaments
               </h2>
             </div>
@@ -301,26 +301,26 @@ export default function TournamentsIndex() {
                     </div>
                   </div>
                   <CardHeader>
-                    <CardTitle className="line-clamp-2">
+                    <CardTitle className="line-clamp-2 font-serif">
                       {tournament.name}
                     </CardTitle>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <MapPin className="h-4 w-4" />
                         {tournament.city}, {tournament.country}
                       </span>
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <Calendar className="h-4 w-4" />
                         {new Date(tournament.date).toLocaleDateString()}
                       </span>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground line-clamp-2 mb-4">
+                    <p className="text-muted-foreground line-clamp-2 mb-4 font-serif">
                       {tournament.description}
                     </p>
                     <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div className="text-center p-3 bg-primary/5 rounded-lg">
+                      <div className="text-center p-3 bg-primary/5 rounded-lg font-serif">
                         <div className="text-2xl font-bold text-primary">
                           {tournament.prize}
                         </div>
@@ -328,7 +328,7 @@ export default function TournamentsIndex() {
                           Prize Pool
                         </div>
                       </div>
-                      <div className="text-center p-3 bg-secondary/5 rounded-lg">
+                      <div className="text-center p-3 bg-secondary/5 rounded-lg font-serif">
                         <div className="text-2xl font-bold text-secondary">
                           {tournament.teams}/{tournament.maxTeams}
                         </div>
@@ -363,7 +363,7 @@ export default function TournamentsIndex() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-1 w-12 rounded bg-accent" />
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-mono tracking-wide">
                 All Tournaments
               </h2>
             </div>
@@ -471,27 +471,27 @@ export default function TournamentsIndex() {
                     </div>
                   </div>
                   <CardHeader>
-                    <CardTitle className="line-clamp-2">
+                    <CardTitle className="line-clamp-2 font-serif">
                       {tournament.name}
                     </CardTitle>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <MapPin className="h-4 w-4" />
                         {tournament.city}, {tournament.country}
                       </span>
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <Calendar className="h-4 w-4" />
                         {new Date(tournament.date).toLocaleDateString()}
                       </span>
                     </div>
                   </CardHeader>
                   <CardContent className="flex flex-col justify-between flex-1">
-                    <p className="text-muted-foreground line-clamp-2 mb-4">
+                    <p className="text-muted-foreground line-clamp-2 mb-4 font-serif">
                       {tournament.description}
                     </p>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground font-serif">
                           Prize Pool
                         </span>
                         <span className="font-semibold text-primary">
@@ -499,18 +499,14 @@ export default function TournamentsIndex() {
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground font-serif">
                           Teams
                         </span>
                         <span className="font-semibold text-secondary">
                           {tournament.teams}/{tournament.maxTeams}
                         </span>
                       </div>
-                      <Button
-                        asChild
-                        size="sm"
-                        className="w-full bg-primary"
-                      >
+                      <Button asChild size="sm" className="w-full bg-primary">
                         <Link href={`/tournaments/${tournament.id}`}>
                           <Trophy className="mr-2 h-4 w-4" />
                           View Details

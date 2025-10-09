@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden rounded-t-3xl bg-gradient-to-b from-background via-muted/10 to-primary/20 text-foreground border-t border-border">
+    <footer className="relative font-serif overflow-hidden rounded-t-3xl bg-gradient-to-b from-background via-muted/10 to-primary/20 text-foreground border-t border-border">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] bg-repeat"></div>

@@ -38,7 +38,7 @@ const enhancedNews = [
     author: "Sarah Johnson",
     readTime: "5 min read",
     featured: true,
-    image: "https://picsum.photos/400/250?random=1",
+    image: "/news-elite-academy-clinics.jpg",
   },
   {
     ...news[1],
@@ -56,7 +56,7 @@ const enhancedNews = [
     author: "Alex Rodriguez",
     readTime: "4 min read",
     featured: true,
-    image: "https://picsum.photos/400/250?random=3",
+    image: "/news-city-arena-upgrades.jpg",
   },
   {
     ...news[3],
@@ -130,21 +130,34 @@ export default function NewsIndex() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+      <section className="relative overflow-hidden min-h-[60vh] flex items-center">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/investor-pack-pdf.jpg"
+            alt="Investor Pack PDF"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-4xl mx-auto text-center"
           >
-            <Badge variant="secondary" className="mb-4">
+            <Badge className="mb-4 bg-white/20 text-white border-white/30 bg-secondary font-serif">
               News & Programs
             </Badge>
-            <h1 className="text-pretty font-serif tracking-tight text-4xl md:text-6xl">
+            <h1 className="text-pretty font-mono tracking-wide text-4xl md:text-6xl text-white">
               Stay Updated
             </h1>
-            <p className="mt-6 max-w-2xl mx-auto text-lg text-muted-foreground">
+            <p className="mt-6 max-w-2xl mx-auto text-lg text-white/90 font-serif">
               Latest news, program updates, and insights from the Ficro Sports
               community.
             </p>
@@ -164,7 +177,7 @@ export default function NewsIndex() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="h-1 w-12 rounded bg-primary" />
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-mono tracking-wide">
                 Featured Articles
               </h2>
             </div>
@@ -179,7 +192,7 @@ export default function NewsIndex() {
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card className="group overflow-hidden transition-all hover:shadow-lg">
+                <Card className="group overflow-hidden transition-all hover:shadow-lg pt-0 h-full flex flex-col">
                   <div className="relative aspect-video overflow-hidden">
                     <Image
                       src={article.image}
@@ -194,38 +207,35 @@ export default function NewsIndex() {
                       </Badge>
                     </div>
                     <div className="absolute top-4 right-4">
-                      <Badge
-                        variant="secondary"
-                        className="bg-accent/20 text-accent"
-                      >
+                      <Badge className="bg-secondary text-white">
                         {article.category}
                       </Badge>
                     </div>
                   </div>
-                  <CardHeader>
-                    <CardTitle className="line-clamp-2">
+                  <CardHeader className="flex-shrink-0">
+                    <CardTitle className="line-clamp-2 font-serif">
                       {article.title}
                     </CardTitle>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <User className="h-4 w-4" />
                         {article.author}
                       </span>
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <Calendar className="h-4 w-4" />
                         {new Date(article.date).toLocaleDateString()}
                       </span>
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <Clock className="h-4 w-4" />
                         {article.readTime}
                       </span>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground line-clamp-3 mb-4">
+                  <CardContent className="flex flex-col flex-1">
+                    <p className="text-muted-foreground line-clamp-3 mb-4 flex-1 font-serif">
                       {article.excerpt}
                     </p>
-                    <Button asChild className="w-full">
+                    <Button asChild className="w-full mt-auto">
                       <Link href={`/news/${article.slug}`}>
                         Read Article
                         <ArrowRight className="ml-2 h-4 w-4" />
@@ -240,7 +250,7 @@ export default function NewsIndex() {
       )}
 
       {/* Filters and Search */}
-      <section className="bg-secondary">
+      <section className="bg-foreground/2">
         <div className="container mx-auto px-4 py-16 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -250,15 +260,15 @@ export default function NewsIndex() {
             className="mb-12"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="h-1 w-12 rounded bg-accent" />
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight">
+              <div className="h-1 w-12 rounded bg-primary" />
+              <h2 className="text-3xl md:text-4xl font-mono tracking-wide">
                 All Articles
               </h2>
             </div>
           </motion.div>
 
-          <div className="grid gap-6 md:grid-cols-4 mb-8">
-            <div className="relative">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-8 max-w-4xl">
+            <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search articles..."
@@ -272,7 +282,7 @@ export default function NewsIndex() {
               value={selectedCategory}
               onValueChange={setSelectedCategory}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full sm:w-48">
                 <Tag className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
@@ -286,7 +296,7 @@ export default function NewsIndex() {
             </Select>
 
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full sm:w-48">
                 <TrendingUp className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
@@ -299,7 +309,7 @@ export default function NewsIndex() {
               </SelectContent>
             </Select>
 
-            <Button variant="outline" className="w-full">
+            <Button className="w-full sm:w-auto cursor-pointer">
               <Share2 className="mr-2 h-4 w-4" />
               Share
             </Button>
@@ -315,7 +325,7 @@ export default function NewsIndex() {
                 viewport={{ once: true, amount: 0.6 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card className="group h-full overflow-hidden transition-all hover:shadow-lg">
+                <Card className="group h-full overflow-hidden transition-all hover:shadow-lg pt-0">
                   <div className="relative aspect-video overflow-hidden">
                     <Image
                       src={article.image}
@@ -324,39 +334,36 @@ export default function NewsIndex() {
                       className="object-cover transition-transform group-hover:scale-105"
                     />
                     <div className="absolute top-4 right-4">
-                      <Badge
-                        variant="secondary"
-                        className="bg-accent/20 text-accent"
-                      >
+                      <Badge className="bg-secondary text-white">
                         {article.category}
                       </Badge>
                     </div>
                   </div>
                   <CardHeader>
-                    <CardTitle className="line-clamp-2">
+                    <CardTitle className="line-clamp-2 font-serif">
                       {article.title}
                     </CardTitle>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <User className="h-4 w-4" />
                         {article.author}
                       </span>
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-center gap-1 font-serif">
                         <Calendar className="h-4 w-4" />
                         {new Date(article.date).toLocaleDateString()}
                       </span>
                     </div>
                   </CardHeader>
                   <CardContent className="flex flex-col justify-between flex-1">
-                    <p className="text-muted-foreground line-clamp-3 mb-4">
+                    <p className="text-muted-foreground line-clamp-3 mb-4 font-serif">
                       {article.excerpt}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <span className="flex items-center gap-1 text-sm text-muted-foreground font-serif">
                         <Clock className="h-4 w-4" />
                         {article.readTime}
                       </span>
-                      <Button asChild variant="outline" size="sm">
+                      <Button asChild size="sm">
                         <Link href={`/news/${article.slug}`}>
                           <BookOpen className="mr-2 h-4 w-4" />
                           Read

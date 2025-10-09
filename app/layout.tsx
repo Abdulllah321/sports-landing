@@ -85,9 +85,15 @@ function ThemeNoFlashScript() {
     const s = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const t = s || (prefersDark ? 'dark' : 'light');
-    if (t === 'dark') document.documentElement.classList.add('dark');
-    else document.documentElement.classList.remove('dark');
-  } catch(e) {}
+    if (t === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  } catch(e) {
+    // Fallback to light theme if localStorage is not available
+    document.documentElement.classList.remove('dark');
+  }
 })();`,
       }}
     />

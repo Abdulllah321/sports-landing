@@ -68,7 +68,7 @@ export function StadiumCards({
   return (
     <>
       <style jsx>{swiperStyles}</style>
-      <div className="space-y-6">
+      <div className="space-y-6 container mx-auto">
         {!facilitiesProp && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 max-w-2xl mx-auto">
             <Input

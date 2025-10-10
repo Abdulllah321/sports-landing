@@ -1,12 +1,17 @@
 {
-  "nav": {
-    "tournaments": "البطولات",
-    "facilities": "المرافق",
-    "yousport": "يوسبورت",
-    "news": "الأخبار",
-    "store": "المتجر",
-    "bookFields": "احجز الملاعب"
-  },
+    "nav": {
+      "player": "اللاعب",
+      "tournaments": "البطولات",
+      "facilities": "المرافق",
+      "academies": "الأكاديميات",
+      "events": "الأحداث",
+      "yousport": "يوسبورت",
+      "news": "الأخبار",
+      "store": "المتجر",
+      "bookFields": "احجز الملاعب",
+      "advertise": "الإعلان",
+      "account": "حسابي"
+    },
   "hero": {
     "tagline": "العب بقوة مع فيكرو",
     "title": "تدرب. احجز. تنافس.",
@@ -107,6 +112,128 @@
     "views": "2.3 ألف مشاهدة",
     "watchMore": "شاهد المزيد من المقاطع",
     "uploadClip": "رفع مقطعك"
+  },
+  "events": {
+    "hero": {
+      "title": "الأحداث والمسابقات",
+      "description": "انضم إلى الأحداث الرياضية المثيرة، شارك في المسابقات، وصوت لصالح المفضلة لديك. كن جزءًا من المجتمع واربح جوائز مذهلة!"
+    },
+    "stats": {
+      "activeEvents": "الأحداث النشطة",
+      "liveContests": "المسابقات المباشرة",
+      "totalVotes": "إجمالي الأصوات"
+    },
+    "sections": {
+      "upcomingEvents": "الأحداث القادمة",
+      "upcomingDescription": "اكتشف وسجل في الأحداث الرياضية والمسابقات القادمة.",
+      "activeContests": "المسابقات النشطة",
+      "contestsDescription": "شارك في المسابقات التفاعلية واعرض مهاراتك.",
+      "voting": "التصويت المجتمعي",
+      "votingDescription": "صوت لصالح الرياضيين واللحظات والمحتوى المفضل لديك. صوتك مهم!"
+    },
+    "eventList": {
+      "searchPlaceholder": "ابحث في الأحداث...",
+      "categoryPlaceholder": "جميع الفئات",
+      "statusPlaceholder": "جميع الحالات",
+      "register": "سجل",
+      "viewDetails": "عرض التفاصيل",
+      "upcoming": "قادم",
+      "live": "مباشر",
+      "ended": "انتهى"
+    },
+    "contests": {
+      "participate": "شارك",
+      "viewResults": "عرض النتائج",
+      "endsIn": "ينتهي في",
+      "participants": "مشارك",
+      "prize": "الجائزة",
+      "rules": "القواعد"
+    },
+    "voting": {
+      "signInRequired": "تسجيل الدخول مطلوب للتصويت",
+      "signIn": "تسجيل الدخول",
+      "voteSubmitted": "تم إرسال التصويت بنجاح!",
+      "alreadyVoted": "لقد صوتت بالفعل لهذا العنصر",
+      "votingClosed": "التصويت مغلق لهذه المسابقة"
+    }
+  },
+  "academies": {
+    "hero": {
+      "title": "الأكاديميات الرياضية",
+      "description": "انضم إلى الأكاديميات الرياضية النخبوية مع التدريب المهني والمرافق عالمية المستوى وبرامج التدريب الشاملة. اختر باقة التدريب وابدأ رحلتك نحو التميز."
+    },
+    "stats": {
+      "totalAcademies": "إجمالي الأكاديميات",
+      "packageLevels": "مستويات الباقات",
+      "activeStudents": "الطلاب النشطين"
+    },
+    "sections": {
+      "directory": "دليل الأكاديميات",
+      "directoryDescription": "استكشف شبكة الأكاديميات الرياضية المهنية واعثر على بيئة التدريب المثالية لأهدافك.",
+      "packageLevels": "مستويات الباقات",
+      "packageDescription": "اختر باقة التدريب التي تناسب احتياجاتك وميزانيتك. جميع الباقات تشمل الوصول إلى مرافقنا والتدريب الخبير."
+    },
+    "packages": {
+      "bronze": {
+        "title": "الباقة البرونزية",
+        "description": "مثالية للمبتدئين والرياضيين الترفيهيين",
+        "features": {
+          "basicTraining": "برامج التدريب الأساسية",
+          "groupSessions": "جلسات التدريب الجماعية",
+          "equipmentAccess": "الوصول للمعدات"
+        },
+        "priceNote": "اشتراك شهري"
+      },
+      "silver": {
+        "title": "الباقة الفضية",
+        "description": "مثالية للرياضيين الجادين والمتنافسين",
+        "popular": "الأكثر شعبية",
+        "features": {
+          "allBronze": "كل ما في الباقة البرونزية",
+          "personalTraining": "جلسات التدريب الشخصي",
+          "nutritionGuidance": "الإرشاد الغذائي",
+          "competitionAccess": "الوصول للمسابقات"
+        },
+        "priceNote": "اشتراك شهري"
+      },
+      "gold": {
+        "title": "الباقة الذهبية",
+        "description": "تدريب نخبوي للرياضيين المحترفين",
+        "features": {
+          "allSilver": "كل ما في الباقة الفضية",
+          "eliteTraining": "برامج التدريب النخبوية",
+          "oneOnOneCoaching": "التدريب الفردي",
+          "performanceAnalysis": "تحليل الأداء",
+          "priorityBooking": "حجز أولوية للمرافق"
+        },
+        "priceNote": "اشتراك شهري"
+      }
+    },
+    "directory": {
+      "searchPlaceholder": "ابحث في الأكاديميات...",
+      "sportPlaceholder": "جميع الرياضات",
+      "packagePlaceholder": "جميع الباقات",
+      "locationPlaceholder": "جميع المواقع",
+      "viewDetails": "عرض التفاصيل",
+      "joinAcademy": "انضم للأكاديمية",
+      "students": "طالب",
+      "coaches": "مدرب",
+      "rating": "التقييم",
+      "established": "تأسست"
+    },
+    "detail": {
+      "about": "حول الأكاديمية",
+      "services": "الخدمات",
+      "courses": "الدورات",
+      "timetable": "الجدول الزمني",
+      "store": "متجر الأكاديمية",
+      "joinForm": "انضم للأكاديمية",
+      "contact": "معلومات الاتصال",
+      "facilities": "المرافق",
+      "coaches": "مدربونا",
+      "testimonials": "شهادات الطلاب",
+      "gallery": "المعرض"
+    }
   },
   "common": {
     "loading": "جاري التحميل...",

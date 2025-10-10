@@ -12,7 +12,7 @@ interface HeroProps {
 export function Hero({ locale }: HeroProps) {
   const t = getServerTranslation(locale)
   return (
-    <section className="relative dark" aria-label="Hero">
+    <section className="relative" aria-label="Hero">
       {/* Full-bleed background */}
       <div
         className="absolute inset-0 -z-10 bg-cover bg-center"
@@ -21,18 +21,18 @@ export function Hero({ locale }: HeroProps) {
         aria-label="Athletes in a stadium background"
       />
       {/* Light/Dark readability gradient */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/70 via-white/40 to-white/10 dark:from-black/60 dark:via-black/40 dark:to-black/10" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/40 to-black/10 dark:from-black/60 dark:via-black/40 dark:to-black/10" />
 
       {/* Content */}
       <div className="container mx-auto px-4 py-14 md:py-24">
-        <HeroAnimated locale={locale}>
-          <p className={`text-sm tracking-wide text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+        {/* <HeroAnimated locale={locale}> */}
+          <p className={`text-sm tracking-wide text-white/90 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
             {t('hero.tagline')}
           </p>
-          <h1 className={`mt-2 text-4xl md:text-6xl leading-[1.05] font-mono text-foreground ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+          <h1 className={`mt-2 text-balance text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 ${locale === 'ar' ? 'font-arabic-heading' : 'font-mono tracking-wider'}`}>
             {t('hero.title')}
           </h1>
-          <p className={`mt-4 max-w-3xl text-base md:text-lg text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+          <p className={`mt-4 max-w-3xl text-base md:text-lg text-white/90 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
             {t('hero.description')}
           </p>
 
@@ -60,12 +60,12 @@ export function Hero({ locale }: HeroProps) {
               locale={locale}
             />
           </div>
-        </HeroAnimated>
+        {/* </HeroAnimated> */}
       </div>
 
       {/* KPI Strip */}
       <div className="relative py-8">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/0 via-background/40 to-background dark:from-black/0 dark:via-black/40 dark:to-black" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 via-black/10 to-transparent dark:from-black/0 dark:via-black/40 dark:to-black" />
         <div className="container mx-auto px-4">
           <div className="grid gap-4 sm:grid-cols-3">
             <KpiCard label={t('hero.stats.players')} value="48,930" locale={locale} />
@@ -80,10 +80,10 @@ export function Hero({ locale }: HeroProps) {
 
 function KpiCard({ label, value, locale }: { label: string; value: string; locale: Locale }) {
   return (
-    <Card className="text-card-foreground bg-primary/20 backdrop-blur supports-[backdrop-filter]:bg-card/70 shadow-lg border-border/60">
+    <Card className="text-card-foreground bg-white/95 dark:bg-card/70 backdrop-blur supports-[backdrop-filter]:bg-white/95 dark:supports-[backdrop-filter]:bg-card/70 shadow-xl border-white/30 dark:border-border/60">
       <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-mono tracking-tight">{value}</CardTitle>
-        <CardDescription className={`mt-1 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{label}</CardDescription>
+        <CardTitle className="text-3xl font-mono tracking-tight text-foreground">{value}</CardTitle>
+        <CardDescription className={`mt-1 text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{label}</CardDescription>
       </CardHeader>
     </Card>
   )
@@ -103,16 +103,16 @@ function CtaCard({
   locale: Locale
 }) {
   return (
-    <Card className="transition hover:shadow-md bg-white/80 dark:bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-card/40">
+    <Card className="transition hover:shadow-md bg-white/90 dark:bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-white/90 dark:supports-[backdrop-filter]:bg-card/40 border-white/20 dark:border-border/60">
       <Link href={href} className="block p-5">
         <div className="flex items-start gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-foreground shadow-sm">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm">
             <Icon className="h-5 w-5" />
           </span>
           <div>
-            <CardTitle className={`text-base ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{title}</CardTitle>
-            <CardDescription className={`mt-1 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{description}</CardDescription>
-            <span className={`mt-3 inline-block text-xs font-medium text-muted-foreground hover:text-secondary ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+            <CardTitle className={`text-base text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{title}</CardTitle>
+            <CardDescription className={`mt-1 text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{description}</CardDescription>
+            <span className={`mt-3 inline-block text-xs font-medium text-primary hover:text-primary/80 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
               {locale === 'ar' ? 'ابدأ الآن ←' : 'Get started →'}
             </span>
           </div>

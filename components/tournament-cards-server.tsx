@@ -1,14 +1,12 @@
 import { TournamentCardsClient } from "./tournament-cards"
-import { getServerTranslation } from "@/lib/server-translations"
-import { Locale } from "@/lib/i18n"
+import { getServerTranslationWithLocale } from "./locale-provider-server"
 
 interface TournamentCardsServerProps {
   limit?: number
-  locale: Locale
 }
 
-export function TournamentCardsServer({ limit, locale }: TournamentCardsServerProps) {
-  const t = getServerTranslation(locale)
+export async function TournamentCardsServer({ limit }: TournamentCardsServerProps) {
+  const { t, locale } = await getServerTranslationWithLocale()
   
   return (
     <TournamentCardsClient 

@@ -209,7 +209,7 @@ export default function StorePage() {
         initial={{ opacity: 0, y: 30, x: -100 }}
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-        className="border-b bg-background/50 backdrop-blur-sm sticky top-[64.5px] z-40 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70"
+        className="sticky top-[64.5px] z-40 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70"
       >
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -274,7 +274,7 @@ export default function StorePage() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.filter((p) => p.badge === "New" || p.rating >= 4.8).map(
+            {PRODUCTS.filter((p) => p.badge === "New" || p?.rating >= 4.8).map(
               (product, index) => (
                 <motion.div
                   key={product.id}
@@ -392,7 +392,7 @@ export default function StorePage() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {PRODUCTS.filter((p) => p.reviews >= 100).map((product, index) => (
+            {PRODUCTS.filter((p) => p?.reviews >= 100).map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}

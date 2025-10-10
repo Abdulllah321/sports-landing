@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { LanguageProvider } from "@/lib/translation-context";
 import { HtmlAttributes } from "@/components/html-attributes";
 import { Suspense } from "react";
-import { Anton, Poppins, Lato, Noto_Sans_Arabic, Noto_Naskh_Arabic } from "next/font/google";
+import { Anton, Poppins, Lato } from "next/font/google";
 import localFont from "next/font/local";
 
 // Load Google fonts and expose CSS variables
@@ -60,9 +60,14 @@ const arabicHeading = localFont({
   display: "swap",
 });
 
-const arabicBody = Noto_Naskh_Arabic({
-  subsets: ["arabic", "latin"],
-  weight: ["400", "500", "600", "700"],
+const arabicBody = localFont({
+  src: [
+    {
+      path: "../public/fonts/Naskh.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
   variable: "--font-arabic-body",
   display: "swap",
 });
@@ -110,11 +115,12 @@ export default function RootLayout({
       lang="en"
       dir="ltr"
       className={`${heading.variable} ${subheading.variable} ${body.variable} ${arabicHeading.variable} ${arabicBody.variable} antialiased`}
+      suppressHydrationWarning
     >
       <head>
         <ThemeNoFlashScript />
       </head>
-      <body className="font-sans bg-background text-foreground">
+      <body className="font-sans bg-background text-foreground" suppressHydrationWarning>
         <LanguageProvider initialLocale="en">
           <HtmlAttributes />
           <Suspense fallback={<div>Loading...</div>}>

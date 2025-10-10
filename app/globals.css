@@ -43,7 +43,7 @@
   --font-heading: var(--font-heading);
   --font-subheading: var(--font-subheading);
   --font-body: var(--font-body);
-  --font-arabic-heading: var(--font-arabic-heading);
+  --font-arabic-heading: "Reem Kufi", var(--font-heading);
   --font-arabic-body: var(--font-arabic-body);
 
   --radius: 0.5rem;
@@ -107,7 +107,7 @@
   --font-serif: Poppins, ui-sans-serif, sans-serif, system-ui;
   --font-mono: Anton, ui-sans-serif, sans-serif, system-ui;
   --font-arabic-heading: var(--font-arabic-heading);
-  --font-arabic-body: Noto Naskh Arabic, ui-sans-serif, sans-serif, system-ui;
+  --font-arabic-body: var(--font-arabic-body);
   --radius: 0.5rem;
   --shadow-x: 0rem;
   --shadow-y: 0.5rem;
@@ -207,6 +207,22 @@
   }
   
   .font-arabic-body {
-    font-family: var(--font-arabic-body), var(--font-body);
+    font-family: var(--font-arabic-body), var(--font-body), sans-serif !important;
+  }
+  
+  /* Ensure Arabic fonts override other font classes */
+  h1.font-arabic-heading,
+  h2.font-arabic-heading,
+  h3.font-arabic-heading,
+  h4.font-arabic-heading,
+  h5.font-arabic-heading,
+  h6.font-arabic-heading {
+    font-family: "Reem Kufi", var(--font-arabic-heading), var(--font-heading), sans-serif !important;
+  }
+  
+  p.font-arabic-body,
+  span.font-arabic-body,
+  div.font-arabic-body {
+    font-family: var(--font-arabic-body), var(--font-body), sans-serif !important;
   }
 }

@@ -1,12 +1,17 @@
 {
-  "nav": {
-    "tournaments": "Tournaments",
-    "facilities": "Facilities",
-    "yousport": "YouSport",
-    "news": "News",
-    "store": "Store",
-    "bookFields": "Book Fields"
-  },
+    "nav": {
+      "player": "Player",
+      "tournaments": "Tournaments",
+      "facilities": "Facilities",
+      "academies": "Academies",
+      "events": "Events",
+      "yousport": "YouSport",
+      "news": "News",
+      "store": "Store",
+      "bookFields": "Book Fields",
+      "advertise": "Advertise",
+      "account": "My Account"
+    },
   "hero": {
     "tagline": "Play harder with Ficro",
     "title": "Train. Book. Compete.",
@@ -107,6 +112,128 @@
     "views": "2.3K views",
     "watchMore": "Watch More Clips",
     "uploadClip": "Upload Your Clip"
+  },
+  "events": {
+    "hero": {
+      "title": "Events & Contests",
+      "description": "Join exciting sports events, participate in contests, and vote for your favorites. Be part of the community and win amazing prizes!"
+    },
+    "stats": {
+      "activeEvents": "Active Events",
+      "liveContests": "Live Contests",
+      "totalVotes": "Total Votes"
+    },
+    "sections": {
+      "upcomingEvents": "Upcoming Events",
+      "upcomingDescription": "Discover and register for upcoming sports events and competitions.",
+      "activeContests": "Active Contests",
+      "contestsDescription": "Participate in interactive contests and showcase your skills.",
+      "voting": "Community Voting",
+      "votingDescription": "Vote for your favorite athletes, moments, and content. Your voice matters!"
+    },
+    "eventList": {
+      "searchPlaceholder": "Search events...",
+      "categoryPlaceholder": "All Categories",
+      "statusPlaceholder": "All Status",
+      "register": "Register",
+      "viewDetails": "View Details",
+      "upcoming": "Upcoming",
+      "live": "Live",
+      "ended": "Ended"
+    },
+    "contests": {
+      "participate": "Participate",
+      "viewResults": "View Results",
+      "endsIn": "Ends in",
+      "participants": "participants",
+      "prize": "Prize",
+      "rules": "Rules"
+    },
+    "voting": {
+      "signInRequired": "Sign in required to vote",
+      "signIn": "Sign In",
+      "voteSubmitted": "Vote submitted successfully!",
+      "alreadyVoted": "You have already voted for this item",
+      "votingClosed": "Voting is closed for this contest"
+    }
+  },
+  "academies": {
+    "hero": {
+      "title": "Sports Academies",
+      "description": "Join elite sports academies with professional coaching, world-class facilities, and comprehensive training programs. Choose your package and start your journey to excellence."
+    },
+    "stats": {
+      "totalAcademies": "Total Academies",
+      "packageLevels": "Package Levels",
+      "activeStudents": "Active Students"
+    },
+    "sections": {
+      "directory": "Academy Directory",
+      "directoryDescription": "Explore our network of professional sports academies and find the perfect training environment for your goals.",
+      "packageLevels": "Package Levels",
+      "packageDescription": "Choose the training package that best fits your needs and budget. All packages include access to our facilities and expert coaching."
+    },
+    "packages": {
+      "bronze": {
+        "title": "Bronze Package",
+        "description": "Perfect for beginners and recreational athletes",
+        "features": {
+          "basicTraining": "Basic training programs",
+          "groupSessions": "Group training sessions",
+          "equipmentAccess": "Equipment access"
+        },
+        "priceNote": "Monthly subscription"
+      },
+      "silver": {
+        "title": "Silver Package",
+        "description": "Ideal for serious athletes and competitors",
+        "popular": "Most Popular",
+        "features": {
+          "allBronze": "Everything in Bronze",
+          "personalTraining": "Personal training sessions",
+          "nutritionGuidance": "Nutrition guidance",
+          "competitionAccess": "Competition access"
+        },
+        "priceNote": "Monthly subscription"
+      },
+      "gold": {
+        "title": "Gold Package",
+        "description": "Elite training for professional athletes",
+        "features": {
+          "allSilver": "Everything in Silver",
+          "eliteTraining": "Elite training programs",
+          "oneOnOneCoaching": "One-on-one coaching",
+          "performanceAnalysis": "Performance analysis",
+          "priorityBooking": "Priority facility booking"
+        },
+        "priceNote": "Monthly subscription"
+      }
+    },
+    "directory": {
+      "searchPlaceholder": "Search academies...",
+      "sportPlaceholder": "All Sports",
+      "packagePlaceholder": "All Packages",
+      "locationPlaceholder": "All Locations",
+      "viewDetails": "View Details",
+      "joinAcademy": "Join Academy",
+      "students": "students",
+      "coaches": "coaches",
+      "rating": "Rating",
+      "established": "Established"
+    },
+    "detail": {
+      "about": "About Academy",
+      "services": "Services",
+      "courses": "Courses",
+      "timetable": "Timetable",
+      "store": "Academy Store",
+      "joinForm": "Join Academy",
+      "contact": "Contact Info",
+      "facilities": "Facilities",
+      "coaches": "Our Coaches",
+      "testimonials": "Student Testimonials",
+      "gallery": "Gallery"
+    }
   },
   "common": {
     "loading": "Loading...",

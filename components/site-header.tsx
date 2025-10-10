@@ -5,8 +5,8 @@ import Image from "next/image"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
-import { Trophy, Building2, PlayCircle, Newspaper, ShoppingBag } from "lucide-react"
+import { Menu, X, User } from "lucide-react"
+import { Trophy, Building2, PlayCircle, Newspaper, ShoppingBag, Calendar, GraduationCap, Megaphone } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
 import { LanguageSwitcher } from "./language-switcher"
 import { useLanguage } from "@/lib/translation-context"
@@ -14,11 +14,16 @@ import { getClientTranslation } from "@/lib/client-translations"
 import { cn } from "@/lib/utils"
 
 const navItems = [
+  { href: "/player", key: "player", icon: User },
   { href: "/tournaments", key: "tournaments", icon: Trophy },
   { href: "/facilities", key: "facilities", icon: Building2 },
+  { href: "/academies", key: "academies", icon: GraduationCap },
+  { href: "/events", key: "events", icon: Calendar },
   { href: "/yousport", key: "yousport", icon: PlayCircle },
   { href: "/news", key: "news", icon: Newspaper },
   { href: "/store", key: "store", icon: ShoppingBag },
+  { href: "/advertise", key: "advertise", icon: Megaphone },
+  { href: "/account", key: "account", icon: User },
 ]
 
 export function SiteHeader() {

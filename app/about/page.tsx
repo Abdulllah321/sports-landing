@@ -1,3 +1,4 @@
+"use client"
 import { AboutPageClient } from "./about-page-client";
 import { Locale } from "@/lib/i18n";
 

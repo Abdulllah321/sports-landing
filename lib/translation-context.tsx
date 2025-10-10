@@ -1,6 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Locale, defaultLocale, isValidLocale } from './i18n'
 
 interface LanguageContextType {
@@ -18,6 +19,7 @@ export function LanguageProvider({
   initialLocale?: Locale 
 }) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale)
+  const router = useRouter()
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale)
@@ -26,12 +28,13 @@ export function LanguageProvider({
     // Set cookie for server-side access
     document.cookie = `locale=${newLocale}; max-age=${60 * 60 * 24 * 365}; path=/; samesite=lax`
     
-    // Update the HTML lang and dir attributes
-    document.documentElement.lang = newLocale
-    document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr'
-    
-    // Reload the page to fetch server-rendered content for the new locale
-    window.location.reload()
+    // Refresh the current route to fetch server-rendered content for the new locale
+    // Using router.refresh() instead of window.location.reload() for better UX:
+    // - Preserves client state and scroll position
+    // - Faster than full page reload
+    // - Maintains React component state
+    // - Only re-fetches server components
+    router.refresh()
   }
 
   useEffect(() => {

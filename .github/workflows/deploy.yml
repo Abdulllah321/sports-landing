@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd ${{ github.workspace }}
-          npm ci
+          npm i -f
 
       - name: Build Next.js app
         run: |

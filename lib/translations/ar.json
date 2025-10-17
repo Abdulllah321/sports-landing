@@ -1,5 +1,6 @@
 {
     "nav": {
+      "menu": "القائمة",
       "player": "اللاعب",
       "tournaments": "البطولات",
       "facilities": "المرافق",
@@ -10,7 +11,8 @@
       "store": "المتجر",
       "bookFields": "احجز الملاعب",
       "advertise": "الإعلان",
-      "account": "حسابي"
+      "account": "حسابي",
+      "about": "حولنا"
     },
   "hero": {
     "tagline": "العب بقوة مع فيكرو",
@@ -238,5 +240,121 @@
   "common": {
     "loading": "جاري التحميل...",
     "language": "اللغة"
+  },
+  "register": {
+    "title": "انضم إلى مجتمعنا الرياضي",
+    "description": "اختر دورك وابدأ رحلتك في عالم الرياضة. سواء كنت أكاديمية أو لاعب أو حكم، لدينا المنصة المثالية لك.",
+    "popular": "الأكثر شعبية",
+    "selectType": "اختر هذا النوع",
+    "selected": "تم اختيار النوع",
+    "selectedDescription": "اختيار رائع! انقر أدناه للمتابعة مع التسجيل.",
+    "proceedToRegistration": "المتابعة للتسجيل",
+    "types": {
+      "academy": {
+        "title": "انضم كأكاديمية",
+        "description": "سجل أكاديميتك الرياضية وابدأ في التواصل مع الرياضيين.",
+        "features": {
+          "manageStudents": "إدارة تسجيلات الطلاب",
+          "organizeTournaments": "تنظيم البطولات والأحداث",
+          "trackProgress": "تتبع تقدم الطلاب",
+          "community": "بناء مجتمعك"
+        }
+      },
+      "player": {
+        "title": "انضم كلاعب",
+        "description": "سجل كلاعب وانضم إلى الأكاديميات والبطولات.",
+        "features": {
+          "joinAcademies": "انضم إلى الأكاديميات الرياضية",
+          "participateTournaments": "شارك في البطولات",
+          "trackProgress": "تتبع تقدمك",
+          "connect": "تواصل مع المدربين"
+        }
+      },
+      "referee": {
+        "title": "انضم كحكم",
+        "description": "سجل كحكم وادير المباريات والبطولات.",
+        "features": {
+          "officiateGames": "إدارة المباريات والمقابلات",
+          "buildReputation": "بناء سمعتك",
+          "earnIncome": "كسب من التحكيم",
+          "network": "التواصل مع المنظمين"
+        }
+      }
+    },
+    "benefits": {
+      "title": "لماذا تنضم إلى فيكرو؟",
+      "description": "اكتشف فوائد كونك جزءًا من مجتمعنا الرياضي.",
+      "community": {
+        "title": "مجتمع قوي",
+        "description": "تواصل مع آلاف الرياضيين والمدربين وعشاق الرياضة."
+      },
+      "tournaments": {
+        "title": "البطولات والأحداث",
+        "description": "شارك في وتنظيم البطولات والمسابقات والأحداث."
+      },
+      "growth": {
+        "title": "النمو والتطوير",
+        "description": "تتبع التقدم وحسن مهاراتك وحقق أهدافك الرياضية."
+      }
+    },
+    "academy": {
+      "title": "انضم كأكاديمية",
+      "description": "سجل أكاديميتك الرياضية وابدأ في التواصل مع الرياضيين وتنظيم البطولات وتنمية مجتمعك.",
+      "form": {
+        "academyName": "اسم الأكاديمية",
+        "academyNamePlaceholder": "أدخل اسم الأكاديمية",
+        "academyType": "نوع الأكاديمية",
+        "academyTypePlaceholder": "اختر نوع الأكاديمية",
+        "establishedYear": "سنة التأسيس",
+        "description": "الوصف",
+        "descriptionPlaceholder": "أخبرنا عن أكاديميتك...",
+        "contactPerson": "الشخص المسؤول",
+        "contactPersonPlaceholder": "أدخل اسم الشخص المسؤول",
+        "email": "عنوان البريد الإلكتروني",
+        "emailPlaceholder": "أدخل عنوان البريد الإلكتروني",
+        "phone": "رقم الهاتف",
+        "phonePlaceholder": "أدخل رقم الهاتف",
+        "website": "الموقع الإلكتروني",
+        "websitePlaceholder": "أدخل رابط الموقع",
+        "address": "العنوان",
+        "addressPlaceholder": "أدخل العنوان الكامل",
+        "city": "المدينة",
+        "cityPlaceholder": "أدخل المدينة",
+        "country": "البلد",
+        "countryPlaceholder": "أدخل البلد",
+        "sports": "الرياضات المقدمة",
+        "facilities": "المرافق المتاحة",
+        "capacity": "سعة الطلاب",
+        "capacityPlaceholder": "أدخل السعة القصوى",
+        "operatingHours": "ساعات العمل",
+        "operatingHoursPlaceholder": "اختر التاريخ والوقت",
+        "license": "رخصة العمل",
+        "certificate": "الشهادة",
+        "insurance": "شهادة التأمين",
+        "photos": "صور الأكاديمية",
+        "uploadLicense": "رفع رخصة العمل",
+        "uploadCertificate": "رفع الشهادة",
+        "uploadInsurance": "رفع شهادة التأمين",
+        "uploadPhotos": "رفع صور الأكاديمية",
+        "chooseFile": "اختر ملف",
+        "chooseFiles": "اختر ملفات",
+        "filesSelected": "ملف محدد",
+        "packageType": "اختر الباقة",
+        "paymentMethod": "طريقة الدفع",
+        "paymentMethodPlaceholder": "اختر طريقة الدفع",
+        "previous": "السابق",
+        "next": "التالي",
+        "submit": "إرسال التسجيل",
+        "submitting": "جاري الإرسال..."
+      },
+      "steps": {
+        "step1Description": "أخبرنا عن أكاديميتك ومعلوماتها الأساسية.",
+        "step2Description": "قدم تفاصيل الاتصال ومعلومات الموقع.",
+        "step3Description": "اختر الرياضات التي تقدمها ووصف مرافقك.",
+        "step4Description": "ارفع المستندات المطلوبة وصور الأكاديمية.",
+        "step5Description": "اختر الباقة المثالية لاحتياجات أكاديميتك.",
+        "step6Description": "اختر طريقة الدفع وأكمل التسجيل."
+      }
+    }
   }
 }

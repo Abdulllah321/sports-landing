@@ -1,5 +1,6 @@
 {
     "nav": {
+      "menu": "Menu",
       "player": "Player",
       "tournaments": "Tournaments",
       "facilities": "Facilities",
@@ -10,7 +11,8 @@
       "store": "Store",
       "bookFields": "Book Fields",
       "advertise": "Advertise",
-      "account": "My Account"
+      "account": "My Account",
+      "about": "About Us"
     },
   "hero": {
     "tagline": "Play harder with Ficro",
@@ -238,5 +240,121 @@
   "common": {
     "loading": "Loading...",
     "language": "Language"
+  },
+  "register": {
+    "title": "Join Our Sports Community",
+    "description": "Choose your role and start your journey in the world of sports. Whether you're an academy, player, or referee, we have the perfect platform for you.",
+    "popular": "Most Popular",
+    "selectType": "Select This Type",
+    "selected": "Type Selected",
+    "selectedDescription": "Great choice! Click below to proceed with your registration.",
+    "proceedToRegistration": "Proceed to Registration",
+    "types": {
+      "academy": {
+        "title": "Join as Academy",
+        "description": "Register your sports academy and start connecting with athletes.",
+        "features": {
+          "manageStudents": "Manage student registrations",
+          "organizeTournaments": "Organize tournaments and events",
+          "trackProgress": "Track student progress",
+          "community": "Build your community"
+        }
+      },
+      "player": {
+        "title": "Join as Player",
+        "description": "Register as a player and join academies and tournaments.",
+        "features": {
+          "joinAcademies": "Join sports academies",
+          "participateTournaments": "Participate in tournaments",
+          "trackProgress": "Track your progress",
+          "connect": "Connect with coaches"
+        }
+      },
+      "referee": {
+        "title": "Join as Referee",
+        "description": "Register as a referee and officiate games and tournaments.",
+        "features": {
+          "officiateGames": "Officiate games and matches",
+          "buildReputation": "Build your reputation",
+          "earnIncome": "Earn from officiating",
+          "network": "Network with organizers"
+        }
+      }
+    },
+    "benefits": {
+      "title": "Why Join Ficro?",
+      "description": "Discover the benefits of being part of our sports community.",
+      "community": {
+        "title": "Strong Community",
+        "description": "Connect with thousands of athletes, coaches, and sports enthusiasts."
+      },
+      "tournaments": {
+        "title": "Tournaments & Events",
+        "description": "Participate in and organize tournaments, competitions, and events."
+      },
+      "growth": {
+        "title": "Growth & Development",
+        "description": "Track progress, improve skills, and achieve your sports goals."
+      }
+    },
+    "academy": {
+      "title": "Join as Academy",
+      "description": "Register your sports academy and start connecting with athletes, organizing tournaments, and growing your community.",
+      "form": {
+        "academyName": "Academy Name",
+        "academyNamePlaceholder": "Enter your academy name",
+        "academyType": "Academy Type",
+        "academyTypePlaceholder": "Select academy type",
+        "establishedYear": "Established Year",
+        "description": "Description",
+        "descriptionPlaceholder": "Tell us about your academy...",
+        "contactPerson": "Contact Person",
+        "contactPersonPlaceholder": "Enter contact person name",
+        "email": "Email Address",
+        "emailPlaceholder": "Enter email address",
+        "phone": "Phone Number",
+        "phonePlaceholder": "Enter phone number",
+        "website": "Website",
+        "websitePlaceholder": "Enter website URL",
+        "address": "Address",
+        "addressPlaceholder": "Enter full address",
+        "city": "City",
+        "cityPlaceholder": "Enter city",
+        "country": "Country",
+        "countryPlaceholder": "Enter country",
+        "sports": "Sports Offered",
+        "facilities": "Available Facilities",
+        "capacity": "Student Capacity",
+        "capacityPlaceholder": "Enter maximum capacity",
+        "operatingHours": "Operating Hours",
+        "operatingHoursPlaceholder": "Select date and time",
+        "license": "Business License",
+        "certificate": "Certification",
+        "insurance": "Insurance Certificate",
+        "photos": "Academy Photos",
+        "uploadLicense": "Upload business license",
+        "uploadCertificate": "Upload certification",
+        "uploadInsurance": "Upload insurance certificate",
+        "uploadPhotos": "Upload academy photos",
+        "chooseFile": "Choose File",
+        "chooseFiles": "Choose Files",
+        "filesSelected": "files selected",
+        "packageType": "Select Package",
+        "paymentMethod": "Payment Method",
+        "paymentMethodPlaceholder": "Select payment method",
+        "previous": "Previous",
+        "next": "Next",
+        "submit": "Submit Registration",
+        "submitting": "Submitting..."
+      },
+      "steps": {
+        "step1Description": "Tell us about your academy and its basic information.",
+        "step2Description": "Provide contact details and location information.",
+        "step3Description": "Select the sports you offer and describe your facilities.",
+        "step4Description": "Upload required documents and academy photos.",
+        "step5Description": "Choose the perfect package for your academy needs.",
+        "step6Description": "Select your payment method and complete registration."
+      }
+    }
   }
 }

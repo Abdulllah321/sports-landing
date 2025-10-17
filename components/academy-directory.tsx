@@ -336,7 +336,7 @@ export function AcademyDirectory() {
               
               <div className="flex gap-2 pt-2">
                 <Button variant="outline" size="sm" className="flex-1" asChild>
-                  <Link href={`/academies/${academy.id}`}>
+                  <Link href={`/academies/detail/${academy.id}`}>
                     {t('academies.directory.viewDetails')}
                   </Link>
                 </Button>

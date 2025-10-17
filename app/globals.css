@@ -10,7 +10,7 @@
   --card-foreground: oklch(0 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0 0 0);
-  --primary: oklch(0.4675 0.1639 256.6956);
+  --primary: oklch(50.73% 0.166 255.05);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.7505 0.1791 58.2827);
   --secondary-foreground: oklch(1 0 0);
@@ -22,13 +22,13 @@
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.8078 0 0);
   --input: oklch(0.937 0 0);
-  --ring: oklch(0.4675 0.1639 256.6956);
-  --chart-1: oklch(0.4675 0.1639 256.6956);
+  --ring: oklch(50.73% 0.166 255.05);
+  --chart-1: oklch(50.73% 0.166 255.05);
   --chart-2: oklch(0.7505 0.1791 58.2827);
   --chart-3: oklch(0.5613 0.0924 238.7182);
   --chart-4: oklch(0.8451 0.1133 65.6852);
   --chart-5: oklch(0.6864 0.0846 234.52);
-  --sidebar: oklch(0.4675 0.1639 256.6956);
+  --sidebar: oklch(50.73% 0.166 255.05);
   --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(0.7505 0.1791 58.2827);
   --sidebar-primary-foreground: oklch(1 0 0);
@@ -45,6 +45,26 @@
   --font-body: var(--font-body);
   --font-arabic-heading: "Reem Kufi", var(--font-heading);
   --font-arabic-body: var(--font-arabic-body);
+
+  /* Font Size Variables - Balanced Sizes */
+  --font-size-xs: 0.75rem;      /* 12px - balanced */
+  --font-size-sm: 0.875rem;     /* 14px - balanced */
+  --font-size-base: 1rem;       /* 16px - balanced */
+  --font-size-md: 1.125rem;     /* 18px - balanced */
+  --font-size-lg: 1.25rem;      /* 20px - balanced */
+  --font-size-xl: 1.5rem;       /* 24px - balanced */
+  --font-size-2xl: 1.875rem;    /* 30px - balanced */
+  --font-size-3xl: 2.25rem;     /* 36px - balanced */
+  --font-size-4xl: 3rem;        /* 48px - balanced */
+  --font-size-5xl: 3.75rem;     /* 60px - balanced */
+  --font-size-6xl: 4.5rem;      /* 72px - balanced */
+
+  /* Line Height Variables */
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
 
   --radius: 0.5rem;
   --shadow-x: 0rem;
@@ -77,7 +97,7 @@
   --card-foreground: oklch(1 0 0);
   --popover: oklch(0 0 0);
   --popover-foreground: oklch(1 0 0);
-  --primary: oklch(0.4675 0.1639 256.6956);
+  --primary: oklch(50.73% 0.166 255.05);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.7505 0.1791 58.2827);
   --secondary-foreground: oklch(1 0 0);
@@ -89,13 +109,13 @@
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.36 0 0);
   --input: oklch(0.285 0 0);
-  --ring: oklch(0.4675 0.1639 256.6956);
-  --chart-1: oklch(0.4675 0.1639 256.6956);
+  --ring: oklch(50.73% 0.166 255.05);
+  --chart-1: oklch(50.73% 0.166 255.05);
   --chart-2: oklch(0.7505 0.1791 58.2827);
   --chart-3: oklch(0.5613 0.0924 238.7182);
   --chart-4: oklch(0.8451 0.1133 65.6852);
   --chart-5: oklch(0.6864 0.0846 234.52);
-  --sidebar: oklch(0.4675 0.1639 256.6956);
+  --sidebar: oklch(50.73% 0.166 255.05);
   --sidebar-foreground: oklch(1 0 0);
   --sidebar-primary: oklch(0.7505 0.1791 58.2827);
   --sidebar-primary-foreground: oklch(1 0 0);
@@ -167,6 +187,26 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
+  
+  /* Font Size Theme Variables */
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-base: var(--font-size-base);
+  --text-md: var(--font-size-md);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
+  --text-2xl: var(--font-size-2xl);
+  --text-3xl: var(--font-size-3xl);
+  --text-4xl: var(--font-size-4xl);
+  --text-5xl: var(--font-size-5xl);
+  --text-6xl: var(--font-size-6xl);
+  
+  /* Line Height Theme Variables */
+  --line-height-tight: var(--line-height-tight);
+  --line-height-snug: var(--line-height-snug);
+  --line-height-normal: var(--line-height-normal);
+  --line-height-relaxed: var(--line-height-relaxed);
+  --line-height-loose: var(--line-height-loose);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

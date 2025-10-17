@@ -1,9 +1,10 @@
-import Link from "next/link"
-import { CalendarRange, MapPin, Play } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { getServerTranslation } from "@/lib/server-translations"
 import { Locale } from "@/lib/i18n"
 import { HeroAnimated } from "./hero-animated"
+import { CalendarRange, MapPin, Play, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 interface HeroProps {
   locale: Locale
@@ -11,70 +12,88 @@ interface HeroProps {
 
 export function Hero({ locale }: HeroProps) {
   const t = getServerTranslation(locale)
-  return (
-    <section className="relative" aria-label="Hero">
+  return (<>
+    <section className="relative min-h-[80vh] flex flex-col  " aria-label="Hero">
       {/* Full-bleed background */}
       <div
-        className="absolute inset-0 -z-10 bg-cover bg-center"
-        style={{ backgroundImage: 'url("/images/hero-legends.jpg")' }}
+        className="absolute inset-0 -z-10 bg-cover bg-[center_5%]"
+        style={{ backgroundImage: 'url("/images/hero.jpeg")' }}
         role="img"
         aria-label="Athletes in a stadium background"
       />
       {/* Light/Dark readability gradient */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/60 via-black/40 to-black/10 dark:from-black/60 dark:via-black/40 dark:to-black/10" />
+      <div className={` absolute inset-0 -z-10  from-black/60 via-transparent to-black/10 dark:from-black/60 dark:via-transparent dark:to-black/10 ${locale === 'ar' ? 'bg-gradient-to-l' : 'bg-gradient-to-r'}`} />
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-14 md:py-24">
-        {/* <HeroAnimated locale={locale}> */}
-          <p className={`text-sm tracking-wide text-white/90 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
-            {t('hero.tagline')}
-          </p>
-          <h1 className={`mt-2 text-balance text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 ${locale === 'ar' ? 'font-arabic-heading' : 'font-mono tracking-wider'}`}>
-            {t('hero.title')}
-          </h1>
-          <p className={`mt-4 max-w-3xl text-base md:text-lg text-white/90 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
-            {t('hero.description')}
-          </p>
-
-          {/* CTA Card Grid */}
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <CtaCard
-              href="/tournaments"
-              title={t('hero.tournaments.title')}
-              description={t('hero.tournaments.description')}
-              Icon={CalendarRange}
-              locale={locale}
-            />
-            <CtaCard
-              href="/facilities"
-              title={t('hero.facilities.title')}
-              description={t('hero.facilities.description')}
-              Icon={MapPin}
-              locale={locale}
-            />
-            <CtaCard
-              href="/yousport"
-              title={t('hero.yousport.title')}
-              description={t('hero.yousport.description')}
-              Icon={Play}
-              locale={locale}
-            />
-          </div>
-        {/* </HeroAnimated> */}
-      </div>
-
-      {/* KPI Strip */}
-      <div className="relative py-8">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 via-black/10 to-transparent dark:from-black/0 dark:via-black/40 dark:to-black" />
-        <div className="container mx-auto px-4">
-          <div className="grid gap-4 sm:grid-cols-3">
-            <KpiCard label={t('hero.stats.players')} value="48,930" locale={locale} />
-            <KpiCard label={t('hero.stats.tournaments')} value="1,245" locale={locale} />
-            <KpiCard label={t('hero.stats.stadiums')} value="612" locale={locale} />
-          </div>
+      <div className="container mx-auto px-4 py-14 md:py-24 text-center h-full justify-between flex flex-col items-center">
+        <div>
+        <p className={`text-sm tracking-wide text-white/90 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+          {t('hero.tagline')}
+        </p>
+        
+        <h1 className={`mt-2 text-balance text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 ${locale === 'ar' ? 'font-arabic-heading' : 'font-mono tracking-wider'}`}>
+          {t('hero.title')}
+        </h1>
+        <p className={`mt-4 max-w-3xl text-base md:text-lg text-white/90 mb-8 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+          {t('hero.description')}
+        </p>
         </div>
+         {/* Primary CTA Badges */}
+         <div className="flex flex-col sm:flex-row gap-4 mb-8">
+           <Link 
+             href="/tournaments" 
+             className="inline-flex items-center gap-3 bg-primary/90 hover:bg-primary text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-primary/20"
+           >
+             <CalendarRange className="h-5 w-5" />
+             {locale === 'ar' ? 'استكشف البطولات' : 'Explore Tournaments'}
+             {/* <ArrowRight className="h-4 w-4" /> */}
+           </Link>
+           
+           <Link 
+             href="/facilities" 
+             className="inline-flex items-center gap-3 bg-secondary/90 hover:bg-secondary text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm border border-secondary/20"
+           >
+             <MapPin className="h-5 w-5" />
+             {locale === 'ar' ? 'احجز مرفق' : 'Book Facility'}
+           </Link>
+         </div>
+
+         {/* Secondary CTA Badges */}
+         <div className="flex items-center gap-4">
+           <Link 
+             href="/yousport" 
+             className="inline-flex items-center gap-2 text-white/90 hover:text-white hover:bg-white/10 font-medium px-4 py-2 rounded-full transition-all duration-300 hover:scale-105"
+           >
+             <Play className="h-4 w-4" />
+             {locale === 'ar' ? 'شاهد YouSport' : 'Watch YouSport'}
+           </Link>
+           
+           <div className="text-white/60 text-sm">
+             {locale === 'ar' ? 'أو' : 'or'}
+           </div>
+           
+           <Link 
+             href="/academies" 
+             className="inline-flex items-center gap-2 text-white/90 hover:text-white hover:bg-white/10 font-medium px-4 py-2 rounded-full transition-all duration-300 hover:scale-105"
+           >
+             {locale === 'ar' ? 'انضم إلى أكاديمية' : 'Join Academy'}
+           </Link>
+         </div>
       </div>
+
+   
     </section>
+      {/* KPI Strip */}
+       <div className="absolute z-10 py-8 -top-1/2">
+       
+       <div className="container mx-auto px-4">
+         <div className="grid gap-4 sm:grid-cols-3">
+           <KpiCard label={t('hero.stats.players')} value="48,930" locale={locale} />
+           <KpiCard label={t('hero.stats.tournaments')} value="1,245" locale={locale} />
+           <KpiCard label={t('hero.stats.stadiums')} value="612" locale={locale} />
+         </div>
+       </div>
+     </div></>
   )
 }
 
@@ -89,35 +108,3 @@ function KpiCard({ label, value, locale }: { label: string; value: string; local
   )
 }
 
-function CtaCard({
-  href,
-  title,
-  description,
-  Icon,
-  locale,
-}: {
-  href: string
-  title: string
-  description: string
-  Icon: React.ComponentType<{ className?: string }>
-  locale: Locale
-}) {
-  return (
-    <Card className="transition hover:shadow-md bg-white/90 dark:bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-white/90 dark:supports-[backdrop-filter]:bg-card/40 border-white/20 dark:border-border/60">
-      <Link href={href} className="block p-5">
-        <div className="flex items-start gap-4">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm">
-            <Icon className="h-5 w-5" />
-          </span>
-          <div>
-            <CardTitle className={`text-base text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{title}</CardTitle>
-            <CardDescription className={`mt-1 text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>{description}</CardDescription>
-            <span className={`mt-3 inline-block text-xs font-medium text-primary hover:text-primary/80 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
-              {locale === 'ar' ? 'ابدأ الآن ←' : 'Get started →'}
-            </span>
-          </div>
-        </div>
-      </Link>
-    </Card>
-  )
-}

@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { LanguageProvider } from "@/lib/translation-context";
 import { HtmlAttributes } from "@/components/html-attributes";
 import { Suspense } from "react";
-import { Anton, Poppins, Lato } from "next/font/google";
+import { Anton, Poppins, Lato, Tajawal } from "next/font/google";
 import localFont from "next/font/local";
 
 // Load Google fonts and expose CSS variables
@@ -60,14 +60,9 @@ const arabicHeading = localFont({
   display: "swap",
 });
 
-const arabicBody = localFont({
-  src: [
-    {
-      path: "../public/fonts/Naskh.ttf",
-      weight: "400",
-      style: "normal",
-    },
-  ],
+const arabicBody = Tajawal({
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "700"],
   variable: "--font-arabic-body",
   display: "swap",
 });
@@ -124,9 +119,7 @@ export default function RootLayout({
         <LanguageProvider initialLocale="en">
           <HtmlAttributes />
           <Suspense fallback={<div>Loading...</div>}>
-            <SiteHeaderServer />
             <main>{children}</main>
-            <SiteFooter />
           </Suspense>
         </LanguageProvider>
         <Analytics />

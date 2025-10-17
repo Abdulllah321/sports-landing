@@ -1,0 +1,43 @@
+name: Deploy Next.js App via PM2
+
+on:
+  push:
+    branches: [main] # or your desired branch
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: |
+          cd ${{ github.workspace }}
+          bun install
+
+      - name: Build Next.js app
+        run: |
+          cd ${{ github.workspace }}
+          bun run build
+
+      - name: Start or restart Next.js with PM2
+        run: |
+          cd ${{ github.workspace }}
+          # Use PM2 to serve the Next.js app in production
+          # If first time -> start, else restart
+          if /usr/bin/pm2 describe ficro > /dev/null; then
+            /usr/bin/pm2 restart ficro
+          else
+            /usr/bin/pm2 start "bun run start" --name ficro
+          fi
+
+      - name: Save PM2 process list
+        run: |
+          /usr/bin/pm2 save

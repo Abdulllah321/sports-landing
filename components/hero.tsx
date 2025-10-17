@@ -16,16 +16,16 @@ export function Hero({ locale }: HeroProps) {
     <section className="relative min-h-[80vh] flex flex-col  " aria-label="Hero">
       {/* Full-bleed background */}
       <div
-        className="absolute inset-0 -z-10 bg-cover bg-[center_5%]"
+        className="absolute inset-0  bg-cover bg-[center_5%]"
         style={{ backgroundImage: 'url("/images/hero.jpeg")' }}
         role="img"
         aria-label="Athletes in a stadium background"
       />
       {/* Light/Dark readability gradient */}
-      <div className={` absolute inset-0 -z-10  from-black/60 via-transparent to-black/10 dark:from-black/60 dark:via-transparent dark:to-black/10 ${locale === 'ar' ? 'bg-gradient-to-l' : 'bg-gradient-to-r'}`} />
+      <div className={` absolute inset-0  from-black/60 via-transparent to-black/10 dark:from-black/60 dark:via-transparent dark:to-black/10  ${locale === 'ar' ? 'bg-gradient-to-l' : 'bg-gradient-to-r'}`} />
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-14 md:py-24 text-center h-full justify-between flex flex-col items-center">
+      <div className="container mx-auto px-4 py-14 md:py-24 text-center h-full justify-between flex flex-col items-center z-20 relative">
         <div>
         <p className={`text-sm tracking-wide text-white/90 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
           {t('hero.tagline')}

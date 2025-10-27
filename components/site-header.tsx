@@ -15,15 +15,14 @@ import { cn } from "@/lib/utils"
 
 const allNavItems = [
   { href: "/about", key: "about", icon: Info },
-  { href: "/player", key: "player", icon: User },
   { href: "/tournaments", key: "tournaments", icon: Trophy },
   { href: "/facilities", key: "facilities", icon: Building2 },
   { href: "/academies", key: "academies", icon: GraduationCap },
   { href: "/events", key: "events", icon: Calendar },
   { href: "/yousport", key: "yousport", icon: PlayCircle },
   { href: "/news", key: "news", icon: Newspaper },
-  { href: "/store", key: "store", icon: ShoppingBag },
-  { href: "/advertise", key: "advertise", icon: Megaphone },
+  { href: "/store", key: "store", icon: ShoppingBag },  { href: "/advertise", key: "advertise", icon: Megaphone },
+  { href: "/support", key: "support", icon: Info },
 ]
 
 export function SiteHeader() {
@@ -33,6 +32,7 @@ export function SiteHeader() {
   const pathname = usePathname()
   const { locale } = useLanguage()
   const t = getClientTranslation(locale)
+  const isArabic = locale === 'ar'
 
   // Handle scroll effect
   useEffect(() => {
@@ -160,7 +160,7 @@ export function SiteHeader() {
               isScrolled && "shadow-lg"
             )}
           >
-            <Link href="/facilities">{t('nav.bookFields')}</Link>
+            <Link href="/auth/register">{isArabic ? 'انضم الآن' : 'Join Now'}</Link>
           </Button>
         </div>
       </div>
@@ -201,8 +201,8 @@ export function SiteHeader() {
               asChild 
               className="w-full bg-primary text-primary-foreground"
             >
-              <Link href="/facilities" onClick={() => setOpen(false)}>
-                {t('nav.bookFields')}
+              <Link href="/auth/register" onClick={() => setOpen(false)}>
+                {isArabic ? 'انضم الآن' : 'Join Now'}
               </Link>
             </Button>
           </div>

@@ -84,7 +84,7 @@ export function Hero({ locale }: HeroProps) {
    
     </section>
       {/* KPI Strip */}
-       <div className="absolute z-10 py-8 -top-1/2">
+       {/* <div className="absolute z-10 py-8 -top-1/2">
        
        <div className="container mx-auto px-4">
          <div className="grid gap-4 sm:grid-cols-3">
@@ -93,7 +93,8 @@ export function Hero({ locale }: HeroProps) {
            <KpiCard label={t('hero.stats.stadiums')} value="612" locale={locale} />
          </div>
        </div>
-     </div></>
+     </div> */}
+     </>
   )
 }
 

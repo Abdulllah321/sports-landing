@@ -1,7 +1,14 @@
-import Link from "next/link";
-import Image from "next/image";
+"use client"
+
+import Link from "next/link"
+import Image from "next/image"
+import { useLanguage } from "@/lib/translation-context"
+import { getClientTranslation } from "@/lib/client-translations"
 
 export function SiteFooter() {
+  const { locale } = useLanguage()
+  const t = getClientTranslation(locale)
+  
   return (
     <footer className="relative font-serif overflow-hidden rounded-t-3xl bg-gradient-to-b from-background via-muted/10 to-primary/20 text-foreground border-t border-border">
       {/* Background Pattern */}
@@ -31,16 +38,16 @@ export function SiteFooter() {
                 />
               </div>
             </div>
-            <p className="text-sm text-foreground/70 leading-relaxed">
-              A unified platform for tournaments, facilities, academies, and the
-              YouSport channel. Connecting athletes, fans, and sports
-              communities worldwide.
+            <p className={`text-sm text-foreground/70 leading-relaxed ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+              {t('footer.description')}
             </p>
           </div>
 
           {/* Explore Section */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4">Explore</h3>
+            <h3 className={`text-sm font-semibold text-foreground mb-4 ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+              {t('footer.explore')}
+            </h3>
             <ul className="space-y-3 text-sm text-foreground/70">
               <li>
                 <Link
@@ -79,7 +86,9 @@ export function SiteFooter() {
 
           {/* Company Section */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4">Company</h3>
+            <h3 className={`text-sm font-semibold text-foreground mb-4 ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+              {t('footer.company')}
+            </h3>
             <ul className="space-y-3 text-sm text-foreground/70">
               <li>
                 <Link
@@ -118,7 +127,9 @@ export function SiteFooter() {
 
           {/* Contact Section */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4">Connect</h3>
+            <h3 className={`text-sm font-semibold text-foreground mb-4 ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+              {t('footer.connect')}
+            </h3>
             <ul className="space-y-3 text-sm text-foreground/70">
               <li>
                 <Link
@@ -159,19 +170,21 @@ export function SiteFooter() {
         {/* Bottom Section */}
         <div className="border-t border-foreground/70">
           <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between px-4 py-6 text-xs text-foreground/70">
-            <p>© {new Date().getFullYear()} Ficro. All rights reserved.</p>
+            <p className={locale === 'ar' ? 'font-arabic-body' : ''}>
+              © {new Date().getFullYear()} {t('footer.copyright')}
+            </p>
             <div className="flex gap-6 mt-2 sm:mt-0">
               <Link
                 href="/privacy"
-                className="hover:text-primary transition-colors duration-200"
+                className={`hover:text-primary transition-colors duration-200 ${locale === 'ar' ? 'font-arabic-body' : ''}`}
               >
-                Privacy
+                {t('footer.privacy')}
               </Link>
               <Link
                 href="/terms"
-                className="hover:text-primary transition-colors duration-200"
+                className={`hover:text-primary transition-colors duration-200 ${locale === 'ar' ? 'font-arabic-body' : ''}`}
               >
-                Terms
+                {t('footer.terms')}
               </Link>
             </div>
           </div>

@@ -50,12 +50,19 @@ interface Academy {
     image: string;
     bio: string;
   }>;
+  management: Array<{
+    name: string;
+    role: string;
+    image: string;
+    bio: string;
+  }>;
   testimonials: Array<{
     name: string;
     age: number;
     program: string;
     text: string;
     rating: number;
+    date: string;
   }>;
   gallery: string[];
   contact: {
@@ -207,17 +214,15 @@ export function AcademyDetailClient({ academy }: AcademyDetailClientProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            <Tabs defaultValue="about" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
-                <TabsTrigger value="about">{t('academies.detail.about')}</TabsTrigger>
-                <TabsTrigger value="services">{t('academies.detail.services')}</TabsTrigger>
-                <TabsTrigger value="courses">{t('academies.detail.courses')}</TabsTrigger>
-                <TabsTrigger value="timetable">{t('academies.detail.timetable')}</TabsTrigger>
-                <TabsTrigger value="coaches">{t('academies.detail.coaches')}</TabsTrigger>
-                <TabsTrigger value="testimonials">{t('academies.detail.testimonials')}</TabsTrigger>
+            <Tabs defaultValue="overview" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="training">Training Programs</TabsTrigger>
+                <TabsTrigger value="community">Community</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="about" className="space-y-6">
+              <TabsContent value="overview" className="space-y-6">
+                {/* About Section */}
                 <Card>
                   <CardHeader>
                     <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
@@ -231,6 +236,43 @@ export function AcademyDetailClient({ academy }: AcademyDetailClientProps) {
                   </CardContent>
                 </Card>
 
+                {/* Management Section */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
+                      {t('academies.detail.management')}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {academy.management.map((member, index) => (
+                        <div key={index} className="text-center space-y-4">
+                          <div className="relative w-24 h-24 mx-auto">
+                            <Image
+                              src={member.image}
+                              alt={member.name}
+                              fill
+                              className="rounded-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h4 className={`font-semibold text-lg ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+                              {member.name}
+                            </h4>
+                            <p className={`text-sm text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                              {member.role}
+                            </p>
+                          </div>
+                          <p className={`text-sm text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                            {member.bio}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Facilities Section */}
                 <Card>
                   <CardHeader>
                     <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
@@ -252,7 +294,47 @@ export function AcademyDetailClient({ academy }: AcademyDetailClientProps) {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="services" className="space-y-6">
+              <TabsContent value="training" className="space-y-6">
+                {/* Coaches Section */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
+                      {t('academies.detail.coaches')}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {academy.coachesList.map((coach, index) => (
+                        <div key={index} className="text-center space-y-4">
+                          <div className="relative w-24 h-24 mx-auto">
+                            <Image
+                              src={coach.image}
+                              alt={coach.name}
+                              fill
+                              className="rounded-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h4 className={`font-semibold text-lg ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+                              {coach.name}
+                            </h4>
+                            <p className={`text-sm text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                              {coach.role}
+                            </p>
+                            <p className={`text-xs text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                              {coach.experience} experience
+                            </p>
+                          </div>
+                          <p className={`text-sm text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                            {coach.bio}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Services Section */}
                 <Card>
                   <CardHeader>
                     <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
@@ -272,37 +354,44 @@ export function AcademyDetailClient({ academy }: AcademyDetailClientProps) {
                     </div>
                   </CardContent>
                 </Card>
-              </TabsContent>
 
-              <TabsContent value="courses" className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {academy.courses.map((course, index) => (
-                    <Card key={index}>
-                      <CardHeader>
-                        <CardTitle className={`text-lg ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
-                          {course.name}
-                        </CardTitle>
-                        <div className="flex gap-2 text-sm text-muted-foreground">
-                          <span className={locale === 'ar' ? 'font-arabic-body' : ''}>
-                            {course.duration}
-                          </span>
-                          <span>•</span>
-                          <span className={locale === 'ar' ? 'font-arabic-body' : ''}>
-                            {course.ageGroup}
-                          </span>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className={`text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
-                          {course.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
+                {/* Courses Section */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
+                      {t('academies.detail.courses')}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {academy.courses.map((course, index) => (
+                        <Card key={index}>
+                          <CardHeader>
+                            <CardTitle className={`text-lg ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+                              {course.name}
+                            </CardTitle>
+                            <div className="flex gap-2 text-sm text-muted-foreground">
+                              <span className={locale === 'ar' ? 'font-arabic-body' : ''}>
+                                {course.duration}
+                              </span>
+                              <span>•</span>
+                              <span className={locale === 'ar' ? 'font-arabic-body' : ''}>
+                                {course.ageGroup}
+                              </span>
+                            </div>
+                          </CardHeader>
+                          <CardContent>
+                            <p className={`text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                              {course.description}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
 
-              <TabsContent value="timetable" className="space-y-6">
+                {/* Timetable Section */}
                 <Card>
                   <CardHeader>
                     <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
@@ -343,61 +432,28 @@ export function AcademyDetailClient({ academy }: AcademyDetailClientProps) {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="coaches" className="space-y-6">
+              <TabsContent value="community" className="space-y-6">
+                {/* Testimonials Section */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
-                      {t('academies.detail.coaches')}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {academy.coachesList.map((coach, index) => (
-                        <div key={index} className="text-center space-y-4">
-                          <div className="relative w-24 h-24 mx-auto">
-                            <Image
-                              src={coach.image}
-                              alt={coach.name}
-                              fill
-                              className="rounded-full object-cover"
-                            />
-                          </div>
-                          <div>
-                            <h4 className={`font-semibold text-lg ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
-                              {coach.name}
-                            </h4>
-                            <p className={`text-sm text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
-                              {coach.role}
-                            </p>
-                            <p className={`text-xs text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
-                              {coach.experience} experience
-                            </p>
-                          </div>
-                          <p className={`text-sm text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
-                            {coach.bio}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="testimonials" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className={locale === 'ar' ? 'font-arabic-heading' : ''}>
-                      {t('academies.detail.testimonials')}
+                    <CardTitle className={`flex items-center justify-between ${locale === 'ar' ? 'font-arabic-heading' : ''}`}>
+                      <span>{t('academies.detail.testimonials')}</span>
+                      <Badge variant="secondary">{academy.testimonials.length} {t('academies.detail.reviews')}</Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {academy.testimonials.map((testimonial, index) => (
                         <div key={index} className="space-y-4 p-4 bg-muted/50 rounded-lg">
-                          <div className="flex items-center gap-1">
-                            {[...Array(testimonial.rating)].map((_, i) => (
-                              <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            ))}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1">
+                              {[...Array(testimonial.rating)].map((_, i) => (
+                                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                              ))}
+                            </div>
+                            <span className={`text-xs text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                              {testimonial.date}
+                            </span>
                           </div>
                           <p className={`text-sm text-muted-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                             "{testimonial.text}"

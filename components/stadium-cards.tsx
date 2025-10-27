@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import { facilities, Facility } from "@/data/facilities";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,7 +14,7 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
-import { MapPin, Star, Users, ArrowRight } from "lucide-react";
+import { MapPin, Star, Users, ArrowRight, Clock, CheckCircle } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -50,6 +50,15 @@ export function StadiumCards({
 }) {
   const [city, setCity] = useState("all");
   const [query, setQuery] = useState("");
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Update current time every minute
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const items = useMemo(() => {
     let list = facilitiesProp || facilities;
@@ -64,6 +73,26 @@ export function StadiumCards({
   const cities = Array.from(
     new Set((facilitiesProp || facilities).map((f) => f.city))
   );
+
+  // Calculate available slots for today
+  const getTodayAvailableSlots = (facility: Facility) => {
+    const today = new Date().toISOString().split('T')[0];
+    const todaySlot = facility.availableSlots.find(slot => slot.date === today);
+    if (!todaySlot) return 0;
+    
+    // Filter out past time slots
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const currentTimeStr = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+    
+    return todaySlot.timeSlots.filter(time => time >= currentTimeStr).length;
+  };
+
+  const getAvailableToday = (facility: Facility) => {
+    const today = new Date().toISOString().split('T')[0];
+    return facility.availableSlots.some(slot => slot.date === today);
+  };
 
   return (
     <>
@@ -142,7 +171,7 @@ export function StadiumCards({
                     </div>
 
                     {/* Rating Badge */}
-                    <div className="absolute top-4 right-4 z-10">
+                    <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
                       <div className="bg-background/95 backdrop-blur-md rounded-full px-3 py-1.5 shadow-xl">
                         <div className="flex items-center gap-1.5">
                           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -151,6 +180,17 @@ export function StadiumCards({
                           </span>
                         </div>
                       </div>
+                      {/* Live Availability Badge */}
+                      {getAvailableToday(f) && (
+                        <div className="bg-green-500/95 backdrop-blur-md rounded-full px-3 py-1.5 shadow-xl">
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="h-4 w-4 text-white" />
+                            <span className="font-bold text-white text-xs">
+                              {getTodayAvailableSlots(f)} slots today
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -216,13 +256,24 @@ export function StadiumCards({
                         </div>
                       </div>
 
-                      {/* Price */}
-                      <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-4 rounded-lg border border-primary/20">
-                        <div className="text-xs text-muted-foreground mb-1">
-                          Starting from
+                      {/* Enhanced Price Display */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-3 rounded-lg border border-primary/20">
+                          <div className="text-xs text-muted-foreground mb-1">
+                            Starting from
+                          </div>
+                          <div className="text-lg font-bold text-primary">
+                            {f.price}
+                          </div>
                         </div>
-                        <div className="text-xl font-bold text-primary">
-                          {f.price}
+                        <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                          <div className="text-xs text-muted-foreground mb-1">
+                            {getAvailableToday(f) ? 'Available Today' : 'Next Available'}
+                          </div>
+                          <div className="text-lg font-bold text-green-600 flex items-center gap-1">
+                            <CheckCircle className="h-4 w-4" />
+                            {getAvailableToday(f) ? 'Now' : 'Soon'}
+                          </div>
                         </div>
                       </div>
                     </div>

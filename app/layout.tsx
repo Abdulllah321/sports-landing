@@ -6,6 +6,7 @@ import { SiteHeaderServer } from "@/components/site-header-server";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguageProvider } from "@/lib/translation-context";
 import { HtmlAttributes } from "@/components/html-attributes";
+import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";
 import { Anton, Poppins, Lato, Tajawal } from "next/font/google";
 import localFont from "next/font/local";
@@ -122,6 +123,7 @@ export default function RootLayout({
             <main>{children}</main>
           </Suspense>
         </LanguageProvider>
+        <Toaster />
         <Analytics />
       </body>
     </html>

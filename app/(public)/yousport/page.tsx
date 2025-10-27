@@ -63,6 +63,7 @@ export default function YouSportPage() {
   const [accessSent, setAccessSent] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedSport, setSelectedSport] = useState("all");
   const [sortBy, setSortBy] = useState("trending");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
@@ -77,6 +78,16 @@ export default function YouSportPage() {
   const categories = useMemo(() => {
     const cats = [...new Set(videos.map((v) => v.category))];
     return cats;
+  }, []);
+
+  // Extract sports from tags
+  const sports = useMemo(() => {
+    const sportsList = videos.flatMap((v) => 
+      v.tags.filter(tag => 
+        ["football", "basketball", "tennis", "swimming", "volleyball", "rugby", "baseball", "soccer"].includes(tag.toLowerCase())
+      )
+    );
+    return [...new Set(sportsList)];
   }, []);
 
   // Filter and sort videos
@@ -102,6 +113,13 @@ export default function YouSportPage() {
       );
     }
 
+    // Filter by sport
+    if (selectedSport !== "all") {
+      filtered = filtered.filter((video) =>
+        video.tags.some((tag) => tag.toLowerCase() === selectedSport.toLowerCase())
+      );
+    }
+
     // Sort videos
     switch (sortBy) {
       case "trending":
@@ -116,6 +134,9 @@ export default function YouSportPage() {
       case "likes":
         filtered.sort((a, b) => b.likes - a.likes);
         break;
+      case "views":
+        filtered.sort((a, b) => b.views - a.views);
+        break;
       case "duration":
         filtered.sort((a, b) => {
           const aDuration = parseInt(a.duration.replace(":", ""));
@@ -126,7 +147,7 @@ export default function YouSportPage() {
     }
 
     return filtered;
-  }, [searchQuery, selectedCategory, sortBy]);
+  }, [searchQuery, selectedCategory, selectedSport, sortBy]);
 
   const liveFilteredStreams = filteredVideos.filter((v) => v.isLive);
   const publicFilteredVideos = filteredVideos.filter(
@@ -168,8 +189,26 @@ export default function YouSportPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-20 pb-16">
-        <div className="container mx-auto px-4">
+      <section className="relative z-10 pt-20 pb-16 overflow-hidden">
+        {/* Dotted Background Pattern */}
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '40px 40px'
+          }}
+        />
+        
+        {/* Noise Texture
+        <div 
+          className="absolute inset-0 opacity-30 mix-blend-overlay"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            backgroundSize: '200px 200px'
+          }}
+        />
+         */}
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -269,12 +308,38 @@ export default function YouSportPage() {
             </div>
 
             {/* Filters */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              {/* Sport Filter */}
+              <Select
+                value={selectedSport}
+                onValueChange={setSelectedSport}
+              >
+                <SelectTrigger className="w-40 bg-card/50 border-border text-foreground rounded-full h-12">
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Sport Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  <SelectItem value="all" className="text-foreground">
+                    All Sports
+                  </SelectItem>
+                  {sports.map((sport) => (
+                    <SelectItem
+                      key={sport}
+                      value={sport}
+                      className="text-foreground"
+                    >
+                      {sport.charAt(0).toUpperCase() + sport.slice(1)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              {/* Category Filter */}
               <Select
                 value={selectedCategory}
                 onValueChange={setSelectedCategory}
               >
-                <SelectTrigger className="w-48 bg-card/50 border-border text-foreground rounded-full h-12">
+                <SelectTrigger className="w-40 bg-card/50 border-border text-foreground rounded-full h-12">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
@@ -294,22 +359,31 @@ export default function YouSportPage() {
                 </SelectContent>
               </Select>
 
+              {/* Sort Filter */}
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40 bg-card/50 border-border text-foreground rounded-full h-12">
+                <SelectTrigger className="w-44 bg-card/50 border-border text-foreground rounded-full h-12">
                   <SortAsc className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
                   <SelectItem value="trending" className="text-foreground">
+                    <TrendingUp className="h-4 w-4 mr-2 inline" />
                     Trending
                   </SelectItem>
                   <SelectItem value="newest" className="text-foreground">
+                    <Clock className="h-4 w-4 mr-2 inline" />
                     Newest
                   </SelectItem>
                   <SelectItem value="likes" className="text-foreground">
+                    <Heart className="h-4 w-4 mr-2 inline" />
                     Most Liked
                   </SelectItem>
+                  <SelectItem value="views" className="text-foreground">
+                    <Eye className="h-4 w-4 mr-2 inline" />
+                    Most Viewed
+                  </SelectItem>
                   <SelectItem value="duration" className="text-foreground">
+                    <Clock className="h-4 w-4 mr-2 inline" />
                     Longest
                   </SelectItem>
                 </SelectContent>
@@ -407,7 +481,7 @@ export default function YouSportPage() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <div className="text-gray-400">
+              <div className="text-muted-foreground">
                 <Radio className="h-16 w-16 mx-auto mb-6 opacity-50" />
                 <p className="text-xl mb-2 font-serif">No live streams at the moment</p>
                 <p className="text-sm font-serif">Check back later for live content</p>
@@ -434,7 +508,7 @@ export default function YouSportPage() {
                   Highlights & VODs
                 </h2>
               </div>
-              <Badge className="bg-green-600/20 text-green-400 border-green-500/30 px-4 py-2 font-serif">
+              <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-2 font-serif">
                 Free to Watch
               </Badge>
             </div>
@@ -470,7 +544,7 @@ export default function YouSportPage() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <div className="text-gray-400">
+              <div className="text-muted-foreground">
                 <Play className="h-16 w-16 mx-auto mb-6 opacity-50" />
                 <p className="text-xl mb-2 font-serif">No videos found</p>
                 <p className="text-sm font-serif">Try adjusting your search or filters</p>
@@ -535,7 +609,7 @@ export default function YouSportPage() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <div className="text-gray-400">
+              <div className="text-muted-foreground">
                 <Crown className="h-16 w-16 mx-auto mb-6 opacity-50" />
                 <p className="text-xl mb-2 font-serif">No premium content found</p>
                 <p className="text-sm font-serif">Try adjusting your search or filters</p>
@@ -671,7 +745,7 @@ export default function YouSportPage() {
         open={!!selectedVideo}
         onOpenChange={() => setSelectedVideo(null)}
       >
-        <DialogContent className="max-w-6xl p-0 bg-slate-900 border-slate-700">
+        <DialogContent className="max-w-6xl p-0">
           {currentVideo && currentVideo.src && (
             <VideoPlayer
               video={currentVideo}
@@ -683,22 +757,22 @@ export default function YouSportPage() {
 
       {/* Request Access Modal */}
       <Dialog open={requestAccessOpen} onOpenChange={setRequestAccessOpen}>
-        <DialogContent className="max-w-md bg-background border-slate-700">
+        <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-white">
-              <Crown className="h-5 w-5 text-yellow-500" />
+            <DialogTitle className="flex items-center gap-2">
+              <Crown className="h-5 w-5 text-primary" />
               Request Premium Access
             </DialogTitle>
           </DialogHeader>
           {accessSent ? (
             <div className="text-center py-8">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-600/20 flex items-center justify-center">
-                <Shield className="h-8 w-8 text-green-400" />
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center">
+                <Shield className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold mb-2 text-white">
+              <h3 className="text-lg font-semibold mb-2">
                 Request Submitted!
               </h3>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-muted-foreground">
                 We'll review your request and get back to you within 2 business
                 days.
               </p>
@@ -706,7 +780,7 @@ export default function YouSportPage() {
           ) : (
             <form onSubmit={handleAccessSubmit} className="space-y-4">
               <div>
-                <label className="text-sm font-medium mb-2 block text-gray-300">
+                <label className="text-sm font-medium mb-2 block">
                   Email Address
                 </label>
                 <Input
@@ -715,11 +789,10 @@ export default function YouSportPage() {
                   value={accessEmail}
                   onChange={(e) => setAccessEmail(e.target.value)}
                   required
-                  className="bg-slate-700 border-slate-600 text-white placeholder:text-gray-400"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium mb-2 block text-gray-300">
+                <label className="text-sm font-medium mb-2 block">
                   Organization/Team
                 </label>
                 <Input
@@ -728,22 +801,20 @@ export default function YouSportPage() {
                   value={accessOrg}
                   onChange={(e) => setAccessOrg(e.target.value)}
                   required
-                  className="bg-slate-700 border-slate-600 text-white placeholder:text-gray-400"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium mb-2 block text-gray-300">
+                <label className="text-sm font-medium mb-2 block">
                   Goals (Optional)
                 </label>
                 <Textarea
                   placeholder="Tell us about your content creation goals..."
                   rows={3}
-                  className="bg-slate-700 border-slate-600 text-white placeholder:text-gray-400"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold"
+                className="w-full"
               >
                 <Crown className="mr-2 h-4 w-4" />
                 Submit Request

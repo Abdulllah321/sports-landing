@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import { facilities } from "@/data/facilities";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -77,12 +77,63 @@ export default function FacilityDetail({ params }: { params: { id: string } }) {
   const [submitted, setSubmitted] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [bookingId, setBookingId] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Update current time every minute
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Calculate available time slots excluding past slots
+  const getAvailableSlotsForDate = (date: string) => {
+    const slot = f.availableSlots.find(s => s.date === date);
+    if (!slot) return [];
+    
+    const today = new Date().toISOString().split('T')[0];
+    if (date !== today) return slot.timeSlots;
+    
+    // Filter out past time slots for today
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const currentTimeStr = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+    
+    return slot.timeSlots.filter(time => time > currentTimeStr);
+  };
+
+  const isSlotPast = (date: string, time: string) => {
+    const today = new Date().toISOString().split('T')[0];
+    if (date !== today) return false;
+    
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const currentTimeStr = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+    
+    return time <= currentTimeStr;
+  };
+
+  const getNextAvailableSlot = () => {
+    const today = new Date().toISOString().split('T')[0];
+    const todaySlot = f.availableSlots.find(s => s.date === today);
+    if (!todaySlot) return null;
+    
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const currentTimeStr = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+    
+    const nextSlot = todaySlot.timeSlots.find(time => time > currentTimeStr);
+    return nextSlot || todaySlot.timeSlots[0];
+  };
 
   if (!f) return notFound();
 
   const availableTimeSlots = selectedDate
-    ? f.availableSlots.find((slot) => slot.date === selectedDate)?.timeSlots ||
-      []
+    ? getAvailableSlotsForDate(selectedDate)
     : [];
 
   const handleBookingSubmit = (e: React.FormEvent) => {
@@ -289,41 +340,75 @@ export default function FacilityDetail({ params }: { params: { id: string } }) {
                 <TabsContent value="calendar" className="mt-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="font-mono tracking-wide font-extralight">
-                        Availability Calendar
-                      </CardTitle>
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="font-mono tracking-wide font-extralight">
+                          Live Availability
+                        </CardTitle>
+                        <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">
+                          <Clock className="h-4 w-4 mr-2" />
+                          Updated: {currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                        </Badge>
+                      </div>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
-                        {f.availableSlots.map((slot, index) => (
-                          <div key={index} className="border rounded-lg p-4">
-                            <div className="flex items-center gap-2 mb-3">
-                              <Calendar className="h-4 w-4 text-primary" />
-                              <span className="font-semibold">
-                                {new Date(slot.date).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    weekday: "long",
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  }
+                        {f.availableSlots.map((slot, index) => {
+                          const availableSlots = getAvailableSlotsForDate(slot.date);
+                          const today = new Date().toISOString().split('T')[0];
+                          const isToday = slot.date === today;
+                          
+                          return (
+                            <div key={index} className={`border rounded-lg p-4 ${isToday ? 'ring-2 ring-primary/50 bg-primary/5' : ''}`}>
+                              <div className="flex items-center justify-between mb-3">
+                                <div className="flex items-center gap-2">
+                                  <Calendar className="h-4 w-4 text-primary" />
+                                  <span className="font-semibold">
+                                    {new Date(slot.date).toLocaleDateString(
+                                      "en-US",
+                                      {
+                                        weekday: "long",
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                      }
+                                    )}
+                                  </span>
+                                </div>
+                                {isToday && availableSlots.length > 0 && (
+                                  <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">
+                                    {availableSlots.length} slots remaining today
+                                  </Badge>
                                 )}
-                              </span>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {slot.timeSlots.map((time, timeIndex) => {
+                                  const isPast = isSlotPast(slot.date, time);
+                                  const isAvailable = !isPast;
+                                  
+                                  return (
+                                    <Badge
+                                      key={timeIndex}
+                                      variant="outline"
+                                      className={`px-3 py-1 ${
+                                        isPast 
+                                          ? 'opacity-30 line-through cursor-not-allowed' 
+                                          : 'border-primary/30 bg-primary/5 hover:bg-primary/10 cursor-pointer'
+                                      }`}
+                                    >
+                                      {time}
+                                      {isPast && <span className="ml-1 text-xs">(past)</span>}
+                                    </Badge>
+                                  );
+                                })}
+                              </div>
+                              {availableSlots.length === 0 && isToday && (
+                                <div className="mt-3 text-sm text-muted-foreground">
+                                  No available slots remaining today
+                                </div>
+                              )}
                             </div>
-                            <div className="flex flex-wrap gap-2">
-                              {slot.timeSlots.map((time, timeIndex) => (
-                                <Badge
-                                  key={timeIndex}
-                                  variant="outline"
-                                  className="px-3 py-1"
-                                >
-                                  {time}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </CardContent>
                   </Card>

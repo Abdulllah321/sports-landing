@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Trophy, School, Building2, Store, LayoutDashboard, HeadphonesIcon } from "lucide-react"
@@ -49,11 +48,8 @@ export function FeatureGrid({ locale }: FeatureGridProps) {
         return (
           <Card key={key} className="group relative h-full bg-card border-border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 py-2">
             <CardHeader className="items-center text-center pb-2 pt-4">
-              <div className="relative mb-4">
+              <div className="mb-4">
                 <Icon className="h-16 w-16 text-primary mx-auto stroke-1" aria-hidden />
-                <Badge className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs">
-                  {t('features.demo')}
-                </Badge>
               </div>
               <CardTitle className={`text-base font-semibold text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                 {t(`features.${key}.title`)}

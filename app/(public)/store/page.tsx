@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/lib/translation-context";
+import { getClientTranslation } from "@/lib/client-translations";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +23,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   ShoppingCart,
@@ -33,13 +34,15 @@ import {
   Plus,
   Minus,
   X,
-  Mail,
-  Phone,
-  User,
   CreditCard,
   CheckCircle,
+  Package,
+  Shirt,
+  Watch,
+  Loader2,
 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
+import { cn } from "@/lib/utils";
 
 interface CartItem {
   id: string;
@@ -56,11 +59,24 @@ export default function StorePage() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [checkoutForm, setCheckoutForm] = useState({
     name: "",
     email: "",
     phone: "",
+    address: "",
+    city: "",
   });
+  const [paymentForm, setPaymentForm] = useState({
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
+    cardName: "",
+  });
+
+  const { locale, setLocale } = useLanguage();
+  const t = getClientTranslation(locale);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -133,60 +149,57 @@ export default function StorePage() {
   };
 
   const handleCheckout = () => {
-    // In a real app, this would integrate with a payment processor
-    // For now, we'll just show a success message
-    alert(
-      "Checkout requires payment integration — invoice will be sent to your email"
-    );
-    setCart([]);
     setIsCheckoutOpen(false);
+    setIsPaymentOpen(true);
+  };
+
+  const handlePayment = () => {
+    if (!paymentForm.cardNumber || !paymentForm.expiryDate || !paymentForm.cvv || !paymentForm.cardName) {
+      alert("Please fill in all payment details");
+      return;
+    }
+    setIsPaymentOpen(false);
+    setIsConfirmOpen(true);
+  };
+
+  const handleConfirm = () => {
+    setTimeout(() => {
+      setIsConfirmOpen(false);
     setIsCartOpen(false);
+      setCart([]);
+      setCheckoutForm({ name: "", email: "", phone: "", address: "", city: "" });
+      setPaymentForm({ cardNumber: "", expiryDate: "", cvv: "", cardName: "" });
+      alert("Order placed successfully! You will receive an email confirmation shortly.");
+    }, 1000);
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+    <div 
       className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20"
+      dir={locale === 'ar' ? 'rtl' : 'ltr'}
     >
       {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 50, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 py-20"
-      >
+      <section className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 py-16">
         <div className="absolute inset-0 bg-[url('/images/section-pattern.jpg')] opacity-5" />
         <div className="container relative mx-auto px-6">
           <div className="mx-auto max-w-4xl text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 30, x: -50 }}
-              animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="font-mono text-4xl font-extralight tracking-wide text-foreground md:text-6xl"
-            >
-              Sports Store
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 30, x: 50 }}
-              animate={{ opacity: 1, y: 0, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="mt-6 text-lg font-serif text-muted-foreground md:text-xl"
-            >
-              Premium gear for athletes, coaches, and sports enthusiasts.
-              Discover equipment that elevates your game.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 40, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-              className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-            >
+            <h1 className={cn(
+              "font-mono text-4xl font-extralight tracking-wide text-foreground md:text-6xl",
+              locale === 'ar' && 'font-arabic-heading'
+            )}>
+              {t('store.hero.title')}
+            </h1>
+            <p className={cn(
+              "mt-6 text-lg font-serif text-muted-foreground md:text-xl",
+              locale === 'ar' && 'font-arabic-body'
+            )}>
+              {t('store.hero.description')}
+            </p>
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  placeholder="Search products..."
+                  placeholder={t('store.hero.searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -194,102 +207,132 @@ export default function StorePage() {
               </div>
               <Button
                 onClick={() => setIsCartOpen(true)}
-                className="relative bg-primary text-primary-foreground hover:bg-primary/90"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 relative"
               >
                 <ShoppingCart className="mr-2 h-4 w-4" />
-                Cart ({getTotalItems()})
+                {t('store.cart.title')} ({getTotalItems()})
               </Button>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Filters */}
-      <motion.section
-        initial={{ opacity: 0, y: 30, x: -100 }}
-        animate={{ opacity: 1, y: 0, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-        className="sticky top-[64.5px] z-40 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70"
-      >
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Select
-                value={selectedCategory}
-                onValueChange={setSelectedCategory}
-              >
-                <SelectTrigger className="w-48">
-                  <Filter className="mr-2 h-4 w-4" />
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="equipment">Equipment</SelectItem>
-                  <SelectItem value="apparel">Apparel</SelectItem>
-                  <SelectItem value="accessories">Accessories</SelectItem>
-                </SelectContent>
-              </Select>
+      {/* Category Tabs */}
+      <section className="sticky top-[64px] z-40 w-full border-b bg-background/95 backdrop-blur">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex flex-wrap gap-3 justify-center">
+            <Button
+              variant={selectedCategory === "all" ? "default" : "ghost"}
+              onClick={() => setSelectedCategory("all")}
+              size="sm"
+              className={cn(
+                "gap-2",
+                selectedCategory !== "all" && "opacity-60"
+              )}
+            >
+              <Package className="h-4 w-4" />
+              <span className={cn(locale === 'ar' && 'font-arabic-body')}>
+                {t('store.categories.allCategories')}
+              </span>
+            </Button>
+            <Button
+              variant={selectedCategory === "equipment" ? "default" : "ghost"}
+              onClick={() => setSelectedCategory("equipment")}
+              size="sm"
+              className={cn(
+                "gap-2",
+                selectedCategory !== "equipment" && "opacity-60"
+              )}
+            >
+              <Package className="h-4 w-4" />
+              <span className={cn(locale === 'ar' && 'font-arabic-body')}>
+                {t('store.categories.equipment')}
+              </span>
+            </Button>
+            <Button
+              variant={selectedCategory === "apparel" ? "default" : "ghost"}
+              onClick={() => setSelectedCategory("apparel")}
+              size="sm"
+              className={cn(
+                "gap-2",
+                selectedCategory !== "apparel" && "opacity-60"
+              )}
+            >
+              <Shirt className="h-4 w-4" />
+              <span className={cn(locale === 'ar' && 'font-arabic-body')}>
+                {t('store.categories.apparel')}
+              </span>
+            </Button>
+            <Button
+              variant={selectedCategory === "accessories" ? "default" : "ghost"}
+              onClick={() => setSelectedCategory("accessories")}
+              size="sm"
+              className={cn(
+                "gap-2",
+                selectedCategory !== "accessories" && "opacity-60"
+              )}
+            >
+              <Watch className="h-4 w-4" />
+              <span className={cn(locale === 'ar' && 'font-arabic-body')}>
+                {t('store.categories.accessories')}
+              </span>
+            </Button>
+          </div>
+        </div>
+      </section>
 
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-48">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name">Name A-Z</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <p className="text-sm text-muted-foreground">
-              {filteredProducts.length} product
-              {filteredProducts.length !== 1 ? "s" : ""} found
+      {/* Products Grid */}
+      <section className="container mx-auto px-6 py-12">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className={cn(
+              "font-mono text-3xl font-extralight tracking-wide text-foreground",
+              locale === 'ar' && 'font-arabic-heading'
+            )}>
+              {t('store.sections.all.title')}
+            </h2>
+            <p className={cn(
+              "mt-2 font-serif text-muted-foreground",
+              locale === 'ar' && 'font-arabic-body'
+            )}>
+              {t('store.sections.all.description')}
             </p>
           </div>
-        </div>
-      </motion.section>
-
-      {/* Featured Items Section */}
-      <section className="container mx-auto px-6 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 50, x: -200 }}
-          whileInView={{ opacity: 1, y: 0, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-12"
-        >
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="font-mono text-3xl font-extralight tracking-wide text-foreground">
-                Featured Items
-              </h2>
-              <p className="mt-2 font-serif text-muted-foreground">
-                Handpicked products for the best performance
-              </p>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-48">
+              <SelectValue placeholder={t('store.filters.sortBy')} />
+                </SelectTrigger>
+                <SelectContent>
+              <SelectItem value="name">{t('store.filters.sortName')}</SelectItem>
+              <SelectItem value="price-low">{t('store.filters.sortPriceLow')}</SelectItem>
+              <SelectItem value="price-high">{t('store.filters.sortPriceHigh')}</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <Badge className="bg-secondary text-secondary-foreground px-4 py-2">
-              Premium
-            </Badge>
-          </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.filter((p) => p.badge === "New" || p?.rating >= 4.8).map(
-              (product, index) => (
-                <motion.div
+        {sortedProducts.length === 0 ? (
+          <div className="py-20 text-center">
+            <ShoppingBag className="mx-auto h-16 w-16 text-muted-foreground" />
+            <h3 className={cn(
+              "mt-4 text-lg font-mono font-extralight tracking-wide",
+              locale === 'ar' && 'font-arabic-heading'
+            )}>
+              {t('store.empty.title')}
+            </h3>
+            <p className={cn(
+              "font-serif text-muted-foreground",
+              locale === 'ar' && 'font-arabic-body'
+            )}>
+              {t('store.empty.message')}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {sortedProducts.map((product, index) => (
+              <Card 
                   key={product.id}
-                  initial={{ opacity: 0, y: 30, x: -50, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.1,
-                    ease: "easeOut",
-                  }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="group"
-                >
-                  <Card className="overflow-hidden border-0 bg-gradient-to-br from-primary/5 to-secondary/5 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 pt-0">
+                className="group overflow-hidden border-0 bg-card/50 backdrop-blur-sm transition-all duration-200 hover:shadow-lg"
+              >
                     <div className="relative aspect-square overflow-hidden">
                       <Image
                         src={product.image}
@@ -302,39 +345,45 @@ export default function StorePage() {
                           {product.badge}
                         </Badge>
                       )}
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="absolute right-3 top-3 rounded-full bg-background/80 p-2 opacity-0 transition-opacity group-hover:opacity-100"
+                  <button
+                    className="absolute right-3 top-3 rounded-full bg-background/90 p-2 opacity-0 transition-opacity group-hover:opacity-100"
+                    aria-label="Add to favorites"
                       >
                         <Heart className="h-4 w-4" />
-                      </motion.button>
+                  </button>
                     </div>
 
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
+                <CardContent className="p-4">
+                  <div className="space-y-2">
                         <div>
-                          <h3 className="font-mono font-extralight tracking-wide text-foreground">
+                      <h3 className={cn(
+                        "font-mono font-extralight tracking-wide text-foreground text-sm",
+                        locale === 'ar' && 'font-arabic-heading'
+                      )}>
                             {product.name}
                           </h3>
-                          <p className="text-sm font-serif text-muted-foreground">
+                      <p className={cn(
+                        "text-xs font-serif text-muted-foreground capitalize",
+                        locale === 'ar' && 'font-arabic-body'
+                      )}>
                             {product.category}
                           </p>
                         </div>
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                              />
-                            ))}
-                            <span className="ml-1 text-sm text-muted-foreground">
-                              ({product.rating})
+                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        <span className={cn(
+                          "text-xs text-muted-foreground",
+                          locale === 'ar' && 'font-arabic-body'
+                        )}>
+                          {product.rating}
                             </span>
                           </div>
-                          <span className="text-lg font-bold text-primary">
+                      <span className={cn(
+                        "text-sm font-bold text-primary",
+                        locale === 'ar' && 'font-arabic-heading'
+                      )}>
                             ${product.price}
                           </span>
                         </div>
@@ -342,113 +391,13 @@ export default function StorePage() {
                         <div className="flex gap-2">
                           <Button
                             asChild
-                            className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 ring-0"
+                        size="sm"
+                        className="flex-1"
+                        variant="outline"
                           >
                             <Link href={`/store/${product.id}`}>
-                              View Details
+                          {t('store.buttons.viewDetails')}
                             </Link>
-                          </Button>
-                          <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <Button
-                              onClick={() => addToCart(product)}
-                              className="bg-primary text-primary-foreground hover:bg-primary/90"
-                            >
-                              <Plus className="h-4 w-4" />
-                            </Button>
-                          </motion.div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )
-            )}
-          </div>
-        </motion.div>
-
-        {/* Hot Items Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-12"
-        >
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="font-mono text-3xl font-extralight tracking-wide text-foreground">
-                Hot Items
-              </h2>
-              <p className="mt-2 font-serif text-muted-foreground">
-                Trending products everyone's talking about
-              </p>
-            </div>
-            <Badge className="bg-secondary text-secondary-foreground px-4 py-2">
-              🔥 Trending
-            </Badge>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {PRODUCTS.filter((p) => p?.reviews >= 100).map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                  ease: "easeOut",
-                }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group"
-              >
-                <Card className="overflow-hidden border-0 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-red-500/20 pt-0">
-                  <div className="relative aspect-square overflow-hidden">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <Badge className="absolute left-3 top-3 bg-red-500 text-white">
-                      Hot
-                    </Badge>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="absolute right-3 top-3 rounded-full bg-background/80 p-2 opacity-0 transition-opacity group-hover:opacity-100"
-                    >
-                      <Heart className="h-4 w-4" />
-                    </motion.button>
-                  </div>
-
-                  <CardContent className="p-4">
-                    <div className="space-y-2">
-                      <h3 className="font-mono font-extralight tracking-wide text-foreground text-sm">
-                        {product.name}
-                      </h3>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-primary">
-                          ${product.price}
-                        </span>
-                        <div className="flex items-center gap-1">
-                          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                          <span className="text-xs text-muted-foreground">
-                            {product.rating}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex gap-1">
-                        <Button
-                          asChild
-                          size="sm"
-                          className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
-                        >
-                          <Link href={`/store/${product.id}`}>View</Link>
                         </Button>
                         <Button
                           size="sm"
@@ -461,162 +410,21 @@ export default function StorePage() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
             ))}
           </div>
-        </motion.div>
-
-        {/* Items for Sale Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50, x: -100 }}
-          whileInView={{ opacity: 1, y: 0, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-12"
-        >
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="font-mono text-3xl font-extralight tracking-wide text-foreground">
-                Items for Sale
-              </h2>
-              <p className="mt-2 font-serif text-muted-foreground">
-                All products with search and filter options
-              </p>
-            </div>
-            <Badge className="bg-secondary text-secondary-foreground px-4 py-2">
-              {PRODUCTS.length} Items
-            </Badge>
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${searchQuery}-${selectedCategory}-${sortBy}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            >
-              {sortedProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 30, x: -30, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.1,
-                    ease: "easeOut",
-                  }}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="group"
-                >
-                  <Card className="overflow-hidden border-0 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 pt-0">
-                    <div className="relative aspect-square overflow-hidden">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      {product.badge && (
-                        <Badge className="absolute left-3 top-3 bg-primary text-primary-foreground">
-                          {product.badge}
-                        </Badge>
-                      )}
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="absolute right-3 top-3 rounded-full bg-background/80 p-2 opacity-0 transition-opacity group-hover:opacity-100"
-                      >
-                        <Heart className="h-4 w-4" />
-                      </motion.button>
-                    </div>
-
-                    <CardContent className="p-6">
-                      <div className="space-y-3">
-                        <div>
-                          <h3 className="font-mono font-extralight tracking-wide text-foreground">
-                            {product.name}
-                          </h3>
-                          <p className="text-sm font-serif text-muted-foreground">
-                            {product.category}
-                          </p>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                              />
-                            ))}
-                            <span className="ml-1 text-sm text-muted-foreground">
-                              (4.8)
-                            </span>
-                          </div>
-                          <span className="text-lg font-bold text-primary">
-                            ${product.price}
-                          </span>
-                        </div>
-
-                        <div className="flex gap-2">
-                          <Button
-                            asChild
-                            className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 ring-0"
-                          >
-                            <Link href={`/store/${product.id}`}>
-                              View Details
-                            </Link>
-                          </Button>
-                          <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <Button
-                              onClick={() => addToCart(product)}
-                              className="bg-primary text-primary-foreground hover:bg-primary/90"
-                            >
-                              <Plus className="h-4 w-4" />
-                            </Button>
-                          </motion.div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {filteredProducts.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="py-20 text-center"
-            >
-              <ShoppingBag className="mx-auto h-16 w-16 text-muted-foreground" />
-              <h3 className="mt-4 text-lg font-mono font-extralight tracking-wide">
-                No products found
-              </h3>
-              <p className="font-serif text-muted-foreground">
-                Try adjusting your search or filters
-              </p>
-            </motion.div>
-          )}
-        </motion.div>
+        )}
       </section>
 
-      {/* Cart Sidebar */}
+      {/* Cart Dialog */}
       <Dialog open={isCartOpen} onOpenChange={setIsCartOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className={cn(
+              "flex items-center gap-2",
+              locale === 'ar' && 'font-arabic-heading'
+            )}>
               <ShoppingCart className="h-5 w-5" />
-              Shopping Cart ({getTotalItems()})
+              {t('store.cart.title')} ({getTotalItems()})
             </DialogTitle>
           </DialogHeader>
 
@@ -624,17 +432,19 @@ export default function StorePage() {
             {cart.length === 0 ? (
               <div className="py-8 text-center">
                 <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground" />
-                <p className="mt-2 text-muted-foreground">Your cart is empty</p>
+                <p className={cn(
+                  "mt-2 text-muted-foreground",
+                  locale === 'ar' && 'font-arabic-body'
+                )}>
+                  {t('store.cart.empty')}
+                </p>
               </div>
             ) : (
               <>
                 <div className="max-h-96 space-y-3 overflow-y-auto">
                   {cart.map((item) => (
-                    <motion.div
+                    <div
                       key={item.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
                       className="flex items-center gap-3 rounded-lg border p-3"
                     >
                       <div className="relative h-12 w-12 overflow-hidden rounded-md">
@@ -646,8 +456,16 @@ export default function StorePage() {
                         />
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-sm font-medium">{item.name}</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <h4 className={cn(
+                          "text-sm font-medium",
+                          locale === 'ar' && 'font-arabic-body'
+                        )}>
+                          {item.name}
+                        </h4>
+                        <p className={cn(
+                          "text-sm text-muted-foreground",
+                          locale === 'ar' && 'font-arabic-body'
+                        )}>
                           ${item.price}
                         </p>
                       </div>
@@ -655,21 +473,20 @@ export default function StorePage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
-                          }
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
-                        <span className="w-8 text-center text-sm">
+                        <span className={cn(
+                          "w-8 text-center text-sm",
+                          locale === 'ar' && 'font-arabic-body'
+                        )}>
                           {item.quantity}
                         </span>
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
-                          }
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
@@ -681,21 +498,24 @@ export default function StorePage() {
                           <X className="h-3 w-3" />
                         </Button>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
 
                 <div className="border-t pt-4">
-                  <div className="flex justify-between text-lg font-semibold">
-                    <span>Total:</span>
+                  <div className={cn(
+                    "flex justify-between text-lg font-semibold",
+                    locale === 'ar' && 'font-arabic-heading'
+                  )}>
+                    <span>{t('store.cart.total')}</span>
                     <span>${getTotalPrice().toFixed(2)}</span>
                   </div>
                   <Button
                     onClick={() => setIsCheckoutOpen(true)}
-                    className="mt-4 w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                    className="mt-4 w-full"
                   >
                     <CreditCard className="mr-2 h-4 w-4" />
-                    Checkout
+                    {t('store.cart.checkout')}
                   </Button>
                 </div>
               </>
@@ -704,63 +524,93 @@ export default function StorePage() {
         </DialogContent>
       </Dialog>
 
-      {/* Checkout Modal */}
+      {/* Checkout Dialog */}
       <Dialog open={isCheckoutOpen} onOpenChange={setIsCheckoutOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className={cn(
+              "flex items-center gap-2",
+              locale === 'ar' && 'font-arabic-heading'
+            )}>
               <CreditCard className="h-5 w-5" />
-              Checkout
+              {t('store.checkout.title')}
             </DialogTitle>
-            <DialogDescription>
-              Complete your purchase by providing your contact information.
+            <DialogDescription className={cn(locale === 'ar' && 'font-arabic-body')}>
+              {t('store.checkout.description')}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Full Name</label>
+              <label className={cn(
+                "text-sm font-medium",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.checkout.name')}
+              </label>
               <Input
-                placeholder="Enter your full name"
+                placeholder={t('store.checkout.namePlaceholder')}
                 value={checkoutForm.name}
-                onChange={(e) =>
-                  setCheckoutForm({ ...checkoutForm, name: e.target.value })
-                }
+                onChange={(e) => setCheckoutForm({ ...checkoutForm, name: e.target.value })}
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Email</label>
+              <label className={cn(
+                "text-sm font-medium",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.checkout.email')}
+              </label>
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t('store.checkout.emailPlaceholder')}
                 value={checkoutForm.email}
-                onChange={(e) =>
-                  setCheckoutForm({ ...checkoutForm, email: e.target.value })
-                }
+                onChange={(e) => setCheckoutForm({ ...checkoutForm, email: e.target.value })}
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Phone</label>
+              <label className={cn(
+                "text-sm font-medium",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.checkout.phone')}
+              </label>
               <Input
                 type="tel"
-                placeholder="Enter your phone number"
+                placeholder={t('store.checkout.phonePlaceholder')}
                 value={checkoutForm.phone}
-                onChange={(e) =>
-                  setCheckoutForm({ ...checkoutForm, phone: e.target.value })
-                }
+                onChange={(e) => setCheckoutForm({ ...checkoutForm, phone: e.target.value })}
               />
             </div>
 
-            <div className="rounded-lg bg-muted p-4">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CheckCircle className="h-4 w-4" />
-                <span>Payment integration required</span>
+            <div className="space-y-2">
+              <label className={cn(
+                "text-sm font-medium",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.address.address')}
+              </label>
+              <Input
+                placeholder={t('store.address.addressPlaceholder')}
+                value={checkoutForm.address}
+                onChange={(e) => setCheckoutForm({ ...checkoutForm, address: e.target.value })}
+              />
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">
-                An invoice will be sent to your email for payment processing.
-              </p>
+
+            <div className="space-y-2">
+              <label className={cn(
+                "text-sm font-medium",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.address.city')}
+              </label>
+              <Input
+                placeholder={t('store.address.cityPlaceholder')}
+                value={checkoutForm.city}
+                onChange={(e) => setCheckoutForm({ ...checkoutForm, city: e.target.value })}
+              />
             </div>
 
             <div className="flex gap-2">
@@ -769,24 +619,169 @@ export default function StorePage() {
                 onClick={() => setIsCheckoutOpen(false)}
                 className="flex-1"
               >
-                Cancel
+                {t('store.buttons.cancel')}
               </Button>
               <Button
                 onClick={handleCheckout}
                 disabled={
                   !checkoutForm.name ||
                   !checkoutForm.email ||
-                  !checkoutForm.phone
+                  !checkoutForm.phone ||
+                  !checkoutForm.address ||
+                  !checkoutForm.city
                 }
-                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                className="flex-1"
               >
-                <Mail className="mr-2 h-4 w-4" />
-                Send Invoice
+                {t('store.buttons.continueToPayment')}
               </Button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
-    </motion.div>
+
+      {/* Payment Dialog */}
+      <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className={cn(
+              "flex items-center gap-2",
+              locale === 'ar' && 'font-arabic-heading'
+            )}>
+              <CreditCard className="h-5 w-5" />
+              {t('store.payment.title')}
+            </DialogTitle>
+            <DialogDescription className={cn(locale === 'ar' && 'font-arabic-body')}>
+              {t('store.payment.description')}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className={cn(
+                "text-sm font-medium",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.payment.cardNumber')}
+              </label>
+              <Input
+                placeholder={t('store.payment.cardNumberPlaceholder')}
+                value={paymentForm.cardNumber}
+                onChange={(e) => setPaymentForm({ ...paymentForm, cardNumber: e.target.value })}
+                maxLength={19}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className={cn(
+                "text-sm font-medium",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.payment.cardholderName')}
+              </label>
+              <Input
+                placeholder={t('store.payment.cardholderPlaceholder')}
+                value={paymentForm.cardName}
+                onChange={(e) => setPaymentForm({ ...paymentForm, cardName: e.target.value })}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className={cn(
+                  "text-sm font-medium",
+                  locale === 'ar' && 'font-arabic-body'
+                )}>
+                  {t('store.payment.expiryDate')}
+                </label>
+                <Input
+                  placeholder={t('store.payment.expiryPlaceholder')}
+                  value={paymentForm.expiryDate}
+                  onChange={(e) => setPaymentForm({ ...paymentForm, expiryDate: e.target.value })}
+                  maxLength={5}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className={cn(
+                  "text-sm font-medium",
+                  locale === 'ar' && 'font-arabic-body'
+                )}>
+                  {t('store.payment.cvv')}
+                </label>
+                <Input
+                  placeholder={t('store.payment.cvvPlaceholder')}
+                  value={paymentForm.cvv}
+                  onChange={(e) => setPaymentForm({ ...paymentForm, cvv: e.target.value })}
+                  maxLength={3}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-lg bg-muted p-4">
+              <div className={cn(
+                "flex items-center gap-2 text-sm text-muted-foreground",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                <CheckCircle className="h-4 w-4 text-primary" />
+                <span>{t('store.payment.secure')}</span>
+              </div>
+              <p className={cn(
+                "mt-1 text-xs text-muted-foreground",
+                locale === 'ar' && 'font-arabic-body'
+              )}>
+                {t('store.payment.secureMessage')}
+              </p>
+            </div>
+
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setIsPaymentOpen(false);
+                  setIsCheckoutOpen(true);
+                }}
+                className="flex-1"
+              >
+                {t('store.buttons.back')}
+              </Button>
+              <Button
+                onClick={handlePayment}
+                className="flex-1"
+              >
+                {t('store.buttons.completePayment')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+        <DialogContent className="max-w-md">
+          <div className="text-center py-6">
+            <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center">
+              <Loader2 className="h-8 w-8 text-primary animate-spin" />
+            </div>
+            <h3 className={cn(
+              "text-lg font-semibold mb-2",
+              locale === 'ar' && 'font-arabic-heading'
+            )}>
+              {t('store.buttons.processingOrder')}
+            </h3>
+            <p className={cn(
+              "text-sm text-muted-foreground mb-4",
+              locale === 'ar' && 'font-arabic-body'
+            )}>
+              {t('store.buttons.processingMessage')}
+            </p>
+            <Button
+              onClick={handleConfirm}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              {t('store.buttons.completeOrder')}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

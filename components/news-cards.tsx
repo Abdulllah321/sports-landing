@@ -37,7 +37,7 @@ export function NewsCards({ limit, locale }: NewsCardsProps) {
             </div>
             
             <CardHeader className="pb-3">
-              <CardTitle className={`text-lg font-mono tracking-wide font-[100] group-hover:text-primary-foreground transition-colors ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+              <CardTitle className={`text-lg font-mono tracking-wide font-[100] group-hover:text-foreground transition-colors ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                 {n.title}
               </CardTitle>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">

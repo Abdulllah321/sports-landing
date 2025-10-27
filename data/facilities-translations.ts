@@ -1,4 +1,5 @@
 import { Locale } from "@/lib/i18n"
+import { facilities } from "@/data/facilities"
 
 export interface FacilityItem {
   id: string
@@ -178,18 +179,188 @@ export const facilityData: FacilityItem[] = [
       ar: "350 شخص"
     }
   },
+  {
+    id: "s6",
+    name: {
+      en: "Khalifa Sports Center",
+      ar: "مركز خليفة الرياضي"
+    },
+    city: {
+      en: "Dubai",
+      ar: "دبي"
+    },
+    type: {
+      en: "Indoor",
+      ar: "داخلي"
+    },
+    amenities: {
+      en: ["AC", "Lights", "Parking", "WiFi", "Changing Rooms", "Equipment Rental"],
+      ar: ["تكييف", "إضاءة", "موقف سيارات", "واي فاي", "غرف تبديل", "تأجير معدات"]
+    },
+    price: "AED 280/hr",
+    images: [
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop&q=80"
+    ],
+    rating: 4.7,
+    capacity: {
+      en: "250 people",
+      ar: "250 شخص"
+    }
+  },
+  {
+    id: "s7",
+    name: {
+      en: "Sharjah Sports Complex",
+      ar: "مجمع الشارقة الرياضي"
+    },
+    city: {
+      en: "Sharjah",
+      ar: "الشارقة"
+    },
+    type: {
+      en: "Outdoor",
+      ar: "خارجي"
+    },
+    amenities: {
+      en: ["Lights", "Parking", "Changing Rooms"],
+      ar: ["إضاءة", "موقف سيارات", "غرف تبديل"]
+    },
+    price: "AED 180/hr",
+    images: [
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&q=80"
+    ],
+    rating: 4.4,
+    capacity: {
+      en: "450 people",
+      ar: "450 شخص"
+    }
+  },
+  {
+    id: "s8",
+    name: {
+      en: "King Fahd Stadium",
+      ar: "ملعب الملك فهد"
+    },
+    city: {
+      en: "Riyadh",
+      ar: "الرياض"
+    },
+    type: {
+      en: "Outdoor",
+      ar: "خارجي"
+    },
+    amenities: {
+      en: ["Lights", "Parking", "WiFi", "Changing Rooms", "Food Service"],
+      ar: ["إضاءة", "موقف سيارات", "واي فاي", "غرف تبديل", "خدمة الطعام"]
+    },
+    price: "SAR 400/hr",
+    images: [
+      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=600&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&q=80"
+    ],
+    rating: 4.9,
+    capacity: {
+      en: "800 people",
+      ar: "800 شخص"
+    }
+  },
+  {
+    id: "s9",
+    name: {
+      en: "Al-Ahli Sports Club",
+      ar: "نادي الأهلي الرياضي"
+    },
+    city: {
+      en: "Doha",
+      ar: "الدوحة"
+    },
+    type: {
+      en: "Indoor",
+      ar: "داخلي"
+    },
+    amenities: {
+      en: ["AC", "Lockers", "Parking", "WiFi", "Changing Rooms", "Equipment Rental", "Food Service"],
+      ar: ["تكييف", "خزائن", "موقف سيارات", "واي فاي", "غرف تبديل", "تأجير معدات", "خدمة الطعام"]
+    },
+    price: "QAR 380/hr",
+    images: [
+      "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&q=80"
+    ],
+    rating: 4.8,
+    capacity: {
+      en: "400 people",
+      ar: "400 شخص"
+    }
+  },
+  {
+    id: "s10",
+    name: {
+      en: "Sports City Arena",
+      ar: "ساحة المدينة الرياضية"
+    },
+    city: {
+      en: "Abu Dhabi",
+      ar: "أبو ظبي"
+    },
+    type: {
+      en: "Indoor",
+      ar: "داخلي"
+    },
+    amenities: {
+      en: ["AC", "Showers", "Parking", "WiFi", "Changing Rooms", "Equipment Rental"],
+      ar: ["تكييف", "دشات", "موقف سيارات", "واي فاي", "غرف تبديل", "تأجير معدات"]
+    },
+    price: "AED 420/hr",
+    images: [
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop&q=80"
+    ],
+    rating: 4.95,
+    capacity: {
+      en: "550 people",
+      ar: "550 شخص"
+    }
+  },
 ]
 
 export function getFacilitiesByLocale(locale: Locale) {
-  return facilityData.map(item => ({
-    id: item.id,
-    name: item.name[locale],
-    city: item.city[locale],
-    type: item.type[locale],
-    amenities: item.amenities[locale],
-    price: item.price,
-    images: item.images,
-    rating: item.rating,
-    capacity: item.capacity[locale]
-  }))
+  return facilityData.map(item => {
+    // Use the facilities from facilities.ts to get full data
+    const fullFacility = facilities.find(f => f.id === item.id) || {
+      description: "",
+      rules: [],
+      availableSlots: [],
+      location: { address: "", coordinates: { lat: 0, lng: 0 } },
+      contact: { phone: "", email: "" },
+      features: {
+        parking: false,
+        wifi: false,
+        changingRooms: false,
+        equipmentRental: false,
+        foodService: false,
+        security: false
+      }
+    }
+    
+    return {
+      id: item.id,
+      name: item.name[locale],
+      city: item.city[locale],
+      type: item.type[locale],
+      amenities: item.amenities[locale],
+      price: item.price,
+      images: item.images,
+      rating: item.rating,
+      capacity: item.capacity[locale],
+      description: fullFacility.description || `${item.name[locale]} is a ${item.type[locale]} facility with excellent amenities.`,
+      rules: fullFacility.rules || [],
+      availableSlots: fullFacility.availableSlots || [],
+      location: fullFacility.location,
+      contact: fullFacility.contact,
+      features: fullFacility.features
+    }
+  })
 }

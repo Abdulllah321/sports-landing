@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import { facilities } from "@/data/facilities";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -63,8 +63,9 @@ const swiperStyles = `
   }
 `;
 
-export default function FacilityDetail({ params }: { params: { id: string } }) {
-  const f = facilities.find((x) => x.id === params.id);
+export default function FacilityDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params) as { id: string };
+  const f = facilities.find((x) => x.id === id);
   const [booking, setBooking] = useState<{
     name: string;
     email: string;
@@ -156,7 +157,7 @@ export default function FacilityDetail({ params }: { params: { id: string } }) {
       <style jsx>{swiperStyles}</style>
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
         {/* Header */}
-        <div className="sticky top-16 z-30 bg-background/95 backdrop-blur-sm border-b border-border/50">
+        <div className="sticky z-30 header-sticky-element">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center gap-4">
               <Button variant="outline" size="sm" asChild>

@@ -82,8 +82,8 @@ export function PlayerSidebar() {
   return (
     <aside 
       className={cn(
-        "w-64 bg-card border-r flex flex-col shrink-0",
-        "sticky top-20 h-max rounded-lg"
+        "w-64 bg-card flex flex-col shrink-0",
+        "sticky top-24 h-max rounded-lg"
       )}
       dir={locale === 'ar' ? 'rtl' : 'ltr'}
     >

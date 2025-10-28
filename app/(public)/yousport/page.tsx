@@ -285,7 +285,7 @@ export default function YouSportPage() {
       </section>
 
       {/* Search and Filter Bar */}
-      <section className="sticky top-[65px] z-40 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+      <section className="sticky z-40 w-full header-sticky-element">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
             {/* Search */}

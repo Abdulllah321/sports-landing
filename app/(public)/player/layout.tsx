@@ -18,7 +18,7 @@ export default function PlayerLayout({
       isArabic && 'rtl'
     )}>
       <PlayerSidebar />
-      <main className="flex-1 w-full min-h-screen bg-gradient-to-br from-background via-background to-muted/20 rounded-lg ">
+      <main className="flex-1 w-full min-h-screen rounded-lg mt-4 bg-foreground/5 overflow-hidden">
         {children}
       </main>
     </div>

@@ -4,6 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --header-height: 0;
   --background: oklch(1 0 0);
   --foreground: oklch(0 0 0);
   --card: oklch(0.9612 0 0);
@@ -264,5 +265,56 @@
   span.font-arabic-body,
   div.font-arabic-body {
     font-family: var(--font-arabic-body), var(--font-body), sans-serif !important;
+  }
+
+  .card{ 
+    position: relative;
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+    border: none !important;
+  }
+
+  .card::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), oklch(50.73% 0.166 255.05 / 0.5), transparent 40%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    mask:
+    linear-gradient(var(--background), var(--background)) 50% 0 / 100% 4px no-repeat,
+    linear-gradient(var(--background), var(--background)) 50% 100% / 100% 4px no-repeat,
+    linear-gradient(var(--background), var(--background)) 0 50% / 4px 100% no-repeat,
+    linear-gradient(var(--background), var(--background)) 100% 50% / 4px 100% no-repeat;
+  
+  }
+
+  .card::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(960px circle at var(--mouse-x) var(--mouse-y), oklch(50.73% 0.166 255.05 / 0.1), transparent 40%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+  }
+
+  .card-contents:hover .card::before,
+  .card-contents:hover .card::after{
+    opacity: 1;
+  }
+
+  .header-sticky-element{
+    top: var(--header-height) !important;
+    @apply container mx-auto rounded-b-2xl rounded-t-2xl border-border/50 border transition-all duration-300 ease-in-out bg-background/60 backdrop-blur mt-4 supports-[backdrop-filter]:bg-background/70;
   }
 }

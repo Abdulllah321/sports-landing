@@ -30,19 +30,62 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [navPopoverOpen, setNavPopoverOpen] = useState(false)
+  const [hasStickyElements, setHasStickyElements] = useState(false)
   const pathname = usePathname()
   const { locale } = useLanguage()
   const t = getClientTranslation(locale)
   const isArabic = locale === 'ar'
 
-  // Handle scroll effect
+  // Handle scroll effect and header height
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
+      checkForStickyElements() // Check sticky elements on scroll
+    }
+    
+    const updateHeaderHeight = () => {
+      const header = document.querySelector('header')
+      if (header) {
+        const height = header.offsetHeight
+        document.documentElement.style.setProperty('--header-height', `calc(${height}px + var(--spacing) * 5)`)
+      }
+    }
+    
+    const checkForStickyElements = () => {
+      // Look specifically for elements with header-sticky-element class
+      const stickyElements = document.querySelectorAll('.header-sticky-element')
+      const headerRect = document?.querySelector('header')?.getBoundingClientRect()
+      const headerLength = (headerRect?.top || 0) + (headerRect?.height || 0)
+      const isSticky = stickyElements.length > 0 && Array.from(stickyElements)?.some((element) => {
+        const elementRect = element.getBoundingClientRect()
+        const elementTop = elementRect.top
+        return elementTop <= headerLength + 10
+      })
+
+      // Reflect state on the sticky elements themselves
+      Array.from(stickyElements).forEach((el) => {
+        el.classList.toggle('rounded-t-none', isSticky)
+      })
+
+      setHasStickyElements(isSticky)
     }
     
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    
+    // Update header height on mount and resize
+    updateHeaderHeight()
+    window.addEventListener('resize', updateHeaderHeight)
+    
+    // Check for sticky elements on mount and when DOM changes
+    checkForStickyElements()
+    const observer = new MutationObserver(checkForStickyElements)
+    observer.observe(document.body, { childList: true, subtree: true })
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', updateHeaderHeight)
+      observer.disconnect()
+    }
   }, [])
 
   // Close mobile menu when route changes
@@ -50,6 +93,21 @@ export function SiteHeader() {
     setOpen(false)
     setNavPopoverOpen(false)
   }, [pathname])
+
+  // Update header height when mobile menu state changes
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      const header = document.querySelector('header')
+      if (header) {
+        const height = header.offsetHeight
+        document.documentElement.style.setProperty('--header-height', `calc(${height}px + var(--spacing) * 5 + 1px)`)
+      }
+    }
+    
+    // Small delay to ensure DOM has updated
+    const timeoutId = setTimeout(updateHeaderHeight, 10)
+    return () => clearTimeout(timeoutId)
+  }, [open])
 
   // Close popover when clicking outside
   useEffect(() => {
@@ -66,9 +124,12 @@ export function SiteHeader() {
   return (
     <header 
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300 mx-auto",
+        "sticky z-50 w-full transition-all duration-300 mx-auto",
         isScrolled 
-          ? "bg-background/60 backdrop-blur-md border border-border/50 top-5 rounded-md w-[calc(100%-2rem)] container max-lg:top-0 max-lg:rounded-none max-lg:w-full max-lg:border-b" 
+          ? cn(
+              "bg-background/60 backdrop-blur border border-border/50 top-5 w-[calc(100%-2rem)] container max-lg:top-0 max-lg:rounded-none max-lg:w-full max-lg:border-b",
+              hasStickyElements ? "rounded-t-2xl rounded-b-0 border-b-transparent element-sticky" : "rounded-2xl"
+            )
           : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b top-0 w-full max-w-full"
       )}
      
@@ -115,7 +176,7 @@ export function SiteHeader() {
               </motion.div>
               
               <div className={cn(
-                "absolute top-full  mt-2 w-64 bg-background/95 backdrop-blur-md border border-border/50 rounded-lg shadow-lg py-2 z-50 transition-all duration-300 ease-in-out",
+                "absolute top-full  mt-2 w-72 bg-background/95 backdrop-blur-md border border-border/50 rounded-lg shadow-lg py-2 z-50 transition-all duration-300 ease-in-out",
                 locale === "ar" ? "right-0" : "left-0",
                 navPopoverOpen 
                   ? "opacity-100 scale-100 translate-y-0" 

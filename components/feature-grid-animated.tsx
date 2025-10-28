@@ -6,11 +6,12 @@ import { Locale } from "@/lib/i18n"
 interface FeatureGridAnimatedProps {
   children: React.ReactNode
   locale: Locale
+  ref: React.RefObject<HTMLDivElement>
 }
 
-export function FeatureGridAnimated({ children, locale }: FeatureGridAnimatedProps) {
+export function FeatureGridAnimated({ children, locale,ref, ...props }: FeatureGridAnimatedProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 card-contents" ref={ref} {...props}>
       {Array.isArray(children) ? children.map((child, i) => (
         <motion.div
           key={i}

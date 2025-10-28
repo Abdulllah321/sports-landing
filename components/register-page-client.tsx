@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Building2, Users, Trophy, Star, ArrowRight, CheckCircle } from "lucide-react"
+import { Building2, Users, Trophy, Star, ArrowRight, CheckCircle, X } from "lucide-react"
 import { useLanguage } from "@/lib/translation-context"
 import { getClientTranslation } from "@/lib/client-translations"
 import { cn } from "@/lib/utils"
@@ -126,37 +127,78 @@ export function RegisterPageClient({ locale }: { locale: string }) {
         })}
       </div>
 
-      {/* Selected Type Action */}
-      {selectedType && (
-        <div className="text-center">
-          <Card className="max-w-md mx-auto">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                {t('register.selected')}
-              </CardTitle>
-              <CardDescription>
-                {t('register.selectedDescription')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button 
-                size="lg" 
-                className="w-full"
-                onClick={() => {
-                  const selectedTypeData = registrationTypes.find(type => type.id === selectedType)
-                  if (selectedTypeData) {
-                    window.location.href = selectedTypeData.href
-                  }
-                }}
-              >
-                {t('register.proceedToRegistration')}
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+      {/* Bottom Sheet */}
+      <AnimatePresence>
+        {selectedType && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-50"
+              onClick={() => setSelectedType(null)}
+            />
+            
+            {/* Bottom Sheet */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 300, 
+                damping: 30 
+              }}
+              className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border rounded-t-2xl shadow-2xl max-w-md mx-auto backdrop-blur supports-[backdrop-filter]:bg-background/70 h-screen"
+            >
+              <div className="p-6">
+                {/* Handle */}
+                <div className="flex justify-center mb-4">
+                  <div className="w-12 h-1 bg-muted-foreground/30 rounded-full" />
+                </div>
+                
+                {/* Close Button */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelectedType(null)}
+                  className="absolute top-4 right-4 h-8 w-8 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+                
+                {/* Content */}
+                <div className="text-center">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <h3 className="text-lg font-semibold">
+                      {t('register.selected')}
+                    </h3>
+                  </div>
+                  <p className="text-muted-foreground mb-6">
+                    {t('register.selectedDescription')}
+                  </p>
+                  
+                  <Button 
+                    size="lg" 
+                    className="w-full"
+                    onClick={() => {
+                      const selectedTypeData = registrationTypes.find(type => type.id === selectedType)
+                      if (selectedTypeData) {
+                        window.location.href = selectedTypeData.href
+                      }
+                    }}
+                  >
+                    {t('register.proceedToRegistration')}
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Benefits Section */}
       <div className="mt-16">

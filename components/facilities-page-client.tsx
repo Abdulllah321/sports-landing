@@ -263,7 +263,7 @@ export function FacilitiesPageClient({ locale, facilities, translations }: Facil
       </section>
 
       {/* Search & Filters */}
-      <section className="py-4 border-y border-border/50 sticky top-[64.5px] z-40 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+      <section className="py-4 mt-2 sticky z-40 w-full header-sticky-element">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 items-center">

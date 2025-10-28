@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/translation-context";
@@ -77,6 +77,42 @@ export default function StorePage() {
 
   const { locale, setLocale } = useLanguage();
   const t = getClientTranslation(locale);
+
+  // State for showing cart button in sticky tabs
+  const [showStickyCart, setShowStickyCart] = useState(false);
+  // State for search bar visibility
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  // Scroll detection for header rounded-t-none
+  useEffect(() => {
+    const checkHeaderRounded = () => {
+      const header = document.querySelector('header');
+      if (header) {
+        const hasRoundedNone = header.classList.contains('element-sticky');
+
+        setShowStickyCart(hasRoundedNone);
+      }
+    };
+
+    // Check on mount
+    checkHeaderRounded();
+
+    // Check on scroll
+    window.addEventListener('scroll', checkHeaderRounded);
+    
+    // Check when DOM changes (for header class updates)
+    const observer = new MutationObserver(checkHeaderRounded);
+    observer.observe(document.body, { 
+      childList: true, 
+      subtree: true, 
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => {
+      window.removeEventListener('scroll', checkHeaderRounded);
+      observer.disconnect();
+    };
+  }, []);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -205,22 +241,51 @@ export default function StorePage() {
                   className="pl-10"
                 />
               </div>
-              <Button
-                onClick={() => setIsCartOpen(true)}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 relative"
-              >
-                <ShoppingCart className="mr-2 h-4 w-4" />
-                {t('store.cart.title')} ({getTotalItems()})
-              </Button>
+            {!showStickyCart&&  <motion.div layoutId="cart-button">
+                <Button
+                  onClick={() => setIsCartOpen(true)}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 relative"
+                >
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  {t('store.cart.title')} ({getTotalItems()})
+                </Button>
+              </motion.div>}
             </div>
           </div>
         </div>
       </section>
 
       {/* Category Tabs */}
-      <section className="sticky top-[64px] z-40 w-full border-b bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex flex-wrap gap-3 justify-center">
+      <section className={"sticky z-40 w-full header-sticky-element " + (showSearchBar ? '!rounded-b-none' : '')}>
+        <div className="container mx-auto px-6 py-4 relative w-full">
+          {/* Left Side - Select Box and Search */}
+          <div className="flex items-center gap-4 absolute top-1/2 left-6 -translate-y-1/2">
+            {/* Select Box */}
+            <AnimatePresence>
+              {showStickyCart && (
+                <motion.div
+                  layoutId="select-box"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="w-48">
+                      <SelectValue placeholder={t('store.filters.sortBy')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="name">{t('store.filters.sortName')}</SelectItem>
+                      <SelectItem value="price-low">{t('store.filters.sortPriceLow')}</SelectItem>
+                      <SelectItem value="price-high">{t('store.filters.sortPriceHigh')}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="flex flex-wrap gap-3 justify-center items-center ">
             <Button
               variant={selectedCategory === "all" ? "default" : "ghost"}
               onClick={() => setSelectedCategory("all")}
@@ -278,6 +343,93 @@ export default function StorePage() {
               </span>
             </Button>
           </div>
+          
+          {/* Animated Search Bar */}
+          <AnimatePresence>
+            {showSearchBar && (
+              <motion.div
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 300, 
+                  damping: 25 
+                }}
+                className="absolute top-full left-0 right-0 border border-border/50 rounded-b-2xl shadow-lg p-4 z-50 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/70"
+              >
+                <div className="container mx-auto px-6">
+                  <div className="relative max-w-md mx-auto">
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder={t('store.hero.searchPlaceholder')}
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10 pr-12"
+                      autoFocus
+                    />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowSearchBar(false)}
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+           <div className="absolute top-1/2 right-6 -translate-y-1/2 flex items-center gap-2 px-2"> 
+           {/* Search Icon / Close Icon */}
+           <AnimatePresence mode="wait">
+              {showStickyCart && (
+                <motion.div
+                  key={showSearchBar ? "close" : "search"}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowSearchBar(!showSearchBar)}
+                    className="h-9 w-9 p-0 shadow-none hover:bg-transparent"
+                  >
+                    {showSearchBar ? (
+                      <X className="h-4 w-4" />
+                    ) : (
+                      <Search className="h-4 w-4" />
+                    )}
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          {/* Animated Cart Button */}
+          <AnimatePresence>
+            {showStickyCart && (
+              <motion.div
+                layoutId="cart-button"
+
+              >
+                <Button
+                  onClick={() => setIsCartOpen(true)}
+                  variant="ghost"
+                  className="h-9 w-9 p-0 shadow-none overflow-visible hover:bg-transparent"
+                  >
+                  <div className="relative">
+                    <ShoppingCart className="mr-2 h-4 w-4" />
+                    <span className="absolute w-4 h-4 -top-2 -right-2 bg-destructive text-white rounded-full flex items-center justify-center text-xs">
+                      {getTotalItems()}
+                    </span>
+                  </div>
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          </div>
         </div>
       </section>
 
@@ -298,16 +450,18 @@ export default function StorePage() {
               {t('store.sections.all.description')}
             </p>
           </div>
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-48">
-              <SelectValue placeholder={t('store.filters.sortBy')} />
-                </SelectTrigger>
-                <SelectContent>
-              <SelectItem value="name">{t('store.filters.sortName')}</SelectItem>
-              <SelectItem value="price-low">{t('store.filters.sortPriceLow')}</SelectItem>
-              <SelectItem value="price-high">{t('store.filters.sortPriceHigh')}</SelectItem>
-                </SelectContent>
-              </Select>
+          {!showStickyCart&& <motion.div layoutId="select-box">
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder={t('store.filters.sortBy')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="name">{t('store.filters.sortName')}</SelectItem>
+                <SelectItem value="price-low">{t('store.filters.sortPriceLow')}</SelectItem>
+                <SelectItem value="price-high">{t('store.filters.sortPriceHigh')}</SelectItem>
+              </SelectContent>
+            </Select>
+          </motion.div>}
             </div>
 
         {sortedProducts.length === 0 ? (
@@ -331,7 +485,7 @@ export default function StorePage() {
             {sortedProducts.map((product, index) => (
               <Card 
                   key={product.id}
-                className="group overflow-hidden border-0 bg-card/50 backdrop-blur-sm transition-all duration-200 hover:shadow-lg"
+                className="group !py-0 overflow-hidden border-0 bg-card/50 backdrop-blur-sm transition-all duration-200 hover:shadow-lg"
               >
                     <div className="relative aspect-square overflow-hidden">
                       <Image

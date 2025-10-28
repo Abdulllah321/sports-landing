@@ -46,12 +46,12 @@ export function FeatureGrid({ locale }: FeatureGridProps) {
         const href = featureHrefs[i]
         
         return (
-          <Card key={key} className="group relative h-full bg-card border-border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 py-2">
+          <Card key={key} className="group relative h-full bg-card border-border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 py-2 gap-0">
             <CardHeader className="items-center text-center pb-2 pt-4">
               <div className="mb-4">
                 <Icon className="h-16 w-16 text-primary mx-auto stroke-1" aria-hidden />
               </div>
-              <CardTitle className={`text-base font-semibold text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+              <CardTitle className={`font-mono text-xl font-extralight mb-0 text-foreground ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                 {t(`features.${key}.title`)}
               </CardTitle>
             </CardHeader>

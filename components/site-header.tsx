@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Menu, X, User, Info, ChevronDown, MoreHorizontal } from "lucide-react"
 import { Trophy, Building2, PlayCircle, Newspaper, ShoppingBag, Calendar, GraduationCap, Megaphone } from "lucide-react"
@@ -65,11 +66,12 @@ export function SiteHeader() {
   return (
     <header 
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "sticky top-0 z-50 w-full transition-all duration-300 mx-auto",
         isScrolled 
-          ? "bg-background/95 backdrop-blur-md shadow-lg border-b border-border/50" 
-          : "bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b"
+          ? "bg-background/60 backdrop-blur-md border border-border/50 top-5 rounded-md w-[calc(100%-2rem)] container max-lg:top-0 max-lg:rounded-none max-lg:w-full max-lg:border-b" 
+          : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b top-0 w-full max-w-full"
       )}
+     
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4 relative">
         {/* Left Section: Menu Button */}
@@ -77,15 +79,40 @@ export function SiteHeader() {
           {/* Desktop Navigation */}
           <nav className="hidden items-center lg:flex">
             <div className="relative">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setNavPopoverOpen(!navPopoverOpen)}
-                className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-200"
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <Menu className="h-4 w-4" />
-                <span>{t('nav.menu')}</span>
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setNavPopoverOpen(!navPopoverOpen)}
+                  className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-200 hover:shadow-sm"
+                >
+                  <motion.div
+                    animate={{ 
+                      rotate: navPopoverOpen ? 90 : 0,
+                      scale: navPopoverOpen ? 1.1 : 1
+                    }}
+                    transition={{ 
+                      duration: 0.2, 
+                      ease: "easeInOut" 
+                    }}
+                  >
+                    <Menu className="h-4 w-4" />
+                  </motion.div>
+                  <motion.span
+                    animate={{ 
+                      opacity: navPopoverOpen ? 0.7 : 1,
+                      x: navPopoverOpen ? 2 : 0
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {t('nav.menu')}
+                  </motion.span>
+                </Button>
+              </motion.div>
               
               <div className={cn(
                 "absolute top-full  mt-2 w-64 bg-background/95 backdrop-blur-md border border-border/50 rounded-lg shadow-lg py-2 z-50 transition-all duration-300 ease-in-out",
@@ -120,18 +147,57 @@ export function SiteHeader() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => setOpen((v) => !v)} 
-            aria-label="Toggle menu"
-            className={cn(
-              "lg:hidden transition-all duration-200",
-              isScrolled && "shadow-md"
-            )}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setOpen((v) => !v)} 
+              aria-label="Toggle menu"
+              className={cn(
+                "lg:hidden transition-all duration-200 hover:shadow-sm",
+                isScrolled && "shadow-md max-lg:shadow-none"
+              )}
+            >
+              <motion.div
+                animate={{ 
+                  rotate: open ? 90 : 0,
+                  scale: open ? 1.1 : 1
+                }}
+                transition={{ 
+                  duration: 0.2, 
+                  ease: "easeInOut" 
+                }}
+              >
+                <AnimatePresence mode="wait">
+                  {open ? (
+                    <motion.div
+                      key="close"
+                      initial={{ opacity: 0, rotate: -90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: 90 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <X className="h-5 w-5" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="menu"
+                      initial={{ opacity: 0, rotate: -90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: 90 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      <Menu className="h-5 w-5" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </Button>
+          </motion.div>
         </div>
 
         {/* Center Section: Logo */}
@@ -153,15 +219,21 @@ export function SiteHeader() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <LanguageSwitcher />
-          <Button 
-            asChild 
-            className={cn(
-              "hidden lg:flex bg-primary text-primary-foreground hover:opacity-95 transition-all duration-200",
-              isScrolled && "shadow-lg"
-            )}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            <Link href="/auth/register">{isArabic ? 'انضم الآن' : 'Join Now'}</Link>
-          </Button>
+            <Button 
+              asChild 
+              className={cn(
+                "hidden lg:flex bg-primary text-primary-foreground hover:opacity-95 transition-all duration-200 hover:shadow-lg",
+                isScrolled && "shadow-lg max-lg:shadow-none"
+              )}
+            >
+              <Link href="/auth/register">{isArabic ? 'انضم الآن' : 'Join Now'}</Link>
+            </Button>
+          </motion.div>
         </div>
       </div>
 

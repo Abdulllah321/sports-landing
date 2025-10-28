@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
@@ -31,23 +33,44 @@ export function ThemeToggle() {
 
   if (!mounted)
     return (
-      <Button variant="ghost" size="icon" aria-label="Toggle theme">
-        <Sun className="h-5 w-5" />
-      </Button>
+      <motion.div
+        // initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+      >
+        <Button variant="ghost" size="icon" aria-label="Toggle theme">
+          <Sun className="h-5 w-5" />
+        </Button>
+      </motion.div>
     );
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggle}
-      aria-label="Toggle theme"
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
-      {theme === "dark" ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
-    </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={toggle}
+        aria-label="Toggle theme"
+        // className="relative overflow-hidden transition-all duration-200 hover:shadow-md"
+      >
+        <motion.div
+          key={theme}
+          initial={{ opacity: 0, rotate: -90 }}
+          animate={{ opacity: 1, rotate: 0 }}
+          exit={{ opacity: 0, rotate: 90 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        >
+          {theme === "dark" ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <Moon className="h-5 w-5" />
+          )}
+        </motion.div>
+      </Button>
+    </motion.div>
   );
 }

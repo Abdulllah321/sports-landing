@@ -95,7 +95,7 @@ export function TournamentCardsClient({ limit, locale, translations }: Tournamen
                   {/* Title with sliding effect */}
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="relative overflow-hidden">
-                      <h3 className={`text-2xl font-bold text-white mb-3 transition-transform duration-500 group-hover:-translate-y-8 ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
+                      <h3 className={`text-2xl font-bold text-white mb-3 transition-transform duration-500 group-hover:-translate-y-[3rem] ${locale === 'ar' ? 'font-arabic-body' : ''}`}>
                         {t.name}
                       </h3>
                       
@@ -118,9 +118,9 @@ export function TournamentCardsClient({ limit, locale, translations }: Tournamen
                   </div>
                   
                   {/* CTA Arrow from right */}
-                  <div className="absolute bottom-4 right-4 transform translate-x-8 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
+                  <div className={`absolute bottom-4 right-4 transform translate-x-8 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100 ${locale === 'ar' ? 'left-4 right-auto' : ''}`}>
                     <div className="bg-primary/90 backdrop-blur-md rounded-full p-3 shadow-xl">
-                      <ArrowRight className="h-5 w-5 text-primary-foreground" />
+                      <ArrowRight  className={`h-5 w-5 text-primary-foreground ${locale === 'ar' ? 'rotate-180' : ''}`} />
                     </div>
                   </div>
                 </div>

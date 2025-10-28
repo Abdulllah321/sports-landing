@@ -256,8 +256,8 @@ export default function PlayerOpportunitiesPage() {
         </Card>
         <Card>
           <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
+          <div className="flex items-center justify-between">
+            <div>
                 <p className={cn("text-sm font-medium text-muted-foreground", isArabic && "font-arabic-body")}>
                   {isArabic ? 'إجمالي المتقدمين' : 'Total Applicants'}
                 </p>
@@ -279,9 +279,9 @@ export default function PlayerOpportunitiesPage() {
                 <p className={cn("text-2xl font-bold", isArabic && "font-arabic-heading")}>
                   {featuredOpportunities.length}
                 </p>
-              </div>
+          </div>
               <Star className="h-8 w-8 text-muted-foreground" />
-            </div>
+        </div>
           </CardContent>
         </Card>
       </div>
@@ -306,7 +306,7 @@ export default function PlayerOpportunitiesPage() {
               >
                 <Card className="border-yellow-500/20 hover:shadow-lg transition-all">
                   <CardHeader>
-                    <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-lg bg-primary/10">
                           {getOpportunityIcon(opportunity.type)}
@@ -495,7 +495,7 @@ export default function PlayerOpportunitiesPage() {
                     <div className="flex flex-col gap-2">
                       <Button onClick={() => handleApply(opportunity)}>
                         {isArabic ? 'تقدم' : 'Apply'}
-                      </Button>
+                    </Button>
                       <Button 
                         variant="outline" 
                         size="sm"
@@ -505,11 +505,11 @@ export default function PlayerOpportunitiesPage() {
                         }}
                       >
                         {isArabic ? 'تفاصيل' : 'Details'}
-                      </Button>
-                    </div>
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </CardContent>
+            </Card>
             </motion.div>
           ))}
         </div>

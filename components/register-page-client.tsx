@@ -136,7 +136,7 @@ export function RegisterPageClient({ locale }: { locale: string }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 z-50"
+              className="fixed inset-0 bg-black/50 z-50 h-screen"
               onClick={() => setSelectedType(null)}
             />
             
@@ -150,7 +150,7 @@ export function RegisterPageClient({ locale }: { locale: string }) {
                 stiffness: 300, 
                 damping: 30 
               }}
-              className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border rounded-t-2xl shadow-2xl max-w-md mx-auto backdrop-blur supports-[backdrop-filter]:bg-background/70 h-screen"
+              className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border rounded-t-2xl shadow-2xl max-w-md mx-auto backdrop-blur supports-[backdrop-filter]:bg-background/70"
             >
               <div className="p-6">
                 {/* Handle */}
